@@ -1,0 +1,6 @@
+{
+  "introduction": "Introduction",
+  "invalidation-from-mutation": "Invalidation from Mutation",
+  "update-from-mutation-response": "Update from Mutation Response",
+  "optimistic-update": "Optimistic Update"
+}

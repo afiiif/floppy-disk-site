@@ -1,0 +1,21 @@
+{
+  "getting-started": "Getting Started",
+  "comparison": "Comparison",
+  "store": "Store",
+  "stores": "Stores",
+  "query": "Query",
+  "mutation": "Mutation",
+  "typescript": "TypeScript",
+  "graphql": "GraphQL",
+  "react-native": "React Native",
+  "api": "API",
+  "-- More": {
+    "type": "separator",
+    "title": ""
+  },
+  "change-log": {
+    "title": "Change Log ↗",
+    "href": "https://github.com/afiiif/floppy-disk/releases",
+    "newWindow": true
+  }
+}

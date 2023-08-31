@@ -1,0 +1,16 @@
+{
+  "introduction": "Introduction",
+  "single-query": "Single Query",
+  "single-query-with-params": "Single Query with Params",
+  "paginated-or-infinite-query": "Paginated/Infinite Query",
+  "dependent-queries": "Dependent Queries",
+  "initial-query-data": "Initial Query Data (CSR/SSR/SSG)",
+  "error-retries": "Error Retries",
+  "lazy-query": "Lazy Query",
+  "disabling-query": "Disabling Query",
+  "prefetching": "Prefetching",
+  "query-invalidation": "Query Invalidation",
+  "optimistic-update": "Optimistic Update",
+  "window-focus-refetching": "Window Focus Refetching",
+  "custom-logger": "Custom Logger"
+}
