@@ -3,6 +3,7 @@ const nextra = require('nextra');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  pageExtensions: ['page.tsx'],
 };
 
 /** @type {import('nextra').NextraConfig} */
