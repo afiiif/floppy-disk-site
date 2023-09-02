@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useRouter } from 'next/router';
+
 /** @type {import('nextra-theme-docs').DocsThemeConfig} */
 const themeConfig = {
   docsRepositoryBase: 'https://github.com/afiiif/floppy-disk-site/blob/main',
@@ -22,6 +25,22 @@ const themeConfig = {
       <link rel="manifest" href="/favicon/site.webmanifest" />
     </>
   ),
+  gitTimestamp: ({ timestamp }) => {
+    const { route, locale } = useRouter();
+    if (route === '/') return null;
+    return (
+      <>
+        Last updated on{' '}
+        <time dateTime={timestamp.toISOString()}>
+          {timestamp.toLocaleDateString(locale, {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+        </time>
+      </>
+    );
+  },
 };
 
 export default themeConfig;
