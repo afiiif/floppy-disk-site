@@ -71,16 +71,15 @@ function Card3() {
 }
 
 function Card4() {
-  const { increment, changeShape } = useMyStore.get();
+  const { count } = useMyStore((state) => [state.count % 5 === 0]);
   return (
     <div className="flex-1">
       <RenderCounter />
-      <button className="btn w-full px-2" onClick={increment}>
-        Increment
-      </button>
-      <button className="btn mt-3 w-full px-2" onClick={changeShape}>
-        Change Shape
-      </button>
+      <div className={cn('h-12 rounded text-center', count % 5 ? 'bg-rose-500' : 'bg-green-500')} />
+      <div className="pt-3">
+        Only re-render when
+        <i>&quot;count value is a multiple of 5&quot;</i> is changed
+      </div>
     </div>
   );
 }
@@ -101,39 +100,43 @@ function Card5() {
   return (
     <div className="flex-1 sm:translate-y-12">
       <RenderCounter />
+      <div className="text-center text-2xl">{isMuted ? '🔕' : '🔔'}</div>
       <button
-        className="btn mb-3 w-full px-2"
+        className="btn my-3 w-full px-2"
         onClick={() => useCard5.set((prev) => ({ isMuted: !prev.isMuted }))}
       >
         {isMuted ? 'Unmute' : 'Mute'}
       </button>
-      <div className="flex items-center gap-4">
-        <div className="pl-2 text-xl">{isMuted ? '🔕' : '🔔'}</div>
-        <div className={cn(isMuted && 'opacity-50')}>
-          <div>Count: {count}</div>
-          <div>Shape: {shape}</div>
-        </div>
+      <div className={cn(isMuted && 'opacity-50')}>
+        <div>Count: {count}</div>
+        <div>Shape: {shape}</div>
       </div>
     </div>
   );
 }
 
 function Card6() {
+  const { increment, changeShape } = useMyStore.get();
   return (
     <div className="w-full sm:w-auto sm:flex-1">
       <RenderCounter />
-      <button
-        className="btn w-full px-2"
-        onClick={() => alert(JSON.stringify(useMyStore.get(), null, 2))}
-      >
-        Get State
-      </button>
-      <button
-        className="btn mt-3 w-full px-2"
-        onClick={() => useMyStore.set((prev) => ({ count: prev.count + 1 }), true)}
-      >
-        Increment Silently
-      </button>
+      <div className="space-y-3 [&>*]:w-full [&>*]:px-2">
+        <button className="btn" onClick={increment}>
+          Increment
+        </button>
+        <button className="btn" onClick={changeShape}>
+          Change Shape
+        </button>
+        <button className="btn" onClick={() => alert(JSON.stringify(useMyStore.get(), null, 2))}>
+          Get State
+        </button>
+        <button
+          className="btn"
+          onClick={() => useMyStore.set((prev) => ({ count: prev.count + 1 }), true)}
+        >
+          Increment Silently 🤫
+        </button>
+      </div>
     </div>
   );
 }
@@ -142,16 +145,20 @@ function Lines() {
   const { isMuted } = useCard5();
   return (
     <>
-      <svg viewBox="0 0 80 40" className="absolute -top-24 h-[32rem] sm:hidden sm:h-96" fill="none">
-        <path d="M40,16 L40,0" className="path moving" />
-        <path d="M37,14 L30,14 L30,7" className="path moving" />
-        <path d="M44,14 L50,14 L50,7" className="path moving" />
-        <path d="M30,31 L30,18 L37,18" className="path" />
-        <path d="M40,18 L40,40" className="path" />
+      <svg
+        viewBox="0 0 80 40"
+        className="absolute -top-24 h-[32.5rem] sm:hidden sm:h-96"
+        fill="none"
+      >
+        <path d="M40,14 L40,0" className="path moving" />
+        <path d="M37,13 L30,13 L30,7" className="path moving" />
+        <path d="M44,13 L50,13 L50,7" className="path moving" />
+        <path d="M37,16.5 L30,16.5 L30,31" className="path moving" />
+        <path d="M40,40 L40,17" className="path moving" />
         {isMuted ? (
-          <path d="M44,18 L50,18 L50,31" className="path" />
+          <path d="M44,16.5 L50,16.5 L50,31" className="path" />
         ) : (
-          <path d="M44,18 L50,18 L50,31" className="path moving" />
+          <path d="M44,16.5 L50,16.5 L50,31" className="path moving" />
         )}
       </svg>
       <svg
@@ -162,8 +169,8 @@ function Lines() {
         <path d="M40,16 L40,4" className="path moving" />
         <path d="M37,17 L22,17 L14,9" className="path moving" />
         <path d="M44,17 L59,17 L67,9" className="path moving" />
-        <path d="M14,31 L22,23 L37,23" className="path" />
-        <path d="M44,23 L59,23 L67,31" className="path" />
+        <path d="M37,23 L22,23 L14,31" className="path moving" />
+        <path d="M67,31 L59,23 L44,23" className="path moving" />
         {isMuted ? (
           <path d="M40,24 L40,36" className="path" />
         ) : (
@@ -192,8 +199,8 @@ function Lines() {
 
 export default function Demo() {
   return (
-    <section className="relative -mx-6 overflow-x-hidden px-6 py-10 sm:py-24">
-      <div className="flex flex-wrap gap-9 text-sm md:gap-12 [&>*]:relative [&>*]:rounded-md [&>*]:border [&>*]:bg-white [&>*]:p-4 dark:[&>*]:bg-black">
+    <section className="relative -mx-6 overflow-x-hidden px-6 py-10 sm:pt-24">
+      <div className="flex flex-wrap gap-x-12 gap-y-8 text-sm sm:gap-9 md:gap-12 [&>*]:relative [&>*]:rounded-md [&>*]:border [&>*]:bg-white [&>*]:p-4 dark:[&>*]:bg-black">
         <Card1 />
         <Card2 />
         <Card3 />
@@ -201,12 +208,12 @@ export default function Demo() {
       <div className="relative -z-10 flex justify-center">
         <Lines />
       </div>
-      <div className="flex justify-center py-16 sm:py-12">
+      <div className="flex justify-center py-12 sm:py-12">
         <div className="rounded-md border bg-white px-6 py-8 text-center text-xl font-semibold dark:bg-black">
           Store
         </div>
       </div>
-      <div className="flex flex-wrap gap-9 text-sm md:gap-12 [&>*]:relative [&>*]:rounded-md [&>*]:border [&>*]:bg-white [&>*]:p-4 dark:[&>*]:bg-black">
+      <div className="flex flex-wrap items-start gap-x-12 gap-y-8 text-sm sm:gap-9 md:gap-12 [&>*]:relative [&>*]:rounded-md [&>*]:border [&>*]:bg-white [&>*]:p-4 dark:[&>*]:bg-black">
         <Card4 />
         <Card5 />
         <Card6 />

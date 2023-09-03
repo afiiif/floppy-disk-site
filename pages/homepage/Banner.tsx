@@ -4,6 +4,16 @@ export default function Banner() {
       <div className="absolute left-0 z-10 -mt-4 w-full overflow-x-hidden border-b border-b-gray-200 dark:border-b-gray-800">
         <div className="bg-[radial-gradient(var(--tw-gradient-stops))] from-white dark:from-black">
           <div className="animate-trigger mx-auto max-w-6xl px-6 py-24 text-center md:px-12 xl:py-28">
+            <div className="relative">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute w-full bg-gradient-to-br from-white/0 to-black/30 bg-clip-text pb-4 text-4xl font-extrabold text-transparent md:text-5xl xl:text-6xl"
+              >
+                2.8 kB Powerful
+                <div>[Global/Local, Sync/Async]</div>
+                State Management Library
+              </div>
+            </div>
             <h1 className="text-4xl font-extrabold md:text-5xl xl:text-6xl">
               2.8 kB Powerful
               <div className="text-green-600 dark:text-green-400">[Global/Local, Sync/Async]</div>
