@@ -4,7 +4,7 @@
   "single-query-with-params": "Single Query with Params",
   "paginated-or-infinite-query": "Paginated/Infinite Query",
   "dependent-queries": "Dependent Queries",
-  "initial-query-data": "Initial Query Data (CSR/SSR/SSG)",
+  "initial-query-data": "Initial Query Data (SSR/SSG)",
   "error-retries": "Error Retries",
   "lazy-query": "Lazy Query",
   "disabling-query": "Disabling Query",

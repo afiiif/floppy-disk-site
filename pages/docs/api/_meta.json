@@ -1,6 +1,6 @@
 {
-  "createStore": "createStore",
-  "createStores": "createStores",
-  "createQuery": "createQuery",
-  "createMutation": "createMutation"
+  "create-store": "createStore",
+  "create-stores": "createStores",
+  "create-query": "createQuery",
+  "create-mutation": "createMutation"
 }
