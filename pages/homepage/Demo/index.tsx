@@ -73,10 +73,9 @@ function Card3() {
 function Card4() {
   const { count } = useMyStore((state) => [state.count % 5 === 0]);
   return (
-    <div className="flex-1">
+    <div className="flex-1 !p-1.5 md:!p-3">
       <RenderCounter />
-      <div className={cn('h-12 rounded text-center', count % 5 ? 'bg-rose-500' : 'bg-green-500')} />
-      <div className="pt-3">
+      <div className={cn('rounded p-2', count % 5 ? 'bg-rose-600' : 'bg-green-500 text-black')}>
         Only re-render when
         <i>&quot;count value is a multiple of 5&quot;</i> is changed
       </div>
@@ -98,16 +97,18 @@ function Card5() {
   }, [isMuted]);
 
   return (
-    <div className="flex-1 sm:translate-y-12">
+    <div className="max-w-[calc(50%_-_1.35rem)] flex-1 sm:max-w-[unset] sm:translate-y-12">
       <RenderCounter />
-      <div className="text-center text-2xl">{isMuted ? '🔕' : '🔔'}</div>
-      <button
-        className="btn my-3 w-full px-2"
-        onClick={() => useCard5.set((prev) => ({ isMuted: !prev.isMuted }))}
-      >
-        {isMuted ? 'Unmute' : 'Mute'}
-      </button>
-      <div className={cn(isMuted && 'opacity-50')}>
+      <div className="flex items-center gap-2">
+        <div className="text-center text-2xl">{isMuted ? '🔕' : '🔔'}</div>
+        <button
+          className="btn w-full p-2"
+          onClick={() => useCard5.set((prev) => ({ isMuted: !prev.isMuted }))}
+        >
+          {isMuted ? 'Unmute' : 'Mute'}
+        </button>
+      </div>
+      <div className={cn('pt-3', isMuted && 'opacity-50')}>
         <div>Count: {count}</div>
         <div>Shape: {shape}</div>
       </div>
@@ -147,7 +148,7 @@ function Lines() {
     <>
       <svg
         viewBox="0 0 80 40"
-        className="absolute -top-24 h-[32.5rem] sm:hidden sm:h-96"
+        className="absolute -top-24 h-[30.5rem] sm:hidden sm:h-96"
         fill="none"
       >
         <path d="M40,14 L40,0" className="path moving" />
@@ -200,7 +201,7 @@ function Lines() {
 export default function Demo() {
   return (
     <section className="relative -mx-6 overflow-x-hidden px-6 py-10 sm:pt-24">
-      <div className="flex flex-wrap gap-x-12 gap-y-8 text-sm sm:gap-9 md:gap-12 [&>*]:relative [&>*]:rounded-md [&>*]:border [&>*]:bg-white [&>*]:p-4 dark:[&>*]:bg-black">
+      <div className="flex flex-wrap gap-x-11 gap-y-7 text-sm sm:gap-9 md:gap-12 [&>*]:relative [&>*]:rounded-md [&>*]:border [&>*]:bg-white [&>*]:p-4 dark:[&>*]:bg-black">
         <Card1 />
         <Card2 />
         <Card3 />
@@ -208,12 +209,12 @@ export default function Demo() {
       <div className="relative -z-10 flex justify-center">
         <Lines />
       </div>
-      <div className="flex justify-center py-12 sm:py-12">
+      <div className="flex justify-center py-9 sm:py-12">
         <div className="rounded-md border bg-white px-6 py-8 text-center text-xl font-semibold dark:bg-black">
           Store
         </div>
       </div>
-      <div className="flex flex-wrap items-start gap-x-12 gap-y-8 text-sm sm:gap-9 md:gap-12 [&>*]:relative [&>*]:rounded-md [&>*]:border [&>*]:bg-white [&>*]:p-4 dark:[&>*]:bg-black">
+      <div className="flex flex-wrap items-start gap-x-11 gap-y-7 text-sm sm:gap-9 md:gap-12 [&>*]:relative [&>*]:rounded-md [&>*]:border [&>*]:bg-white [&>*]:p-4 dark:[&>*]:bg-black">
         <Card4 />
         <Card5 />
         <Card6 />

@@ -6,15 +6,16 @@ type MyStore = {
   increment: () => void;
   changeShape: () => void;
 };
-export const useMyStore = createStore<MyStore>(({ set }) => ({
+export const useMyStore = createStore<MyStore>(({ set, get }) => ({
   count: 3,
   shape: 'square',
   increment: () => set((prev) => ({ count: prev.count + 1 })),
   changeShape: () => {
-    set(({ shape }) => {
-      if (shape === 'square') return { shape: 'circle' };
-      if (shape === 'circle') return { shape: 'triangle' };
-      return { shape: 'square' };
-    });
+    const { shape } = get();
+    let nextShape;
+    if (shape === 'square') nextShape = 'circle';
+    else if (shape === 'circle') nextShape = 'triangle';
+    else nextShape = 'square';
+    set({ shape: nextShape });
   },
 }));

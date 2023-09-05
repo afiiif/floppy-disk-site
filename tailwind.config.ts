@@ -28,6 +28,20 @@ const config: Config = {
           padding: '0.75rem 1.5rem',
           fontWeight: '500',
         },
+        '.btn:hover, .btn:focus': {
+          backgroundColor: theme('colors.blue.700'),
+        },
+        '.btn-secondary': {
+          backgroundColor: 'transparent',
+          borderRadius: theme('borderRadius.md'),
+          borderWidth: '1px',
+          borderColor: theme('colors.blue.600'),
+          padding: '0.75rem 1.5rem',
+          fontWeight: '500',
+        },
+        '.btn-secondary:hover, .btn-secondary:focus': {
+          backgroundColor: 'rgb(37 99 235 / 0.1)',
+        },
       });
     }),
   ],
