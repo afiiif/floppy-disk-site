@@ -1,5 +1,5 @@
 {
-  "introduction": "Introduction",
+  "introduction": "Query Introduction",
   "single-query": "Single Query",
   "single-query-with-params": "Single Query with Params",
   "paginated-or-infinite-query": "Paginated/Infinite Query",

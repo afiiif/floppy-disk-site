@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Tabs, Tab } from 'nextra-theme-docs'
 
 # Getting Started
@@ -22,10 +23,40 @@ import { Tabs, Tab } from 'nextra-theme-docs'
   </Tab>
 </Tabs>
 
-<br /><br />
+Compatible with React v16.8+ and works with ReactDOM and React Native.
 
-🚧&nbsp; WIP &nbsp;🚧
+## Ingredients
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+After the installation finished, you'll get 5 items:
 
-<br /><br />
+```ts
+import {
+  initStore,
+  createStore,
+  createStores,
+  createQuery,
+  createMutation,
+} from 'floppy-disk'
+```
+
+Here is the structure of dependencies of each items:
+
+<div className="relative [&>*]:absolute [&>*]:rounded-lg [&>*]:border [&>*]:py-3 [&>*]:px-4 [&>*]:bg-blue-500/20 h-72 mt-8">
+  <div className="h-40 w-48 top-28 left-16 sm:w-56 sm:left-24 flex items-end justify-end">
+    <Link className="hover:underline" href="/docs/mutation/introduction">createMutation</Link>
+  </div>
+  <div className="h-[6.5rem] w-40 top-28 left-16 sm:w-44 sm:left-24 flex items-end justify-end">
+    <Link className="hover:underline" href="/docs/store/introduction">createStore</Link>
+  </div>
+  <div className="h-40 w-48 sm:w-56">
+    <Link className="hover:underline" href="/docs/query/introduction">createQuery</Link>
+  </div>
+  <div className="h-[6.5rem] w-40 top-14 left-8 sm:w-44 sm:left-12">
+    <Link className="hover:underline" href="/docs/stores/introduction">createStores</Link>
+  </div>
+  <div className="w-32 h-12 left-16 top-28 sm:left-24 flex items-center justify-center">initStore</div>
+</div>
+
+The `createQuery` function was built on top of `createStores`.
+So, all the things we can do in `createStores`, we can do it on `createQuery` too.
+Therefore, before jump into query & mutation, it is better to understand how store & stores work.

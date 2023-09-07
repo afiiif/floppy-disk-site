@@ -41,6 +41,9 @@ const themeConfig = {
       </>
     );
   },
+  sidebar: {
+    titleComponent: ({ title }) => (title.endsWith('Introduction') ? 'Introduction' : title),
+  },
 };
 
 export default themeConfig;
