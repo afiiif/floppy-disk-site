@@ -1,9 +1,22 @@
 # Silent Update
 
-<br /><br />
+Set the state **silently** (without broadcast the state change to **any subscribers**).
 
-🚧&nbsp; WIP &nbsp;🚧
+```jsx
+const useCatStore = createStore(({ set }) => ({
+  age: 0,
+  isSleeping: false,
+  increaseAge: () => set((state) => ({ age: state.age + 1 })),
+  reset: () => set({ age: 0, isSleeping: false }),
+}));
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
-
-<br /><br />
+const decreaseAgeSilently = () => {
+  useCatStore.set((state) => ({ age: state.age }), true);
+  //                                               ^silent param
+};
+//                👇 Will not re-render
+function Cat() {
+  const { age } = useCatStore((state) => [state.age]);
+  return <div>Cat's age: {age}</div>;
+}
+```

@@ -1,9 +1,56 @@
 # As Local Storage
 
-<br /><br />
+Want a local state instead of global state?
+Or, want to set the initial state inside component?
 
-🚧&nbsp; WIP &nbsp;🚧
+```jsx
+const [CatStoreProvider, useCatStoreContext] = withContext(() =>
+  createStore(({ set }) => ({
+    age: 0,
+    isSleeping: false,
+    increaseAge: () => set((state) => ({ age: state.age + 1 })),
+    reset: () => set({ age: 0, isSleeping: false }),
+  })),
+);
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+function Parent() {
+  return (
+    <>
+      <CatStoreProvider>
+        <CatAge />
+        <CatIsSleeping />
+        <WillNotReRenderAsCatStateChanged />
+      </CatStoreProvider>
 
-<br /><br />
+      <CatStoreProvider>
+        <CatAge />
+        <CatIsSleeping />
+        <WillNotReRenderAsCatStateChanged />
+      </CatStoreProvider>
+
+      <CatStoreProvider onInitialize={(store) => store.set({ age: 99 })}>
+        <CatAge />
+        <CatIsSleeping />
+        <WillNotReRenderAsCatStateChanged />
+      </CatStoreProvider>
+    </>
+  );
+}
+
+function CatAge() {
+  const { age } = useCatStoreContext()((state) => [state.age]);
+  return <div>Age: {age}</div>;
+}
+function CatIsSleeping() {
+  const useCatStore = useCatStoreContext();
+  const { isSleeping } = useCatStore((state) => [state.isSleeping]);
+  return (
+    <>
+      <div>Is Sleeping: {String(isSleeping)}</div>
+      <button onClick={useCatStore.get().increaseAge}>Increase cat age</button>
+    </>
+  );
+}
+```
+
+> Example: [https://codesandbox.io/.../examples/react/local-state](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/local-state)

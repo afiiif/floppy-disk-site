@@ -21,7 +21,8 @@ import JsOrTs from './homepage/JsOrTs'
 
 <div className="text-center pt-6">
 
-This library was highly-inspired by [Zustand](https://github.com/pmndrs/zustand), [TanStack Query](https://tanstack.com/query), and [SWR](https://swr.vercel.app/).<br />Its DX will be very similar to Zustand's.
+This library was highly-inspired by [Zustand](https://github.com/pmndrs/zustand), [TanStack Query](https://tanstack.com/query), and [SWR](https://swr.vercel.app/).<br />
+Its DX will be very similar to Zustand's. [[See comparison]](/docs/comparison)
 
 </div>
 
@@ -213,7 +214,7 @@ import { createQuery, createMutation } from 'floppy-disk'; // 8.2 kB (gzipped: 2
         const { isLoading, data, error } = usePokemonDetailQuery({ id });
         if (error) return <div>Something went wrong</div>;
         if (isLoading) return <div>Loading...</div>;
-        return <div>Latest pokemon is {data.name}</div>;
+        return <div>Pokemon: {data.name}</div>;
       }
       ```
 
@@ -335,7 +336,7 @@ import { createQuery, createMutation } from 'floppy-disk'; // 8.2 kB (gzipped: 2
         const { isLoading, data, error } = usePokemonDetailQuery({ id });
         if (error) return <div>Something went wrong</div>;
         if (isLoading) return <div>Loading...</div>;
-        return <div>Latest pokemon is {data.name}</div>;
+        return <div>Pokemon: {data.name}</div>;
       }
       ```
 

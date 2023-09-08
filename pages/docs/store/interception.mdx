@@ -1,9 +1,23 @@
 # Interception
 
-<br /><br />
+```js
+const useCatStore = createStore(
+  ({ set }) => ({
+    age: 0,
+    isSleeping: false,
+    increaseAge: () => set((state) => ({ age: state.age + 1 })),
+    reset: () => set({ age: 0, isSleeping: false }),
+  }),
+  {
+    intercept: (nextState, prevState) => {
+      if (nextState.age !== prevState.age) {
+        return { ...nextState, isSleeping: false };
+      }
+      return nextState;
+    },
+  },
+);
+```
 
-🚧&nbsp; WIP &nbsp;🚧
-
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
-
-<br /><br />
+> Example:
+> [https://codesandbox.io/.../examples/react/intercept](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/intercept)

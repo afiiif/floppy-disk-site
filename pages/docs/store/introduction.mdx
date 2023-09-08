@@ -1,9 +1,111 @@
 # Store
 
-<br /><br />
+## Create a store
 
-🚧&nbsp; WIP &nbsp;🚧
+```js
+import { createStore } from 'floppy-disk';
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+const useCatStore = createStore(({ set }) => ({
+  age: 0,
+  isSleeping: false,
+  increaseAge: () => set((state) => ({ age: state.age + 1 })),
+  reset: () => set({ age: 0, isSleeping: false }),
+}));
+```
 
-<br /><br />
+## Use the hook anywhere
+
+No providers are needed.
+
+```jsx
+function Cat() {
+  const { age } = useCatStore((state) => [state.age]);
+  return <div>Cat's age: {age}</div>;
+}
+
+function Control() {
+  const { increaseAge } = useCatStore((state) => [state.increaseAge]);
+  return <button onClick={increaseAge}>Increase cat's age</button>;
+}
+```
+
+> Example: [https://codesandbox.io/.../examples/react/basic](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/basic)
+
+## Control the reactivity
+
+The concept is same as `useEffect` dependency array.
+
+```jsx
+function Cat() {
+  const { age, isSleeping } = useCatStore();
+  // Will re-render every state change    ^
+  return <div>...</div>;
+}
+
+function Cat() {
+  const { age, isSleeping } = useCatStore((state) => [state.isSleeping]);
+  // Will only re-render when isSleeping is updated   ^
+  // Update on age won't cause re-render this component
+  return <div>...</div>;
+}
+
+function Cat() {
+  const { age, isSleeping } = useCatStore((state) => [state.age, state.isSleeping]);
+  // Will re-render when age or isSleeping is updated ^
+  return <div>...</div>;
+}
+
+function Cat() {
+  const { age, isSleeping } = useCatStore((state) => [state.age > 3]);
+  // Will only re-render when (age>3) is updated
+  return <div>...</div>;
+}
+```
+
+> Example: [https://codesandbox.io/.../examples/react/custom-reactivity](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/custom-reactivity)
+
+## Outside Component
+
+Reading/writing state and reacting to changes outside of components.
+
+```js
+const alertCatAge = () => {
+  alert(useCatStore.get().age);
+};
+
+const toggleIsSleeping = () => {
+  useCatStore.set((state) => ({ isSleeping: !state.isSleeping }));
+};
+
+const unsub = useCatStore.subscribe(
+  // Action
+  (state) => {
+    console.log('The value of age is changed!', state.age);
+  },
+  // Reactivity dependency (just like useEffect dependency mentioned above)
+  (state) => [state.age],
+  // ^If not set, the action will be triggered on every state change
+);
+```
+
+## Set default reactivity
+
+```jsx {9}
+const useCatStore = createStore(
+  ({ set }) => ({
+    age: 0,
+    isSleeping: false,
+    increaseAge: () => set((state) => ({ age: state.age + 1 })),
+    reset: () => set({ age: 0, isSleeping: false }),
+  }),
+  {
+    defaultDeps: (state) => [state.age],
+  },
+);
+
+function Cat() {
+  const { age } = useCatStore();
+  //                          ^will only re-render when age changed
+  return <div>Cat's age: {age}</div>;
+}
+```

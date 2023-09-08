@@ -1,9 +1,53 @@
 # Store Event
 
-<br /><br />
+```js
+const useCatStore = createStore(
+  ({ set }) => ({
+    age: 0,
+    isSleeping: false,
+    increaseAge: () => set((state) => ({ age: state.age + 1 })),
+    reset: () => set({ age: 0, isSleeping: false }),
+  }),
+  {
+    onFirstSubscribe: (state) => {
+      console.log('onFirstSubscribe', state);
+    },
+    onSubscribe: (state) => {
+      console.log('onSubscribe', state);
+    },
+    onUnsubscribe: (state) => {
+      console.log('onUnsubscribe', state);
+    },
+    onLastUnsubscribe: (state) => {
+      console.log('onLastUnsubscribe', state);
+    },
+  },
+);
+```
 
-🚧&nbsp; WIP &nbsp;🚧
+> Example:
+> [https://codesandbox.io/.../examples/react/store-event](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/store-event)
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+Let's go wild using IIFE.
 
-<br /><br />
+```js
+const useCatStore = createStore(
+  ({ set }) => ({
+    age: 0,
+    isSleeping: false,
+    increaseAge: () => set((state) => ({ age: state.age + 1 })),
+    reset: () => set({ age: 0, isSleeping: false }),
+  }),
+  (() => {
+    const validateCat = () => {
+      console.info('Window focus event triggered...');
+      const { age } = useCatStore.get();
+      if (age > 5) useCatStore.set({ age: 1 });
+    };
+    return {
+      onFirstSubscribe: () => window.addEventListener('focus', validateCat),
+      onLastUnsubscribe: () => window.removeEventListener('focus', validateCat),
+    };
+  })(),
+);
+```

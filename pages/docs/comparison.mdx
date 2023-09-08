@@ -2,6 +2,8 @@ import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 
 # Comparison
 
+## Feature Comparison
+
 <Callout type="info">
   <div>Legend</div>
   <div>✅ : Supported</div>
@@ -71,3 +73,182 @@ import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 **Notes:**<br /><sup>[1]</sup> Do we need that feature? We can just set a state to `undefined`.
 
 </section>
+
+## DX Comparison
+
+<Tabs items={['Floppy Disk', 'Zustand']}>
+  <Tab>
+    ```tsx {4,24,25,29,36,37} showLineNumbers
+    import { createStore } from 'floppy-disk';
+
+    export const useMyStore = createStore(
+      ({ set, get }) => ({
+        count: 3,
+        shape: 'square',
+        increment: () => set((prev) => ({ count: prev.count + 1 })),
+        changeShape: () => {
+          const { shape } = get();
+          let nextShape;
+          if (shape === 'square') nextShape = 'circle';
+          else if (shape === 'circle') nextShape = 'triangle';
+          else nextShape = 'square';
+          set({ shape: nextShape });
+        },
+      })
+    );
+
+    function MyComponent() {
+      // Subscribe all changes
+      const { count, shape } = useMyStore();
+
+      // Subscribe to single slice
+      const { count } = useMyStore((state) => [state.count]);
+      const { shape } = useMyStore((state) => [state.shape]);
+
+      // Subscribe to multiple slices
+      const { count, shape } = useMyStore(
+        (state) => [state.count, state.shape]
+      );
+
+      return <>...</>;
+    }
+
+    // Get/set state outside component
+    const getShape = () => useMyStore.get().shape;
+    const increment = () => useMyStore.set((state) => ({ count: state.count + 1 }));
+    ```
+
+  </Tab>
+  <Tab>
+    ```tsx {4,24,25,29,30,37,38} showLineNumbers
+    import { create } from 'zustand';
+
+    export const useMyStore = create(
+      (set, get) => ({
+        count: 3,
+        shape: 'square',
+        increment: () => set((prev) => ({ count: prev.count + 1 })),
+        changeShape: () => {
+          const { shape } = get();
+          let nextShape;
+          if (shape === 'square') nextShape = 'circle';
+          else if (shape === 'circle') nextShape = 'triangle';
+          else nextShape = 'square';
+          set({ shape: nextShape });
+        },
+      })
+    );
+
+    function MyComponent() {
+      // Subscribe all changes
+      const { count, shape } = useMyStore();
+
+      // Subscribe to single slice
+      const count = useMyStore((state) => state.count);
+      const shape = useMyStore((state) => state.shape);
+
+      // Subscribe to multiple slices
+      const { count, shape } = useMyStore(
+        (state) => ({ count: state.count, shape: state.shape }),
+        shallow // import shallow from 'zustand/shallow'
+      );
+
+      return <>...</>;
+    }
+
+    // Get/set state outside component
+    const getShape = () => useMyStore.getState().shape;
+    const increment = () => useMyStore.setState((state) => ({ count: state.count + 1 }));
+    ```
+
+  </Tab>
+</Tabs>
+
+<Tabs items={['Floppy Disk', 'TanStack Query']}>
+  <Tab>
+    ```tsx {1,26} showLineNumbers
+    const usePokemonDetailQuery = createQuery(fetchPokemonById);
+
+    function PokemonDetailPage({ id }) {
+      const { isLoading, data, error } = usePokemonDetailQuery({ id });
+      if (error) return <div>Something went wrong</div>;
+      if (isLoading) return <div>Loading...</div>;
+      return (
+        <main>
+          <h1>{data.name}</h1>
+          <PokemonAttribute id={id} />
+        </main>
+      );
+    }
+
+    function PokemonAttribute({ id }) {
+      const { data } = usePokemonDetailQuery({ id });
+      return (
+        <section>
+          <div>Weight: {data.weight}</div>
+          <div>Height: {data.height}</div>
+        </section>
+      );
+    }
+
+    // Outside component
+    const prefetchPokemonById = ({ id }) => usePokemonDetailQuery.get({ id }).fetch();
+    ```
+
+  </Tab>
+  <Tab>
+    ```tsx {1,5,7,11-16,41-47} showLineNumbers
+    const queryClient = new QueryClient();
+
+    function App() {
+      return (
+        <QueryClientProvider client={queryClient}>
+          <Page />
+        </QueryClientProvider>
+      );
+    }
+
+    const usePokemonDetailQuery = ({ id }) => {
+      return useQuery(
+        ['pokemon', id],
+        () => fetchPokemonById({ id })
+      );
+    };
+
+    function PokemonDetailPage({ id }) {
+      const { isLoading, data, error } = usePokemonDetailQuery({ id });
+      if (error) return <div>Something went wrong</div>;
+      if (isLoading) return <div>Loading...</div>;
+      return (
+        <main>
+          <h1>{data.name}</h1>
+          <PokemonAttribute id={id} />
+        </main>
+      );
+    }
+
+    function PokemonAttribute({ id }) {
+      const { data } = usePokemonDetailQuery({ id });
+      return (
+        <section>
+          <div>Weight: {data.weight}</div>
+          <div>Height: {data.height}</div>
+        </section>
+      );
+    }
+
+    function SomeComponent() {
+      const queryClient = useQueryClient({ context });
+      const prefetchPokemonById = ({ id }) => {
+        queryClient.prefetchQuery({
+          queryKey: ['pokemon', id],
+          queryFn: () => fetchPokemonById({ id }),
+        });
+      };
+
+      //...
+    }
+    ```
+
+  </Tab>
+</Tabs>

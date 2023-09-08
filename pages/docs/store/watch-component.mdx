@@ -1,9 +1,43 @@
 # Watch Component
 
-<br /><br />
+Prevent re-render using `Watch`.
 
-🚧&nbsp; WIP &nbsp;🚧
+```jsx {26-31}
+const useCatStore = createStore(({ set }) => ({
+  age: 0,
+  isSleeping: false,
+  increaseAge: () => set((state) => ({ age: state.age + 1 })),
+  reset: () => set({ age: 0, isSleeping: false }),
+}));
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+function CatPage() {
+  const { age } = useCatStore((state) => [state.age]);
+  // If age changed, this component will re-render which will cause
+  // HeavyComponent1 & HeavyComponent2 to be re-rendered as well.
+  return (
+    <main>
+      <HeavyComponent1 />
+      <div>Cat's age: {age}</div>
+      <HeavyComponent2 />
+    </main>
+  );
+}
 
-<br /><br />
+// Optimized
+function CatPageOptimized() {
+  return (
+    <main>
+      <HeavyComponent1 />
+      <useCatStore.Watch
+        selectDeps={(state) => [state.age]}
+        render={({ age }) => {
+          return <div>Cat's age: {age}</div>;
+        }}
+      />
+      <HeavyComponent2 />
+    </main>
+  );
+}
+```
+
+> Example: [https://codesandbox.io/.../examples/react/watch-component](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/watch-component)
