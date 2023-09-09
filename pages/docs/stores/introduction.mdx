@@ -1,9 +1,83 @@
+import { Callout } from 'nextra/components';
+
 # Stores
 
-<br /><br />
+The concept is same as [store](/docs/store/introduction), but this can be used for multiple stores.
 
-🚧&nbsp; WIP &nbsp;🚧
+## Create a stores
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+```ts
+import { createStores } from 'floppy-disk';
 
-<br /><br />
+const useCatStores = createStores(
+  ({ set, get, key }) => ({
+    //         ^store key
+    age: 0,
+    isSleeping: false,
+    increaseAge: () => set((state) => ({ age: state.age + 1 })),
+    reset: () => set({ age: 0, isSleeping: false }),
+  })
+);
+```
+
+## Using a stores as hook
+
+We need to specify the store key (an object) as identifier.
+
+```tsx {17,23}
+function CatPage() {
+  const [catId, setCatId] = useState(1);
+
+  return (
+    <>
+      <div>Current cat id: {catId}</div>
+      <button onClick={() => setCatId((prev) => prev - 1)}>Prev cat</button>
+      <button onClick={() => setCatId((prev) => prev + 1)}>Next cat</button>
+
+      <Cat catId={catId} />
+      <Control catId={catId} />
+    </>
+  );
+}
+
+function Cat({ catId }) {
+  const { age } = useCatStores({ catId });
+  return <div>Cat's age: {age}</div>;
+}
+
+function Control({ catId }) {
+  const { increaseAge } = useCatStores(
+    { catId },
+    (state) => [state.increaseAge]
+  );
+  return <button onClick={increaseAge}>Increase cat's age</button>;
+}
+```
+
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../examples/react/stores](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/stores)
+</Callout>
+
+## Using store outside component
+
+Reading/writing state and reacting to changes outside of components.
+
+```ts {2,7,12}
+const alertCatAge = () => {
+  alert(useCatStore.get({ catId: 3 }).age);
+  //                      ^ get cat store with catId: 3
+};
+
+const toggleIsSleeping = () => {
+  useCatStore.set({ catId: 7 }, (state) => ({ isSleeping: !state.isSleeping }));
+  //                ^ get cat store with catId: 7
+};
+
+const unsub = useCatStore.subscribe(
+  { catId: 9 },
+  (state) => {
+    console.log('The value of age for catId 9 is changed!', state.age);
+  },
+  (state) => [state.age],
+);
+```

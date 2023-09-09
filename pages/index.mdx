@@ -233,7 +233,7 @@ import { createQuery, createMutation } from 'floppy-disk'; // 8.2 kB (gzipped: 2
         {
           select: (response, { data }) => [...(data || []), ...response.results],
           getNextPageParam: (lastPageResponse, i) => {
-            if (i > 5) return undefined; // Return undefined means you have reached the end of the pages
+            if (i > 5) return undefined; // Return undefined means we have reached the end of the pages
             return i * 10;
           },
         },
@@ -358,7 +358,7 @@ import { createQuery, createMutation } from 'floppy-disk'; // 8.2 kB (gzipped: 2
         {
           select: (response, { data }) => [...(data || []), ...response.results],
           getNextPageParam: (lastPageResponse, i) => {
-            if (i > 5) return undefined; // Return undefined means you have reached the end of the pages
+            if (i > 5) return undefined; // Return undefined means we have reached the end of the pages
             return i * 10;
           },
         },
@@ -450,7 +450,7 @@ import { createQuery, createMutation } from 'floppy-disk'; // 8.2 kB (gzipped: 2
   - Backend agnostic (support GraphQL & any async function)
   - TypeScript ready
   - SSR/SSG support
-  - Custom reactivity (you choose when to re-render)
+  - Custom reactivity (we choose when to re-render)
   - **Create query**
     - Dedupe multiple request
     - Auto-fetch on mount or manual (lazy query)

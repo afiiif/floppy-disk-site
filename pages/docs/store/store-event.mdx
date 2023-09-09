@@ -1,6 +1,12 @@
+import { Callout } from 'nextra/components';
+
 # Store Event
 
-```js
+We can trigger something when the store got a new subscriber or lost a subscriber.
+Here we called it a "store event".
+There were 4 event can be used, `onFirstSubscribe`, `onSubscribe`, `onUnsubscribe`, and `onLastUnsubscribe`.
+
+```ts
 const useCatStore = createStore(
   ({ set }) => ({
     age: 0,
@@ -25,12 +31,13 @@ const useCatStore = createStore(
 );
 ```
 
-> Example:
-> [https://codesandbox.io/.../examples/react/store-event](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/store-event)
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../examples/react/store-event](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/store-event)
+</Callout>
 
 Let's go wild using IIFE.
 
-```js
+```ts
 const useCatStore = createStore(
   ({ set }) => ({
     age: 0,
