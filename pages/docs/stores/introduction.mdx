@@ -4,7 +4,7 @@ import { Callout } from 'nextra/components';
 
 The concept is same as [store](/docs/store/introduction), but this can be used for multiple stores.
 
-## Create a stores
+## Create a Stores
 
 ```ts
 import { createStores } from 'floppy-disk';
@@ -20,7 +20,7 @@ const useCatStores = createStores(
 );
 ```
 
-## Using a stores as hook
+## Using a Stores as Hook
 
 We need to specify the store key (an object) as identifier.
 
@@ -58,7 +58,7 @@ function Control({ catId }) {
 Example: [https://codesandbox.io/.../examples/react/stores](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/stores)
 </Callout>
 
-## Using store outside component
+## Using Store Outside Component
 
 Reading/writing state and reacting to changes outside of components.
 
@@ -80,4 +80,38 @@ const unsub = useCatStore.subscribe(
   },
   (state) => [state.age],
 );
+```
+
+## Stores Methods
+
+Stores method is a way to do something with the store outside of a component like what we've learned before.
+
+```ts {8,11,14,17}
+import { createStore, createStores } from 'floppy-disk';
+
+type State = { age: number }
+const useCatStore  = createStore<State>(() => ({ age: 0 }));
+const useFoxStores = createStores<{ id: string }, State>(() => ({ age: 0 }));
+
+const getCatAge = () => useCatStore.get().age;
+const getFoxAge = ({ id }) => useFoxStore.get({ id }).age;
+
+const resetCatAge = () => useCatStore.set({ age: 0 });
+const resetFoxAge = ({ id }) => useFoxStore.set({ id }, { age: 0 });
+
+const subscribeCat = () => useCatStore.subscribe(console.log);
+const subscribeFox = ({ id }) => useFoxStore.subscribe({ id }, console.log);
+
+const getSubscribersOfCat = () => useCatStore.getSubscribers();
+const getSubscribersOfFox = ({ id }) => useFoxStore.getSubscribers({ id });
+```
+
+Stores-only (not available in `createStore`) methods:
+
+```ts
+useCatStores.getAll();
+// Returns array of store state
+
+useCatStores.getAllWithSubscriber();
+// Returns array of store state, but only for stores with subscribers
 ```

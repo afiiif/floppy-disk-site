@@ -2,7 +2,7 @@ import { Callout } from 'nextra/components';
 
 # Store
 
-## Create a store
+## Create a Store
 
 ```js
 import { createStore } from 'floppy-disk';
@@ -15,7 +15,7 @@ const useCatStore = createStore(({ set }) => ({
 }));
 ```
 
-## Use the hook anywhere
+## Use the Hook Anywhere
 
 No providers are needed.
 
@@ -35,7 +35,7 @@ function Control() {
 Example: [https://codesandbox.io/.../examples/react/basic](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/basic)
 </Callout>
 
-## Control the reactivity
+## Control the Reactivity
 
 The concept is same as `useEffect` dependency array.
 
@@ -70,7 +70,29 @@ function Cat() {
 Example: [https://codesandbox.io/.../examples/react/custom-reactivity](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/custom-reactivity)
 </Callout>
 
-## Using store outside component
+## Set Default Reactivity
+
+```jsx {9}
+const useCatStore = createStore(
+  ({ set }) => ({
+    age: 0,
+    isSleeping: false,
+    increaseAge: () => set((state) => ({ age: state.age + 1 })),
+    reset: () => set({ age: 0, isSleeping: false }),
+  }),
+  {
+    defaultDeps: (state) => [state.age],
+  },
+);
+
+function Cat() {
+  const { age } = useCatStore();
+  //                          ^will only re-render when age changed
+  return <div>Cat's age: {age}</div>;
+}
+```
+
+## Using Store Outside Component
 
 Reading/writing state and reacting to changes outside of components.
 
@@ -92,26 +114,6 @@ const unsub = useCatStore.subscribe(
   (state) => [state.age],
   // ^If not set, the action will be triggered on every state change
 );
-```
 
-## Set default reactivity
-
-```jsx {9}
-const useCatStore = createStore(
-  ({ set }) => ({
-    age: 0,
-    isSleeping: false,
-    increaseAge: () => set((state) => ({ age: state.age + 1 })),
-    reset: () => set({ age: 0, isSleeping: false }),
-  }),
-  {
-    defaultDeps: (state) => [state.age],
-  },
-);
-
-function Cat() {
-  const { age } = useCatStore();
-  //                          ^will only re-render when age changed
-  return <div>Cat's age: {age}</div>;
-}
+const getSubscribersOfCat = () => useCatStore.getSubscribers();
 ```
