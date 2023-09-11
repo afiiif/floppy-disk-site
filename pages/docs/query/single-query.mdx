@@ -1,9 +1,82 @@
+import { Callout } from 'nextra/components';
+
 # Single Query
 
-<br /><br />
+## Creating the Store/Hook
 
-🚧&nbsp; WIP &nbsp;🚧
+```jsx
+const useGitHubQuery = createQuery(async () => {
+  const res = await fetch('https://api.github.com/repos/afiiif/floppy-disk');
+  if (res.ok) return res.json();
+  throw res;
+});
+```
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+## Using Query Inside a Component
 
-<br /><br />
+```jsx
+function SingleQuery() {
+  const { isLoading, data } = useGitHubQuery();
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <h1>{data.name}</h1>
+      <p>{data.description}</p>
+      <strong>⭐️ {data.stargazers_count}</strong>
+      <strong>🍴 {data.forks_count}</strong>
+    </div>
+  );
+}
+```
+
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../examples/react/query](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/query)
+</Callout>
+
+## Options
+
+```jsx
+const useGitHubQuery = createQuery(
+  async () => {
+    const res = await fetch('https://api.github.com/repos/afiiif/floppy-disk');
+    if (res.ok) return res.json();
+    throw res;
+  },
+  {
+    fetchOnMount: false,
+    enabled: () => !!useUserQuery.get().data?.user,
+    select: (response) => response.name,
+    staleTime: Infinity, // Never stale
+    retry: 0, // No retry
+    onSuccess: (response) => {},
+    onError: (error) => {},
+    onSettled: () => {},
+
+    // ... same as createStores options
+  },
+);
+```
+
+## Actions
+
+Normally, we don't need reactivity for the actions.
+Therefore, using `get` method will be better, since it will not re-render the component when a query state changed.
+
+```jsx {2}
+function Actions() {
+  const { fetch, forceFetch, reset } = useGitHubQuery.get();
+
+  // Or like this:
+  // const { isLoading, data, error, fetch, forceFetch, reset } = useGitHubQuery();
+
+  return (
+    <>
+      <button onClick={fetch}>Call query if the query data is stale</button>
+      <button onClick={forceFetch}>Call query</button>
+      <button onClick={reset}>Reset query</button>
+    </>
+  );
+}
+```

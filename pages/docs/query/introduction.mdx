@@ -1,9 +1,78 @@
+import QueryStateFlow from './_components/QueryStateFlow';
+
 # Query
 
-<br /><br />
+With the power of `createStores` function, we can easily create a hook just like `useQuery` and `useInfiniteQuery` in [TanStack-Query](https://tanstack.com/query) using `createQuery` function.
 
-🚧&nbsp; WIP &nbsp;🚧
+It can dedupe multiple request, handle caching, auto-update stale data, handle retry on error, handle infinite query, and many more.
+With the flexibility given in `createStores`, we can extend its power according to our needs.
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+## Query State & Network Fetching State
 
-<br /><br />
+First of all, we need to understand the difference between these 2 types:
+
+- Query data state
+- Network fetching state
+
+The query data state represented as `status`, `isLoading`, `isSuccess`, `isError`.
+These values has **no relation** with network fetching state. ⚠️
+
+For network fetching state, we use `isWaiting`.
+The value will be `true` if the query is called and still waiting for the response.
+By default, if `isWaiting` value is changed, the subscribers or the component which use the hook will not be notified.
+We can change this behavior by setting up the `defaultDeps`, or set it on specific component (in the dependency array).
+
+Here is the flow of both states:
+
+<QueryStateFlow />
+
+## Response Vs Data
+
+```tsx
+const { isSuccess, data, response } = useMyQuery();
+```
+
+The `response` represents the untouched response returned from the async function.
+On the other hand, the `data` represents the customized selection of the response obtained using the `select` option.
+If we didn't define the `select` option, `data` will be equal to `response`.
+
+## Inherited from createStores
+
+The `createQuery` function inherits functionality from the `createStores` function, allowing us to perform the same result and actions available in `createStores`.
+
+```tsx
+const useMyQuery = createQuery(
+  myQueryFn,
+  {
+    // 👇 Same as createStores options
+    defaultDeps: undefined,
+    onFirstSubscribe: (state) => console.log('onFirstSubscribe', state),
+    onSubscribe: (state) => console.log('onSubscribe', state),
+    onUnsubscribe: (state) => console.log('onUnsubscribe', state),
+    onLastUnsubscribe: (state) => console.log('onLastUnsubscribe', state),
+    onBeforeChangeKey: (nextKey, prevKey) => console.log('Store key changed', nextKey, prevKey),
+
+    // ... other createQuery options (explained on next chapter)
+  },
+);
+```
+
+Custom reactivity (dependency array):
+
+```tsx
+function QueryLoader() {
+  // This component doesn't care whether the query is success or error.
+  // It just listening to network fetching state. 👇
+  const { isWaiting } = useMyQuery((state) => [state.isWaiting]);
+  return <div>Is network fetching? {String(isWaiting)}</div>;
+}
+```
+
+Actions outside component:
+
+```tsx
+useMyQuery.get( /* ... */ );
+useMyQuery.set( /* ... */ );
+useMyQuery.subscribe( /* ... */ );
+useMyQuery.getSubscribers( /* ... */ );
+```
