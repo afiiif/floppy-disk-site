@@ -115,3 +115,22 @@ useCatStores.getAll();
 useCatStores.getAllWithSubscriber();
 // Returns array of store state, but only for stores with subscribers
 ```
+
+## Store Key
+
+When using stores, the store key is a store identifier. It **should** be an object.
+The default hashing mechanism is by sorting the object keys and stringify it.
+And of course you can customize it using `hashKeyFn` option.
+
+```tsx
+useProductStores({ keyword: 'floppy' });
+// Hash: '{"id":"floppy"}'
+
+useProductStores({ keyword: 'floppy', sort: 'asc' });
+// Hash: '{"id":"floppy","sort":"asc"}'
+
+useProductStores({ sort: 'asc', keyword: 'floppy' });
+// Hash: '{"id":"floppy","sort":"asc"}'
+```
+
+If the hashed store key is same, it will use the same stored state.

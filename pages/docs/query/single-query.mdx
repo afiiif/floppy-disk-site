@@ -7,8 +7,9 @@ import { Callout } from 'nextra/components';
 ```jsx
 const useGitHubQuery = createQuery(async () => {
   const res = await fetch('https://api.github.com/repos/afiiif/floppy-disk');
-  if (res.ok) return res.json();
-  throw res;
+  const resJson = await res.json();
+  if (res.ok) return resJson;
+  throw resJson;
 });
 ```
 
@@ -41,8 +42,9 @@ Example: [https://codesandbox.io/.../examples/react/query](https://codesandbox.i
 const useGitHubQuery = createQuery(
   async () => {
     const res = await fetch('https://api.github.com/repos/afiiif/floppy-disk');
-    if (res.ok) return res.json();
-    throw res;
+    const resJson = await res.json();
+    if (res.ok) return resJson;
+    throw resJson;
   },
   {
     fetchOnMount: false,
@@ -59,6 +61,10 @@ const useGitHubQuery = createQuery(
 );
 ```
 
+<Callout emoji="💡">
+See full options on [/docs/api/create-query](/docs/api/create-query)
+</Callout>
+
 ## Actions
 
 Normally, we don't need reactivity for the actions.
@@ -68,7 +74,7 @@ Therefore, using `get` method will be better, since it will not re-render the co
 function Actions() {
   const { fetch, forceFetch, reset } = useGitHubQuery.get();
 
-  // Or like this:
+  // Or like this if you need reactivity:
   // const { isLoading, data, error, fetch, forceFetch, reset } = useGitHubQuery();
 
   return (

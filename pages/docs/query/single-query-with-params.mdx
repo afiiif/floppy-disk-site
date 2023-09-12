@@ -1,9 +1,63 @@
+import { Callout } from 'nextra/components';
+
 # Single Query with Params
 
-<br /><br />
+Sometimes we need to fetch data with some parameters. We want the parameters to be dynamic.
+Every parameters combination might resolve to a different response, and each of them should store a different state.
 
-🚧&nbsp; WIP &nbsp;🚧
+For example, we have a pokemon detail endpoint that accept a pokemon name.
+We need a query state for each pokemon name.
+There should be a possibility where the "charmander" pokemon query is still fetching,
+the "squirtle" pokemon query data has been fetched, and the "bulbasaur" pokemon query needs to be reset.
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+To achieve this, we use [store key](/docs/stores/introduction) like what we have learned before.
+The query function will receive the store key as its parameter.
 
-<br /><br />
+```jsx {2,12}
+const usePokemonQuery = createQuery(
+  async ({ pokemon }) => {
+    //     ^store key
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    if (res.ok) return res.json();
+    throw res;
+  }
+);
+
+function PokemonsPage() {
+  const [currentPokemon, setCurrentPokemon] = useState();
+  const { isSuccess, data } = usePokemonQuery({ pokemon: currentPokemon });
+  //                                            ^store key
+
+  return (
+    <main>
+      {isSuccess ? (
+        <section>
+          <h1>{data.name}</h1>
+          <div>Weight: {data.weight}</div>
+        </section>
+      ) : (
+        <div>Loading...</div>
+      )}
+
+      <PokemonList onSelectPokemon={setCurrentPokemon}>
+    </main>
+  );
+}
+```
+
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../examples/react/query-with-param](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/query-with-param)
+</Callout>
+
+Get data or do something outside component:
+
+```jsx
+const getDitto = () => {
+  console.log(usePokemonQuery.get({ pokemon: 'ditto' }).data);
+  //                                ^store key
+};
+
+const resetDitto = () => {
+  usePokemonQuery.get({ pokemon: 'ditto' }).reset();
+};
+```

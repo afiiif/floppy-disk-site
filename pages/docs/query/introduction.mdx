@@ -42,7 +42,7 @@ The `createQuery` function inherits functionality from the `createStores` functi
 
 ```tsx
 const useMyQuery = createQuery(
-  myQueryFn,
+  fetchMyData,
   {
     // 👇 Same as createStores options
     defaultDeps: undefined,
@@ -76,3 +76,27 @@ useMyQuery.set( /* ... */ );
 useMyQuery.subscribe( /* ... */ );
 useMyQuery.getSubscribers( /* ... */ );
 ```
+
+## Fresh & Stale Query Concept
+
+A query categorized as a fresh or stale depends on the comparison between the stale time config and the current time.
+For example, we use the default stale time, which is **3 seconds**.
+
+```tsx
+const useMyQuery = createQuery(fetchMyData);
+const { fetch, forceFetch } = useMyQuery.get();
+```
+
+<section className="[&>ul_ul]:mt-0 [&>ul>li]:my-5 [&>ul_ul>li]:list-[square]">
+- `07:00 AM` – fetch the data
+- `07:01 AM` – get the response
+  <div className="pt-2 text-sm">(Since stale time is 3 seconds, the query will be categorized as fresh until `07:04 AM`)</div>
+- `07:02 AM to 07:04 AM` 🟢 _fresh_
+  - By default, when a component which use the hook is mounted, the query function will not get invoked.
+  - By default, when a window focus event triggered, the query function will not get invoked.
+  - Calling `fetch()` won't affect anything.
+  - Calling `forceFetch()` will call the query function.
+- `07:05 AM onwards` 🟠 _stale_
+  - By default, when a component which use the hook is mounted, the query function will get invoked.
+  - By default, when a window focus event triggered, the query function will get invoked.
+</section>
