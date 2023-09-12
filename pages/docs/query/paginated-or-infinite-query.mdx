@@ -1,9 +1,82 @@
+import { Callout } from 'nextra/components';
+
+import JsOrTs from '@/pages/_components/JsOrTs';
+
 # Paginated or Infinite Query
 
-<br /><br />
+## Creating the Store/Hook
 
-🚧&nbsp; WIP &nbsp;🚧
+<JsOrTs className="pt-5 -mb-3 justify-end">
+<>
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+```jsx
+const usePokemonsQuery = createQuery(
+  async (_, { pageParam = 0 }) => {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${pageParam}`);
+    if (res.ok) return res.json();
+    throw res;
+  },
+  {
+    select: (response, { data }) => [...(data || []), ...response.results],
+    getNextPageParam: ({ pagination }) => (
+      pagination.totalPages > pagination.currentPage ? (pagination.currentPage + 1) : undefined;
+    ),
+    // Or if you use cursor:
+    // getNextPageParam: (lastPageResponse) => lastPageResponse.cursor,
+  },
+);
+```
 
-<br /><br />
+</>
+<>
+
+```tsx
+type PokemonsResponse = { results: Pokemon[]; success: boolean }
+type Pokemon = { id: number; name: string };
+
+const usePokemonsQuery = createQuery<undefined, PokemonsResponse, Pokemon[]>(
+  //                                 ^key       ^response         ^data (from select)
+  async (_, { pageParam = 0 }) => {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${pageParam}`);
+    if (res.ok) return res.json();
+    throw res;
+  },
+  {
+    select: (response, { data }) => [...(data || []), ...response.results],
+    getNextPageParam: ({ pagination }) => (
+      pagination.totalPages > pagination.currentPage ? (pagination.currentPage + 1) : undefined;
+    ),
+    // Or if you use cursor:
+    // getNextPageParam: (lastPageResponse) => lastPageResponse.cursor,
+  },
+);
+```
+
+</>
+</JsOrTs>
+
+## Using Query Hook Inside a Component
+
+```tsx
+function PokemonListPage() {
+  const { data, fetchNextPage, hasNextPage, isWaitingNextPage } = usePokemonsQuery();
+
+  return (
+    <div>
+      {data?.map((pokemon) => (
+        <div key={pokemon.name}>{pokemon.name}</div>
+      ))}
+
+      {isWaitingNextPage ? (
+        <div>Loading more...</div>
+      ) : (
+        hasNextPage && <button onClick={fetchNextPage}>Load more</button>
+      )}
+    </div>
+  );
+}
+```
+
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../examples/react/infinite-query](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/infinite-query)
+</Callout>

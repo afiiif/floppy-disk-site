@@ -1,11 +1,16 @@
+import { cn } from '@/utils/string';
 import { ReactNode, useState } from 'react';
 
-export default function JsOrTs({ children }: { children: ReactNode[] }) {
+type Props = {
+  children: ReactNode[];
+  className?: string;
+};
+export default function JsOrTs({ children, className = 'justify-center' }: Props) {
   const [isTS, setIsTS] = useState(true);
 
   return (
     <>
-      <div className="flex items-center justify-center gap-3">
+      <div className={cn('flex items-center gap-3', className)}>
         <label className="flex cursor-pointer gap-1">
           <input type="radio" checked={!isTS} onChange={() => setIsTS(false)} />
           <svg

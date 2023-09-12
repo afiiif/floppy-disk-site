@@ -1,5 +1,7 @@
 import { Callout } from 'nextra/components';
 
+import JsOrTs from '@/pages/_components/JsOrTs';
+
 # Single Query with Params
 
 Sometimes we need to fetch data with some parameters. We want the parameters to be dynamic.
@@ -12,6 +14,9 @@ the "squirtle" pokemon query data has been fetched, and the "bulbasaur" pokemon 
 
 To achieve this, we use [store key](/docs/stores/introduction) like what we have learned before.
 The query function will receive the store key as its parameter.
+
+<JsOrTs className="pt-5 -mb-3 justify-end">
+<>
 
 ```jsx {2,12}
 const usePokemonQuery = createQuery(
@@ -45,13 +50,52 @@ function PokemonsPage() {
 }
 ```
 
+</>
+<>
+
+```tsx {3,13}
+type Pokemon = { id: string; name: string; weight: number };
+const usePokemonQuery = createQuery<{ pokemon: string }, Pokemon>(
+  async ({ pokemon }) => {
+    //     ^store key
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    if (res.ok) return res.json();
+    throw res;
+  }
+);
+
+function PokemonsPage() {
+  const [currentPokemon, setCurrentPokemon] = useState();
+  const { isSuccess, data } = usePokemonQuery({ pokemon: currentPokemon });
+  //                                            ^store key
+
+  return (
+    <main>
+      {isSuccess ? (
+        <section>
+          <h1>{data.name}</h1>
+          <div>Weight: {data.weight}</div>
+        </section>
+      ) : (
+        <div>Loading...</div>
+      )}
+
+      <PokemonList onSelectPokemon={setCurrentPokemon}>
+    </main>
+  );
+}
+```
+
+</>
+</JsOrTs>
+
 <Callout type="info" emoji="ℹ️">
 Example: [https://codesandbox.io/.../examples/react/query-with-param](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/query-with-param)
 </Callout>
 
 Get data or do something outside component:
 
-```jsx
+```tsx
 const getDitto = () => {
   console.log(usePokemonQuery.get({ pokemon: 'ditto' }).data);
   //                                ^store key

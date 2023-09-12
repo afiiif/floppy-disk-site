@@ -1,9 +1,93 @@
+import { Callout } from 'nextra/components';
+
+import JsOrTs from '@/pages/_components/JsOrTs';
+
 # Mutation
 
-<br /><br />
+## Creating the Store/Hook
 
-🚧&nbsp; WIP &nbsp;🚧
+<JsOrTs className="pt-5 -mb-3 justify-end">
+<>
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+```jsx
+import { createMutation } from 'floppy-disk';
 
-<br /><br />
+const useLoginMutation = createMutation(
+  async (variables) => {
+    const res = await axios.post('/auth/login', {
+      email: variables.email,
+      password: variables.password,
+    });
+    return res.data;
+  },
+  {
+    onSuccess: (response, variables) => {
+      console.log(`Logged in as ${variables.email}`);
+      console.log(`Access token: ${response.data.accessToken}`);
+    },
+  },
+);
+```
+
+</>
+<>
+
+```tsx
+import { createMutation } from 'floppy-disk';
+
+type LoginVariable = {
+  email: string;
+  password: string;
+}
+type LoginResponse = {
+  success: boolean;
+  data: { accessToken: string };
+};
+
+const useLoginMutation = createMutation<LoginVariable, LoginResponse>(
+  async (variables) => {
+    const res = await axios.post('/auth/login', {
+      email: variables.email,
+      password: variables.password,
+    });
+    return res.data;
+  },
+  {
+    onSuccess: (response, variables) => {
+      console.log(`Logged in as ${variables.email}`);
+      console.log(`Access token: ${response.data.accessToken}`);
+    },
+  },
+);
+```
+
+</>
+</JsOrTs>
+
+## Using Mutation Hook Inside a Component
+
+```jsx
+function Login() {
+  const { mutate, isWaiting } = useLoginMutation();
+  const showToast = useToast();
+
+  return (
+    <button
+      disabled={isWaiting}
+      onClick={() => {
+        mutate({ email: 'foo@bar.baz', password: 's3cREt' })
+          .then(({ response, error }) => {
+            if (error) showToast('Login failed');
+            else showToast('Login success');
+          });
+      }}
+    >
+      Login
+    </button>
+  );
+}
+```
+
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../examples/react/mutation](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/mutation)
+</Callout>

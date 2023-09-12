@@ -1,21 +1,57 @@
 import { Callout } from 'nextra/components';
 
+import JsOrTs from '@/pages/_components/JsOrTs';
+
 # Single Query
 
 ## Creating the Store/Hook
 
-```jsx
-const useGitHubQuery = createQuery(async () => {
-  const res = await fetch('https://api.github.com/repos/afiiif/floppy-disk');
-  const resJson = await res.json();
-  if (res.ok) return resJson;
-  throw resJson;
-});
+<JsOrTs className="pt-5 -mb-3 justify-end">
+<>
+
+```tsx
+import { createQuery } from 'floppy-disk';
+
+const useGitHubQuery = createQuery(
+  async () => {
+    const res = await fetch('https://api.github.com/repos/afiiif/floppy-disk');
+    const resJson = await res.json();
+    if (res.ok) return resJson;
+    throw resJson;
+  }
+);
 ```
 
-## Using Query Inside a Component
+</>
+<>
 
-```jsx
+```tsx
+import { createQuery } from 'floppy-disk';
+
+type RepoDetailResponse = {
+  id: number;
+  name: string;
+  full_name: string;
+  description: string;
+  html_url: string;
+};
+const useGitHubQuery = createQuery<undefined, RepoDetailResponse>(
+  //                               ^store key
+  async () => {
+    const res = await fetch('https://api.github.com/repos/afiiif/floppy-disk');
+    const resJson = await res.json();
+    if (res.ok) return resJson;
+    throw resJson;
+  }
+);
+```
+
+</>
+</JsOrTs>
+
+## Using Query Hook Inside a Component
+
+```tsx
 function SingleQuery() {
   const { isLoading, data } = useGitHubQuery();
 
@@ -38,7 +74,7 @@ Example: [https://codesandbox.io/.../examples/react/query](https://codesandbox.i
 
 ## Options
 
-```jsx
+```tsx
 const useGitHubQuery = createQuery(
   async () => {
     const res = await fetch('https://api.github.com/repos/afiiif/floppy-disk');
@@ -70,7 +106,7 @@ See full options on [/docs/api/create-query](/docs/api/create-query)
 Normally, we don't need reactivity for the actions.
 Therefore, using `get` method will be better, since it will not re-render the component when a query state changed.
 
-```jsx {2}
+```tsx {2}
 function Actions() {
   const { fetch, forceFetch, reset } = useGitHubQuery.get();
 

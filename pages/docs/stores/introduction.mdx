@@ -1,10 +1,15 @@
 import { Callout } from 'nextra/components';
 
+import JsOrTs from '@/pages/_components/JsOrTs';
+
 # Stores
 
 The concept is same as [store](/docs/store/introduction), but this can be used for multiple stores.
 
 ## Create a Stores
+
+<JsOrTs className="pt-5 -mb-3 justify-end">
+<>
 
 ```ts
 import { createStores } from 'floppy-disk';
@@ -19,6 +24,29 @@ const useCatStores = createStores(
   })
 );
 ```
+
+</>
+<>
+
+```ts
+import { createStores } from 'floppy-disk';
+
+type CatStoreKey = { catId: number };
+type CatStore = { age: number; isSleeping: boolean; increaseAge: () => void; reset: () => void };
+
+const useCatStores = createStores<CatStoreKey, CatStore>(
+  ({ set, get, key }) => ({
+    //         ^store key
+    age: 0,
+    isSleeping: false,
+    increaseAge: () => set((state) => ({ age: state.age + 1 })),
+    reset: () => set({ age: 0, isSleeping: false }),
+  })
+);
+```
+
+</>
+</JsOrTs>
 
 ## Using a Stores as Hook
 

@@ -1,10 +1,15 @@
 import { Callout } from 'nextra/components';
 
+import JsOrTs from '@/pages/_components/JsOrTs';
+
 # Store
 
 ## Create a Store
 
-```js
+<JsOrTs className="pt-5 -mb-3 justify-end">
+<>
+
+```ts
 import { createStore } from 'floppy-disk';
 
 const useCatStore = createStore(({ set }) => ({
@@ -14,6 +19,29 @@ const useCatStore = createStore(({ set }) => ({
   reset: () => set({ age: 0, isSleeping: false }),
 }));
 ```
+
+</>
+<>
+
+```ts
+import { createStore } from 'floppy-disk';
+
+type CatStore = {
+  age: number;
+  isSleeping: boolean;
+  increaseAge: () => void;
+  reset: () => void;
+};
+const useCatStore = createStore<CatStore>(({ set }) => ({
+  age: 0,
+  isSleeping: false,
+  increaseAge: () => set((state) => ({ age: state.age + 1 })),
+  reset: () => set({ age: 0, isSleeping: false }),
+}));
+```
+
+</>
+</JsOrTs>
 
 ## Use the Hook Anywhere
 
