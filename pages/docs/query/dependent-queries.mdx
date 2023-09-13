@@ -1,9 +1,78 @@
 # Dependent Queries
 
-<br /><br />
+Dependent (or serial) queries refer to a situation in which the execution of one query
+is dependent on the result of another query or dependent on a certain condition.
 
-🚧&nbsp; WIP &nbsp;🚧
+Example, fetch pokemon detail data only if a pokemon selected:
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+```jsx {4}
+const usePokemonDetailQuery = createQuery(
+  getPokemonByName,
+  {
+    enabled: ({ pokemonName }) => !!pokemonName,
+    //          ^store key
+  }
+);
 
-<br /><br />
+function PokemonsPage() {
+  const [currentPokemon, setCurrentPokemon] = useState(); // Initially no pokemon is selected
+
+  const { isSuccess, data } = usePokemonQuery({ pokemonName: currentPokemon });
+  //                                            ^store key
+
+  return (
+    <main>
+      {isSuccess ? (
+        <section>
+          <h1>{data.name}</h1>
+          <div>Weight: {data.weight}</div>
+        </section>
+      ) : (
+        <div>Loading...</div>
+      )}
+
+      <PokemonList onSelectPokemon={setCurrentPokemon} />
+    </main>
+  );
+}
+```
+
+Another example, we build a nested dropdown menu:
+
+```jsx
+const useCountriesQuery = createQuery(getCountries);
+const useProvincesQuery = createQuery(getProvinces, { enabled: ({ countryId }) => !!countryId });
+const useCitiesQuery = createQuery(getCities, { enabled: ({ provinceId }) => !!provinceId });
+
+function AddressForm() {
+  const [country, setCountry] = useState();
+  const [province, setProvince] = useState();
+  const [city, setCity] = useState();
+
+  const queryCountries = useCountriesQuery();
+  const queryProvinces = useProvincesQuery({ countryId: country?.id });
+  const queryCities = useCitiesQuery({ provinceId: province?.id });
+
+  return (
+    <div>
+      <Dropdown
+        onChange={setCountry}
+        options={queryCountries.data}
+        isLoading={!queryCountries.isSuccess}
+      />
+      <Dropdown
+        onChange={setProvince}
+        options={queryProvinces.data}
+        isLoading={!queryProvinces.isSuccess}
+        disabled={!country}
+      />
+      <Dropdown
+        onChange={setCity}
+        options={queryCities.data}
+        isLoading={!queryCities.isSuccess}
+        disabled={!province}
+      />
+    </div>
+  )
+}
+```

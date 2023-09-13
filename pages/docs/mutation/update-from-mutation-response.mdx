@@ -1,0 +1,44 @@
+# Update From Mutation Response
+
+```jsx {4-11,26-33}
+const useProductDetailQuery = createQuery(getProductDetail);
+
+const useEditProductMutation = createMutation(editProduct, {
+  onSuccess: (response, variables) => {
+    // Here
+    useProductDetailQuery.set({
+      responseUpdatedAt: Date.now(),
+      response,
+      data: response,
+    });
+  },
+});
+
+function SaveProduct() {
+  const { mutate, isWaiting } = useEditProductMutation();
+  const { getValues } = useFormContext();
+
+  return (
+    <button
+      disabled={isWaiting}
+      onClick={() => {
+        const payload = getValues();
+        const productId = payload.id;
+
+        mutate(payload).then(({ response, error }) => {
+          if (response) {
+            // Or here
+            useProductDetailQuery.set({
+              responseUpdatedAt: Date.now(),
+              response,
+              data: response,
+            });
+          }
+        });
+      }}
+    >
+      Save
+    </button>
+  );
+}
+```

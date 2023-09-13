@@ -110,7 +110,7 @@ Therefore, using `get` method will be better, since it will not re-render the co
 function Actions() {
   const { fetch, forceFetch, reset } = useGitHubQuery.get();
 
-  // Or like this if you need reactivity:
+  // Or like this if we need reactivity:
   // const { isLoading, data, error, fetch, forceFetch, reset } = useGitHubQuery();
 
   return (

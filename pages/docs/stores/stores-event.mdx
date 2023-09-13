@@ -3,7 +3,7 @@
 Since the concept of stores is same as [store](/docs/store/introduction), it also have a store event handler.
 We can use `onFirstSubscribe`, `onSubscribe`, `onUnsubscribe`, `onLastUnsubscribe`, and additional `onBeforeChangeKey` event handler.
 
-```ts {10-12}
+```ts {10-15}
 const useCatStores = createStores(
   ({ set }) => ({
     age: 0,
@@ -15,6 +15,9 @@ const useCatStores = createStores(
     // New
     onBeforeChangeKey: (nextKey, prevKey) => {
       console.log('Store key changed', nextKey, prevKey);
+    },
+    onStoreInitialized: (key, keyHash) => {
+      console.log('Store with a specific key was initialized', key, keyHash);
     },
 
    // Same as createStore

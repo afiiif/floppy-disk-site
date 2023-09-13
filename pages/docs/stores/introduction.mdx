@@ -148,9 +148,26 @@ useCatStores.getAllWithSubscriber();
 
 When using stores, the store key is a store identifier. It **should** be an object.
 The default hashing mechanism is by sorting the object keys and stringify it.
-And of course you can customize it using `hashKeyFn` option.
+And of course we can customize it using `hashKeyFn` option.
 
-```tsx
+```tsx {14}
+import {
+  createStores,
+  hashStoreKey, // Default hash function
+} from 'floppy-disk';
+
+const useProductStores = createStores(
+  ({ get, set, key, keyHash }) => {
+    console.log(key, keyHash); // Check key (object) and keyHash (string)
+    return {
+      data: null,
+    };
+  },
+  {
+    hashKeyFn: myCustomHashFn, // Customize here
+  },
+);
+
 useProductStores({ keyword: 'floppy' });
 // Hash: '{"id":"floppy"}'
 

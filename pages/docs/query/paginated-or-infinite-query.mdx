@@ -21,7 +21,7 @@ const usePokemonsQuery = createQuery(
     getNextPageParam: ({ pagination }) => (
       pagination.totalPages > pagination.currentPage ? (pagination.currentPage + 1) : undefined;
     ),
-    // Or if you use cursor:
+    // Or if we use cursor:
     // getNextPageParam: (lastPageResponse) => lastPageResponse.cursor,
   },
 );
@@ -46,7 +46,7 @@ const usePokemonsQuery = createQuery<undefined, PokemonsResponse, Pokemon[]>(
     getNextPageParam: ({ pagination }) => (
       pagination.totalPages > pagination.currentPage ? (pagination.currentPage + 1) : undefined;
     ),
-    // Or if you use cursor:
+    // Or if we use cursor:
     // getNextPageParam: (lastPageResponse) => lastPageResponse.cursor,
   },
 );

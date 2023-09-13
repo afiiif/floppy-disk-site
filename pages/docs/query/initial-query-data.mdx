@@ -1,9 +1,43 @@
 # Initial Query Data (SSR/SSG)
 
-<br /><br />
+```jsx
+// Single query
+const usePopularProductQuery = createQuery(fetchPopularProduct);
+const useProductDetailQuery = createQuery(fetchProductDetail); // With dynamic param
 
-🚧&nbsp; WIP &nbsp;🚧
+// Infinite query
+const useNotificationsQuery = createQuery(
+  (_, { pageParam }) => fetchNotifications(pageParam),
+  { getNextPageParam: (lastPageResponse) => lastPageResponse.cursor },
+);
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+export async function getServerSideProps() {
+const popularProduct = await fetchPopularProduct();
+const productDetail = await fetchProductDetail({ id: 3 });
+const notifications = await fetchNotifications();
+  return {
+    props: {
+      popularProduct,
+      productDetail,
+      notifications,
+    }
+  }
+}
 
-<br /><br />
+export default function Page({ popularProduct, productDetail, notifications }) {
+  // Must be placed on the top or before any component subscribe to the query.
+  // These setInitialResponse method will only run once.
+
+  usePopularProductQuery
+    .setInitialResponse({ response: popularProduct });
+
+  useProductDetailQuery
+    .setInitialResponse({ response: productDetail, key: { id: 3 } });
+
+  useNotificationsQuery
+    .setInitialResponse({ response: notifications, skipRevalidation: true });
+    //                                             ^if we don't want to revalidate on client-side
+
+  return <main> ... </main>
+}
+```
