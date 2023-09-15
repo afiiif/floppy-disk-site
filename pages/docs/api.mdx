@@ -1,0 +1,179 @@
+# API
+
+## createStore
+
+```ts
+const useStore = createStore<T>(initializer, {
+  defaultDeps,
+  intercept,
+  onFirstSubscribe,
+  onSubscribe,
+  onUnsubscribe,
+  onLastUnsubscribe,
+});
+
+// Inside component or custom hook
+const state = useStore(selectDeps);
+```
+
+**Parameters**
+
+- `initializer` A function that returns an initial state
+- `options?` (_optional_)
+  - `defaultDeps` Set default reactivity
+  - `intercept` Intercept set state
+  - `onFirstSubscribe` Handle first subscribe event
+  - `onSubscribe` Handle subscribe event
+  - `onUnsubscribe` Handle unsubscribe event
+  - `onLastUnsubscribe` Handle last unsubscribe event
+
+**Return Value**
+
+- `useStore()`
+  - **Parameters** (_optional_)
+    - `selectDeps` Customize when to re-render
+  - **Return Value**
+    - `state`
+- **Methods**
+  - `useStore.get`
+  - `useStore.set`
+  - `useStore.subscribe`
+  - `useStore.getSubscribers`
+  - `useStore.setDefaultValues`
+  - `useStore.Watch`
+
+## createStores
+
+```ts
+const useStores = createStores<TKey, T>(initializer, {
+  ...options, // Same as createStore options
+  hashKeyFn,
+  onBeforeChangeKey,
+  onStoreInitialized,
+});
+
+// Inside component or custom hook
+const state = useStores(storeKey, selectDeps);
+const state = useStores(selectDeps);
+```
+
+**Parameters**
+
+- `initializer` A function that returns an initial single store state
+- `options?` (_optional_)
+  - `hashKeyFn` Custom function to transform the store key (object) into a key hash (string)
+  - `onBeforeChangeKey` Handle change key passed to the hook
+  - `onStoreInitialized` Handle single store state initialized event
+
+**Return Value**
+
+- `useStores()`
+  - **Parameters** (_optional_)
+    - `storeKey` Choose which store state will be used
+    - `selectDeps` Customize when to re-render
+  - **Return Value**
+    - `state`
+- **Methods**
+  - `useStore.get`
+  - `useStore.getAll`
+  - `useStore.getAllWithSubscriber`
+  - `useStore.set`
+  - `useStore.setAll`
+  - `useStore.subscribe`
+  - `useStore.getSubscribers`
+  - `useStore.getStore`
+  - `useStore.getStores`
+  - `useStore.setDefaultValues`
+  - `useStore.Watch`
+
+## createQuery
+
+```ts
+const useQuery = createQuery<TKey, TResponse, TData, TError>(queryFn, {
+  ...options, // Same as createStores options
+  select,
+  staleTime,
+  fetchOnMount,
+  fetchOnWindowFocus,
+  enabled,
+  retry,
+  retryDelay,
+  keepPreviousData,
+  getNextPageParam,
+  onSuccess,
+  onError,
+  onSettled,
+});
+
+// Inside component or custom hook
+const state = useQuery(storeKey, selectDeps);
+const state = useQuery(selectDeps);
+```
+
+**Parameters**
+
+- `queryFn`
+- `options?` (_optional_)
+  - `select` Transform or select a portion of the raw response
+  - `staleTime` Determine how long a response is categorized as fresh
+  - `fetchOnMount` Should we fetch/refetch when the component mounted?
+  - `fetchOnWindowFocus` Should we fetch/refetch when a window focus event triggered?
+  - `enabled` Should we fetch/refetch for any reason?
+  - `retry` Maximum error retry count
+  - `retryDelay` Error retry delay in milliseconds
+  - `keepPreviousData` Return the previous key's data until the current key's fetching finished
+  - `getNextPageParam` Determine the value that should be used when getting next page
+  - `onSuccess` Handle success event (promise resolved)
+  - `onError` Handle error event (promise rejected)
+  - `onSettled` Handle success or error event
+
+**Return Value**
+
+- `useQuery()`
+  - **Parameters** (_optional_)
+    - `storeKey` Choose which query store state will be used
+    - `selectDeps` Customize when to re-render
+  - **Return Value**
+    - `state`
+- **Methods**
+  - Same as `useStores`'s
+  - `useQuery.setInitialResponse`
+  - `useQuery.reset`
+  - `useQuery.resetSpecificKey`
+  - `useQuery.invalidate`
+  - `useQuery.invalidateSpecificKey`
+  - `useQuery.optimisticUpdate`
+
+## createMutation
+
+```ts
+const useMutation = createMutation<T>(initializer, {
+  ...options, // Same as createStore options
+  onMutate,
+  onSuccess,
+  onError,
+  onSettled,
+});
+
+// Inside component or custom hook
+const state = useMutation(selectDeps);
+```
+
+**Parameters**
+
+- `initializer`
+- `options?` (_optional_)
+  - `onMutate` Handle mutate event (right after the mutation function fired)
+  - `onSuccess` Handle success event (promise resolved)
+  - `onError` Handle error event (promise rejected)
+  - `onSettled` Handle success or error event
+
+**Return Value**
+
+- `useMutation()`
+  - **Parameters** (_optional_)
+    - `selectDeps` Customize when to re-render
+  - **Return Value**
+    - `state`
+- **Methods**
+  - Same as `useStore`'s

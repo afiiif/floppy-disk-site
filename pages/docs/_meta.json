@@ -8,8 +8,12 @@
   "typescript": "TypeScript",
   "graphql": "GraphQL",
   "react-native": "React Native",
+  "--separator1--": {
+    "type": "separator",
+    "title": ""
+  },
   "api": "API",
-  "-- More": {
+  "--separator2--": {
     "type": "separator",
     "title": ""
   },

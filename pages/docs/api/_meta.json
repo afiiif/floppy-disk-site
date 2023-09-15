@@ -1,6 +1,0 @@
-{
-  "create-store": "createStore",
-  "create-stores": "createStores",
-  "create-query": "createQuery",
-  "create-mutation": "createMutation"
-}
