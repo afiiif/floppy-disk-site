@@ -92,7 +92,7 @@ const useMyQuery = createQuery(fetchMyData);
 const { fetch, forceFetch } = useMyQuery.get();
 ```
 
-<section className="[&>ul_ul]:mt-0 [&>ul>li]:my-5 [&>ul_ul>li]:list-[square]">
+<section className="[&>ul>li]:my-5 [&>ul_ul>li]:list-[square]">
 - `07:00 AM` – fetch the data
 - `07:01 AM` – get the response
   <div className="pt-2 text-sm">(Since stale time is 3 seconds, the query will be categorized as fresh until `07:04 AM`)</div>
