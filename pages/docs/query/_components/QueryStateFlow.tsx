@@ -91,6 +91,10 @@ export default function QueryStateFlow() {
                 isError: <span className="text-green-500">true</span>
               </li>
               <li className="mt-2 border-t border-dashed pt-1.5">isWaiting: false</li>
+              <li className="mt-2 border-t border-dashed pt-1.5">
+                isGoingToRetry: <span className="text-blue-600">bool</span>
+                <div className="pt-1 text-xs italic">(depends on option 👆)</div>
+              </li>
             </ul>
           </div>
           <div className="card waiting-state">

@@ -1,9 +1,49 @@
 # Window Focus Refetching
 
-<br /><br />
+```jsx {2}
+const useProductsQuery = createQuery(getProducts, {
+  fetchOnWindowFocus: false, // To disable window focus (re)fetch
+});
+```
 
-🚧&nbsp; WIP &nbsp;🚧
+## React Native
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+In React Native, there is no such "window" focus event.
+Threfore, we need to disable the `fetchOnWindowFocus`.
+To trigger refetch when a screen is focused, we can use `useFocusEffect` hook.
 
-<br /><br />
+```jsx
+import { useFocusEffect } from '@react-navigation/native';
+
+const useProductsQuery = createQuery(getProducts, {
+  fetchOnWindowFocus: false,
+});
+const refetchProductQuery = useProductsQuery.get().fetch;
+
+function Profile({ userId }) {
+  useFocusEffect(
+    refetchProductQuery
+  );
+
+  ...
+}
+```
+
+## Set Globally
+
+If we want to modify the default `fetchOnWindowFocus` option, we can just create our own `createQuery` function like this:
+
+```jsx
+import { createQuery as createQueryOriginal } from 'floppy-disk';
+
+export const createQuery = (queryFn, options = {}) => {
+  const {
+    fetchOnWindowFocus = false,
+  } = options;
+
+  return createQueryOriginal(queryFn, {
+    ...options,
+    fetchOnWindowFocus,
+  });
+};
+```

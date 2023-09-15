@@ -1,9 +1,39 @@
-# Prefetching
+# Prefetching or Preloading
 
-<br /><br />
+```jsx {8, 29}
+import { useState } from 'react';
+import { createQuery } from 'floppy-disk';
+import { getProfile } from './queries';
 
-🚧&nbsp; WIP &nbsp;🚧
+const useProfileQuery = createQuery(getProfile);
+const useNotificationQuery = createQuery(getNotifications);
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+useProfileQuery.get().fetch();
 
-<br /><br />
+function Profile() {
+  const { data } = useProfileQuery();
+  ...
+}
+
+function Notifications() {
+  const { data } = useNotificationsQuery();
+  ...
+}
+
+export default function App() {
+  const [show, setShow] = useState(false)
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Show Profile</button>
+      {show ? <Profile /> : null}
+
+      <Link
+        href="/notifications"
+        onMouseEnter={() => useNotificationQuery.get().fetch()}
+      >
+        Notifications Page
+      </Link>
+    </div>
+  )
+}
+```

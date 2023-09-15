@@ -1,9 +1,29 @@
 # Custom Logger
 
-<br /><br />
+```jsx
+import * as Sentry from '@sentry/react';
+import { createQuery } from 'floppy-disk';
 
-🚧&nbsp; WIP &nbsp;🚧
+const usePokemonsQuery = createQuery(getPokemons, {
+  onError: (error) => {
+    Sentry.captureException(error);
+  },
+});
+```
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+## Set Globally
 
-<br /><br />
+```jsx {8}
+import * as Sentry from '@sentry/react';
+import { createQuery as createQueryOriginal } from 'floppy-disk';
+
+export const createQuery = (queryFn, options = {}) => {
+  return createQueryOriginal(queryFn, {
+    ...options,
+    onError: (error, state) => {
+      Sentry.captureException(error);
+      options.onError?.(error, state);
+    },
+  });
+};
+```

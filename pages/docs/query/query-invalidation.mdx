@@ -1,9 +1,29 @@
 # Query Invalidation
 
-<br /><br />
+```jsx {16-17}
+const useEditProductMutation = createMutation(editProduct);
 
-🚧&nbsp; WIP &nbsp;🚧
+function SaveProduct() {
+  const { mutate, isWaiting } = useEditProductMutation();
+  const { getValues } = useFormContext();
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+  return (
+    <button
+      disabled={isWaiting}
+      onClick={() => {
+        const payload = getValues();
+        const productId = payload.id;
 
-<br /><br />
+        mutate(payload).then(({ response, error }) => {
+          if (response) {
+            useProductListInfiniteQuery.invalidate();
+            useProductDetailQuery.invalidateSpecificKey({ id: productId });
+          }
+        });
+      }}
+    >
+      Save
+    </button>
+  );
+}
+```

@@ -1,9 +1,37 @@
 # Disabling Query
 
-<br /><br />
+Disabled query is a bit different from lazy query.
+Disabled query's async function will never be triggered even if we accidentally call the `fetch` function
+(like what we've learned in [lazy query](/docs/query/lazy-query)).
+We can easily protect a query from being called by utilizing `enabled` option.
 
-🚧&nbsp; WIP &nbsp;🚧
+```jsx {4-8}
+const useProfileQuery = createQuery(getProfile);
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+const usePremiumContentsQuery = createQuery(getPremiumContents, {
+  enabled: () => {
+    const { isSuccess, data } = useProfileQuery.get();
+    if (isSuccess && data.isPremiumMember) return true;
+    return false;
+  },
+});
 
-<br /><br />
+function Component() {
+  const { data } = useProfileQuery();
+  const { fetch } = usePremiumContentsQuery();
+
+  useEffect(() => {
+    if (data) {
+      fetch(); // Will not call getPremiumContents if user is not a premium member
+    }
+  }, [data])
+
+  return (
+    <div>
+      <button onClick={fetch}>
+        Fetch premium contents if query is enabled
+      </button>
+    </div>
+  )
+}
+```

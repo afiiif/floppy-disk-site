@@ -1,9 +1,47 @@
 # Error Retries
 
-<br /><br />
+When a query fails (the async function throws an error), an automatic retry will be triggered.
+By default, there will be only 1 time retry with the 2 seconds delay after error occured.
+We can customize this by setting the `retry` & `retryDelay` options on `createQuery` function.
 
-🚧&nbsp; WIP &nbsp;🚧
+```jsx
+const useProfileQuery = createQuery(
+  fetchProfile,
+  {
+    // retry: 0 (or false) – no retry
+    // retry: 3            – maximum retry: 3 times
+    retry: (error, prevState) => {
+      const isClientError = /^4..$/.test(error.status);
+      if (isClientError) return 0;
+      if (prevState.isSuccess) return 1; // Only retry 1 times if already success (just a refetch error)
+      return 3;
+    },
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+    // retryDelay: 5000 – delay for 5 seconds
+    retryDelay: (error, prevState) => {
+      return (prevState.retryCount + 1) * 1000; // Delay: 1s, 2s, 3s, etc.
+    }
+  }
+)
+```
 
-<br /><br />
+## Set Globally
+
+If we want to modify the default `retry` or `retryDelay` option, we can just create our own `createQuery` function like this:
+
+```jsx
+import { createQuery as createQueryOriginal } from 'floppy-disk';
+
+export const createQuery = (queryFn, options = {}) => {
+  const {
+    retry = 2,
+    retryDelay = 1000,
+  } = options;
+
+  return createQueryOriginal(queryFn, {
+    ...options,
+    retry,
+    retryDelay,
+  });
+};
+```

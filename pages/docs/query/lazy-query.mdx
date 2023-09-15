@@ -1,9 +1,46 @@
+import { Callout } from 'nextra/components';
+
 # Lazy Query
 
-<br /><br />
+Lazy query or manual query means the query function will not be called automatically.
+By default, there are 2 things that trigger calling query automatically:
 
-🚧&nbsp; WIP &nbsp;🚧
+- A component mounted
+- Window focus event
 
-Alternative docs: https://github.com/afiiif/floppy-disk#readme
+If we want to create a lazy query, we just need to set `fetchOnMount` to `false`.
+Because by doing that, the default value of `fetchOnWindowFocus` will be `false` too.
 
-<br /><br />
+<Callout emoji="💡">
+`fetchOnMount` and `fetchOnWindowFocus` can be set to different values.
+However, if `fetchOnWindowFocus` is **not explicitly set**, it will mimic the value of `fetchOnMount`.
+</Callout>
+
+```jsx {3,8}
+const useCatsQuery = createQuery(
+  () => getCats(),
+  { fetchOnMount: false },
+);
+
+const useFoxQuery = createQuery(
+  ({ id }) => getFoxById({ id }),
+  { fetchOnMount: false },
+);
+
+function Component() {
+  const { fetch: fetchCats } = useCatsQuery();
+  const { fetch: fetchFox } = useFoxQuery({ id: 3 });
+  return (
+    <div>
+      <button onClick={fetchCats}>Fetch Cats</button>
+      <button onClick={fetchFox}>Fetch Fox</button>
+    </div>
+  )
+}
+
+const triggerOutsideComponent = () => {
+  useCatsQuery.get().fetch();
+  useFoxQuery.get({ id: 3 }).fetch();
+  useFoxQuery.get({ id: 4 }).fetch();
+}
+```
