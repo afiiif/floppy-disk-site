@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components';
+
 import QueryStateFlow from './_components/QueryStateFlow';
 
 # Query
@@ -19,12 +21,15 @@ These values has **no relation** with network fetching state. ⚠️
 
 For network fetching state, we use `isWaiting`.
 The value will be `true` if the query is called and still waiting for the response.
-By default, if `isWaiting` value is changed, the subscribers or the component which use the hook will not be notified.
-We can change this behavior by setting up the `defaultDeps`, or set it on specific component (in the dependency array).
-
 Here is the flow of both states:
 
 <QueryStateFlow />
+
+<Callout emoji="💡">
+**IMPORTANT NOTE:**<br/>
+By default, when `isWaiting` value is changed, the subscribers or the component which use the hook **will not be notified**.
+We can change this behavior by setting up the `defaultDeps`, or set it on specific component (in the dependency array).
+</Callout>
 
 ## Response Vs Data
 

@@ -1,15 +1,9 @@
 import JsOrTs from '@/pages/_components/JsOrTs';
 
-# Window Focus Refetching
+# React Native
 
-```jsx {2}
-const useProductsQuery = createQuery(getProducts, {
-  fetchOnWindowFocus: false, // To disable window focus (re)fetch
-});
-```
-
-## React Native
-
+We can use Floppy Disk in React Native too.
+Currently, the only thing needs to be handled is the focus refetching mechanism.
 In React Native, there is no such "window" focus event.
 Threfore, we need to disable the `fetchOnWindowFocus`.
 To trigger refetch when a screen is focused, we can use `useFocusEffect` hook.

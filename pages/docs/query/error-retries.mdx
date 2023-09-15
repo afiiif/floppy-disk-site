@@ -1,3 +1,5 @@
+import JsOrTs from '@/pages/_components/JsOrTs';
+
 # Error Retries
 
 When a query fails (the async function throws an error), an automatic retry will be triggered.
@@ -29,6 +31,9 @@ const useProfileQuery = createQuery(
 
 If we want to modify the default `retry` or `retryDelay` option, we can just create our own `createQuery` function like this:
 
+<JsOrTs className="pt-5 -mb-3 justify-end">
+<>
+
 ```jsx
 import { createQuery as createQueryOriginal } from 'floppy-disk';
 
@@ -45,3 +50,39 @@ export const createQuery = (queryFn, options = {}) => {
   });
 };
 ```
+
+</>
+<>
+
+```tsx
+import {
+  CreateQueryOptions,
+  QueryState,
+  StoreKey,
+  createQuery as createQueryOriginal,
+} from 'floppy-disk';
+
+export const createQuery = <
+  TKey extends StoreKey = StoreKey,
+  TResponse = any,
+  TData = TResponse,
+  TError = unknown,
+>(
+  queryFn: (key: TKey, state: QueryState<TKey, TResponse, TData, TError>) => Promise<TResponse>,
+  options: CreateQueryOptions<TKey, TResponse, TData, TError> = {},
+) => {
+  const {
+    retry = 2,
+    retryDelay = 1000,
+  } = options;
+
+  return createQueryOriginal(queryFn, {
+    ...options,
+    retry,
+    retryDelay,
+  });
+};
+```
+
+</>
+</JsOrTs>

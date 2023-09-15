@@ -1,7 +1,31 @@
 # TypeScript
 
-<br /><br />
+Yes, this library contains built-in TypeScript declaration.
 
-🚧&nbsp; WIP &nbsp;🚧
+Yes, it also uses a [discriminated union type](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) for the query result.
 
-<br /><br />
+```tsx
+const useFloppyDiskQuery = createQuery(
+  () => Promise.resolve({ isAwesome: true })
+);
+
+function Component() {
+  const { data, isLoading, isSuccess, isError } = useFloppyDiskQuery();
+  //      ^? const data: { isAwesome: boolean } | null
+
+  if (isLoading) {
+    console.log(data);
+    //          ^? const data: null
+  }
+
+  if (isSuccess) {
+    console.log(data);
+    //          ^? const data: { isAwesome: boolean }
+  }
+
+  if (isError) {
+    console.log(data);
+    //          ^? const data: null
+  }
+}
+```
