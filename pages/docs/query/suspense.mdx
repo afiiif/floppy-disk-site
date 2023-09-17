@@ -1,0 +1,56 @@
+import { Callout } from 'nextra/components';
+
+# Suspense
+
+Floppy Disk can also be used with React's `Suspense` for Data Fetching API's.
+This can be done easily by replacing the hook invocation to hook's `suspend` method.
+
+```diff
+- const { data } = useProfileQuery();
++ const { data } = useProfileQuery.suspend();
+
+- const { data } = useProductQuery({ id: 12 });
++ const { data } = useProductQuery.suspend({ id: 12 });
+```
+
+```tsx {18-19}
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { createQuery } from 'floppy-disk';
+
+import { fetchProfile } from '../api';
+
+type Key = undefined;
+type ProfileResponse = { id: string; name: string; email: string };
+const useProfileQuery = createQuery<Key, ProfileResponse>(fetchProfile);
+
+function Profile() {
+  const { data } = useProfileQuery();
+  //      ^? ProfileResponse | null
+  return <div>Hello, {data.name}</div>;
+}
+
+function ProfileSuspenseMode() {
+  const { data } = useProfileQuery.suspend();
+  //      ^? ProfileResponse
+  return <div>Hello, {data.name}</div>;
+}
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<h2>Could not fetch profile.</h2>}>
+      <Suspense fallback={<h2>Loading profile...</h2>}>
+        <ProfileSuspenseMode />
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+```
+
+Floppy Disk only throw "hard" error to the nearest ErrorBoundary only when we have no data yet.
+If a **refetch** fails, it won't throw error.
+
+<Callout emoji="⚠️" type="warning">
+React still **doesn't recommend** using `Suspense` in data frameworks
+([More information](https://reactjs.org/blog/2022/03/29/react-v18.html#suspense-in-data-frameworks)).
+</Callout>

@@ -39,7 +39,7 @@ import { create } from 'zustand'; // 3.3 kB (gzipped: 1.5 kB)
 import { createStore } from 'floppy-disk'; // 1.3 kB (gzipped: 702 B) 🎉
 
 import { QueryClient, QueryClientProvider, useQuery, useInfiniteQuery, useMutation } from '@tanstack/react-query'; // 41 kB (gzipped: 11 kB)
-import { createQuery, createMutation } from 'floppy-disk'; // 8.4 kB (gzipped: 2.8 kB) 🎉
+import { createQuery, createMutation } from 'floppy-disk'; // 8.8 kB (gzipped: 3 kB) 🎉
 ```
 
 <Callout type="info" emoji="🍽">
@@ -463,6 +463,7 @@ import { createQuery, createMutation } from 'floppy-disk'; // 8.4 kB (gzipped: 2
     - Query with param (query key)
     - Paginated/infinite query
     - Prefetch query
+    - Suspense mode
     - Fetch from inside/outside component
     - Get query state inside/outside component
   - **Create mutation**

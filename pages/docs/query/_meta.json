@@ -12,5 +12,6 @@
   "query-invalidation": "Query Invalidation",
   "optimistic-update": "Optimistic Update",
   "window-focus-refetching": "Window Focus Refetching",
+  "suspense": "Suspense",
   "custom-logger": "Custom Logger"
 }

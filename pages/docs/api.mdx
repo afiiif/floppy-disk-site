@@ -18,6 +18,8 @@ const state = useStore(selectDeps);
 
 **Parameters**
 
+<div className="[&_ul]:text-sm">
+
 - `initializer` A function that returns an initial state
 - `options?` (_optional_)
   - `defaultDeps` Set default reactivity
@@ -27,7 +29,11 @@ const state = useStore(selectDeps);
   - `onUnsubscribe` Handle unsubscribe event
   - `onLastUnsubscribe` Handle last unsubscribe event
 
+</div>
+
 **Return Value**
+
+<div className="[&_ul_ul]:text-sm">
 
 - `useStore()`
   - **Parameters** (_optional_)
@@ -35,12 +41,14 @@ const state = useStore(selectDeps);
   - **Return Value**
     - `state`
 - **Methods**
-  - `useStore.get`
-  - `useStore.set`
-  - `useStore.subscribe`
-  - `useStore.getSubscribers`
-  - `useStore.setDefaultValues`
-  - `useStore.Watch`
+  - `useStore.get` Get state
+  - `useStore.set` Set state
+  - `useStore.subscribe` Subscribe the store state
+  - `useStore.getSubscribers` Get store subscribers
+  - `useStore.setDefaultValues` Set default/initial values from inside a component (must be called inside component before it gets any subscribers)
+  - `useStore.Watch` A helper component that will watch the state changes ([learn more](/docs/store/watch-component))
+
+</div>
 
 ## createStores
 
@@ -59,13 +67,19 @@ const state = useStores(selectDeps);
 
 **Parameters**
 
+<div className="[&_ul]:text-sm">
+
 - `initializer` A function that returns an initial single store state
 - `options?` (_optional_)
   - `hashKeyFn` Custom function to transform the store key (object) into a key hash (string)
   - `onBeforeChangeKey` Handle change key passed to the hook
   - `onStoreInitialized` Handle single store state initialized event
 
+</div>
+
 **Return Value**
+
+<div className="[&_ul_ul]:text-sm">
 
 - `useStores()`
   - **Parameters** (_optional_)
@@ -74,17 +88,19 @@ const state = useStores(selectDeps);
   - **Return Value**
     - `state`
 - **Methods**
-  - `useStore.get`
-  - `useStore.getAll`
-  - `useStore.getAllWithSubscriber`
-  - `useStore.set`
-  - `useStore.setAll`
-  - `useStore.subscribe`
-  - `useStore.getSubscribers`
-  - `useStore.getStore`
-  - `useStore.getStores`
-  - `useStore.setDefaultValues`
-  - `useStore.Watch`
+  - `useStore.get` Get state of specific store (specific store key)
+  - `useStore.getAll` Get all stores state
+  - `useStore.getAllWithSubscriber` Get all stores state that has subscriber
+  - `useStore.set` Set state of specific store (specific store key)
+  - `useStore.setAll` Set all stores state
+  - `useStore.subscribe` Subscribe to a store state
+  - `useStore.getSubscribers` Get subscribers of a store state
+  - `useStore.getStore` Get a store
+  - `useStore.getStores` Get all stores
+  - `useStore.setDefaultValues` Set default/initial values from inside a component (must be called inside component before it gets any subscribers)
+  - `useStore.Watch` A helper component that will watch the state changes ([learn more](/docs/store/watch-component))
+
+</div>
 
 ## createQuery
 
@@ -112,6 +128,8 @@ const state = useQuery(selectDeps);
 
 **Parameters**
 
+<div className="[&_ul]:text-sm">
+
 - `queryFn`
 - `options?` (_optional_)
   - `select` Transform or select a portion of the raw response
@@ -127,7 +145,11 @@ const state = useQuery(selectDeps);
   - `onError` Handle error event (promise rejected)
   - `onSettled` Handle success or error event
 
+</div>
+
 **Return Value**
+
+<div className="[&_ul_ul]:text-sm">
 
 - `useQuery()`
   - **Parameters** (_optional_)
@@ -137,12 +159,16 @@ const state = useQuery(selectDeps);
     - `state`
 - **Methods**
   - Same as `useStores`'s
-  - `useQuery.setInitialResponse`
-  - `useQuery.reset`
-  - `useQuery.resetSpecificKey`
-  - `useQuery.invalidate`
-  - `useQuery.invalidateSpecificKey`
-  - `useQuery.optimisticUpdate`
+  - `useQuery.Render` A helper component that will render components conditionally based on query status
+  - `useQuery.setInitialResponse` Set default/initial response from inside a component (must be called inside component before it gets any subscribers)
+  - `useQuery.reset` Reset query state for all query keys
+  - `useQuery.resetSpecificKey` Reset a specific query state
+  - `useQuery.invalidate` Invalidate query for all query keys
+  - `useQuery.invalidateSpecificKey` Invalidate a specific query
+  - `useQuery.optimisticUpdate` Optimistic update ([learn more](/docs/query/optimistic-update))
+  - `useQuery.suspend` Use query with suspense mode
+
+</div>
 
 ## createMutation
 
@@ -161,6 +187,8 @@ const state = useMutation(selectDeps);
 
 **Parameters**
 
+<div className="[&_ul]:text-sm">
+
 - `initializer`
 - `options?` (_optional_)
   - `onMutate` Handle mutate event (right after the mutation function fired)
@@ -168,7 +196,11 @@ const state = useMutation(selectDeps);
   - `onError` Handle error event (promise rejected)
   - `onSettled` Handle success or error event
 
+</div>
+
 **Return Value**
+
+<div className="[&_ul_ul]:text-sm">
 
 - `useMutation()`
   - **Parameters** (_optional_)
@@ -177,3 +209,5 @@ const state = useMutation(selectDeps);
     - `state`
 - **Methods**
   - Same as `useStore`'s
+
+</div>
