@@ -63,7 +63,7 @@ export default function QueryStateFlow() {
               </li>
             </ul>
           </div>
-          <div className="card">
+          <div className="card -mb-14">
             <b>After refetch failed</b>
             <ul>
               <li>status: "success"</li>
@@ -75,6 +75,10 @@ export default function QueryStateFlow() {
               <li className="mt-2 border-t border-dashed pt-1.5">isWaiting: false</li>
               <li className="mt-2 border-t border-dashed pt-1.5">
                 isRefetchError: <span className="text-green-500">true</span>
+              </li>
+              <li className="mt-2 border-t border-dashed pt-1.5">
+                isGoingToRetry: <span className="text-blue-600">bool</span>
+                <div className="pt-1 text-xs italic">(depends on option 👆)</div>
               </li>
             </ul>
           </div>
