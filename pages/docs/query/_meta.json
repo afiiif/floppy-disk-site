@@ -12,6 +12,7 @@
   "query-invalidation": "Query Invalidation",
   "optimistic-update": "Optimistic Update",
   "window-focus-refetching": "Window Focus Refetching",
+  "polling": "Auto Refetching / Polling",
   "suspense": "Suspense",
   "custom-logger": "Custom Logger"
 }

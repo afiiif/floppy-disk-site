@@ -7,15 +7,15 @@ export default function Banner() {
             <div className="relative">
               <div
                 aria-hidden
-                className="pointer-events-none absolute w-full bg-gradient-to-br from-white/0 to-black/30 bg-clip-text pb-4 text-4xl font-extrabold text-transparent md:text-5xl xl:text-6xl"
+                className="pointer-events-none absolute w-full bg-gradient-to-br from-white/0 from-40% to-black/20 bg-clip-text pb-4 text-4xl font-extrabold text-transparent md:text-5xl xl:text-6xl"
               >
-                3.3 kB Powerful
+                3.4 kB Powerful
                 <div>[Global/Local, Sync/Async]</div>
                 State Management Library
               </div>
             </div>
             <h1 className="text-4xl font-extrabold md:text-5xl xl:text-6xl">
-              3.3 kB Powerful
+              3.4 kB Powerful
               <div className="text-green-600 dark:text-green-400">[Global/Local, Sync/Async]</div>
               State Management Library
             </h1>
@@ -53,7 +53,7 @@ export default function Banner() {
       {/* For spacer only */}
       <div className="invisible -mt-4 mb-8 py-24 text-center md:mb-12 xl:-mx-16 xl:py-28">
         <div className="text-4xl font-extrabold md:text-5xl xl:text-6xl">
-          3.3 kB Powerful
+          3.4 kB Powerful
           <div>[Global/Local, Sync/Async]</div>
           State Management Library
         </div>

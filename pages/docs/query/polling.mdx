@@ -1,0 +1,32 @@
+# Auto Refetching / Polling
+
+In many cases, data changes because of multiple devices, multiple users, or multiple tabs.
+If we want to make sure the data on the screen is revalidated for every specific interval, we can utilize `refetchInterval` option.
+
+Refetching will only happened if:
+
+- A query is enabled
+- A query has subscriber
+- Last data fetching is succeed
+  - If last data fetching is failed, the polling interval will be disabled, and it will use `retry` mechanism instead. ([More information](/docs/query/error-retries))
+
+It **will not** check if:
+
+- A window is in focus state
+- No internet connection
+
+Therefore, to prevent API calls while the window is minimized, we can utilize `onBeforeFetch` option.
+
+```jsx
+const useFeedQuery = createQuery(
+  fetchFeed,
+  {
+    refetchInterval: 3000, // Refetch every 3s
+    onBeforeFetch: (cancel) => {
+      if (document.visibilityState === 'hidden') {
+        cancel(); // To prevent polling while the window is minimized or unfocused
+      }
+    },
+  }
+)
+```

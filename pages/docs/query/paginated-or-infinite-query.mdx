@@ -6,10 +6,15 @@ import JsOrTs from '@/pages/_components/JsOrTs';
 
 ## Creating the Store/Hook
 
+Rendering list of items with a "load more" feature is a very common UI pattern.
+To achieve this "load more" functionality, we can set the `getNextPageParam` option to determine what next offset or cursor is,
+and then use the last page param on query function.
+Lastly, we need to utilize `select` option to concat the previous data with the new response.
+
 <JsOrTs className="pt-5 -mb-3 justify-end">
 <>
 
-```jsx
+```jsx {2,9-11}
 const usePokemonsQuery = createQuery(
   async (_, { pageParam = 0 }) => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${pageParam}`);
@@ -30,7 +35,7 @@ const usePokemonsQuery = createQuery(
 </>
 <>
 
-```tsx
+```tsx {6,13-15}
 type PokemonsResponse = { results: Pokemon[]; success: boolean }
 type Pokemon = { id: number; name: string };
 
@@ -55,9 +60,12 @@ const usePokemonsQuery = createQuery<undefined, PokemonsResponse, Pokemon[]>(
 </>
 </JsOrTs>
 
+In order to tell Floppy Disk that we already reached at the end of page, return `undefined` or `null` on `getNextPageParam`.
+After doing that, the `hasNextPage` will be `true` and the `fetchNextPage` will no longer triggering anything.
+
 ## Using Query Hook Inside a Component
 
-```tsx
+```tsx {13}
 function PokemonListPage() {
   const { data, fetchNextPage, hasNextPage, isWaitingNextPage } = usePokemonsQuery();
 

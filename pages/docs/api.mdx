@@ -22,7 +22,7 @@ const state = useStore(selectDeps);
 
 - `initializer` A function that returns an initial state
 - `options?` (_optional_)
-  - `defaultDeps` Set default reactivity
+  - `defaultDeps` Set default reactivity ([learn more](/docs/store/introduction#set-default-reactivity))
   - `intercept` Intercept set state
   - `onFirstSubscribe` Handle first subscribe event
   - `onSubscribe` Handle subscribe event
@@ -71,7 +71,7 @@ const state = useStores(selectDeps);
 
 - `initializer` A function that returns an initial single store state
 - `options?` (_optional_)
-  - `hashKeyFn` Custom function to transform the store key (object) into a key hash (string)
+  - `hashKeyFn` Custom function to transform the store key (object) into a hash string ([learn more](/docs/stores/introduction#store-key))
   - `onBeforeChangeKey` Handle change key passed to the hook
   - `onStoreInitialized` Handle single store state initialized event
 
@@ -83,7 +83,7 @@ const state = useStores(selectDeps);
 
 - `useStores()`
   - **Parameters** (_optional_)
-    - `storeKey` Choose which store state will be used
+    - `storeKey` Choose which store state will be used ([learn more](/docs/stores/introduction#store-key))
     - `selectDeps` Customize when to re-render
   - **Return Value**
     - `state`
@@ -133,17 +133,20 @@ const state = useQuery(selectDeps);
 - `queryFn`
 - `options?` (_optional_)
   - `select` Transform or select a portion of the raw response
-  - `staleTime` Determine how long a response is categorized as fresh
+  - `staleTime` Determine how long a response is categorized as fresh, defaults to 3 seconds
+  - `cacheTime` Determine how long the query data should be stored in memory, defaults to 5 minutes
   - `fetchOnMount` Should we fetch/refetch when the component mounted?
   - `fetchOnWindowFocus` Should we fetch/refetch when a window focus event triggered?
   - `enabled` Should we fetch/refetch for any reason?
-  - `retry` Maximum error retry count
+  - `retry` Maximum error retry count ([learn more](/docs/query/error-retries))
   - `retryDelay` Error retry delay in milliseconds
   - `keepPreviousData` Return the previous key's data until the current key's fetching finished
   - `getNextPageParam` Determine the value that should be used when getting next page
-  - `onSuccess` Handle success event (promise resolved)
-  - `onError` Handle error event (promise rejected)
-  - `onSettled` Handle success or error event
+  - `refetchInterval` Auto refetching / polling interval ([learn more](/docs/query/polling))
+  - `onBeforeFetch` Triggered before fetch/refetch, can also be used to cancel fetch
+  - `onSuccess` Triggered after fetch/refetch succeed
+  - `onError` Triggered after fetch/refetch failed
+  - `onSettled` Triggered after fetch/refetch (both succeed or failed)
 
 </div>
 
@@ -161,12 +164,12 @@ const state = useQuery(selectDeps);
   - Same as `useStores`'s
   - `useQuery.Render` A helper component that will render components conditionally based on query status
   - `useQuery.setInitialResponse` Set default/initial response from inside a component (must be called inside component before it gets any subscribers)
-  - `useQuery.reset` Reset query state for all query keys
-  - `useQuery.resetSpecificKey` Reset a specific query state
-  - `useQuery.invalidate` Invalidate query for all query keys
+  - `useQuery.reset` Reset query to empty state for all query keys
+  - `useQuery.resetSpecificKey` Reset a specific query to empty state
+  - `useQuery.invalidate` Invalidate query for all query keys ([learn more](/docs/query/query-invalidation))
   - `useQuery.invalidateSpecificKey` Invalidate a specific query
   - `useQuery.optimisticUpdate` Optimistic update ([learn more](/docs/query/optimistic-update))
-  - `useQuery.suspend` Use query with suspense mode
+  - `useQuery.suspend` Use query with suspense mode ([learn more](/docs/query/suspense))
 
 </div>
 

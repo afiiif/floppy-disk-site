@@ -1,7 +1,8 @@
 # Stores Event
 
 Since the concept of stores is same as [store](/docs/store/introduction), it also have a store event handler.
-We can use `onFirstSubscribe`, `onSubscribe`, `onUnsubscribe`, `onLastUnsubscribe`, and additional `onBeforeChangeKey` event handler.
+We can use `onFirstSubscribe`, `onSubscribe`, `onUnsubscribe`, `onLastUnsubscribe`,
+and additional `onBeforeChangeKey` & `onStoreInitialized` event handler.
 
 ```ts {10-15}
 const useCatStores = createStores(
