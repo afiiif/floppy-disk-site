@@ -231,9 +231,9 @@ import { createQuery, createMutation } from 'floppy-disk'; // 9.2 kB (gzipped: 3
           throw resJson;
         },
         {
-          select: (response, { data }) => [...(data || []), ...response.results],
+          select: (response, { data = [] }) => [...data, ...response.results],
           getNextPageParam: (lastPageResponse, i) => {
-            if (i > 5) return undefined; // Return undefined means we have reached the end of the pages
+            if (i > 5) return undefined; // Return undefined when reached the end of the pages
             return i * 10;
           },
         },
@@ -356,9 +356,9 @@ import { createQuery, createMutation } from 'floppy-disk'; // 9.2 kB (gzipped: 3
           throw resJson;
         },
         {
-          select: (response, { data }) => [...(data || []), ...response.results],
+          select: (response, { data = [] }) => [...data, ...response.results],
           getNextPageParam: (lastPageResponse, i) => {
-            if (i > 5) return undefined; // Return undefined means we have reached the end of the pages
+            if (i > 5) return undefined; // Return undefined when reached the end of the pages
             return i * 10;
           },
         },

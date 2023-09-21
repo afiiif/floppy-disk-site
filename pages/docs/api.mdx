@@ -143,10 +143,10 @@ const state = useQuery(selectDeps);
   - `keepPreviousData` Return the previous key's data until the current key's fetching finished
   - `getNextPageParam` Determine the value that should be used when getting next page
   - `refetchInterval` Auto refetching / polling interval ([learn more](/docs/query/polling))
-  - `onBeforeFetch` Triggered before fetch/refetch, can also be used to cancel fetch
-  - `onSuccess` Triggered after fetch/refetch succeed
-  - `onError` Triggered after fetch/refetch failed
-  - `onSettled` Triggered after fetch/refetch (both succeed or failed)
+  - `onBeforeFetch` Triggered before fetch, refetch, & fetch next/prev page, can also be used to cancel fetch
+  - `onSuccess` Triggered after fetch, refetch, & fetch next/prev page succeed
+  - `onError` Triggered after fetch, refetch, & fetch next/prev page failed
+  - `onSettled` Triggered after fetch, refetch, & fetch next/prev page (both succeed or failed)
 
 </div>
 
