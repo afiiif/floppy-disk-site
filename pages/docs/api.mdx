@@ -109,6 +109,7 @@ const useQuery = createQuery<TKey, TResponse, TData, TError>(queryFn, {
   ...options, // Same as createStores options
   select,
   staleTime,
+  cacheTime,
   fetchOnMount,
   fetchOnWindowFocus,
   enabled,
@@ -116,6 +117,8 @@ const useQuery = createQuery<TKey, TResponse, TData, TError>(queryFn, {
   retryDelay,
   keepPreviousData,
   getNextPageParam,
+  refetchInterval,
+  onBeforeFetch,
   onSuccess,
   onError,
   onSettled,
