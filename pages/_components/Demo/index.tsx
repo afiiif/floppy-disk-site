@@ -75,7 +75,12 @@ function Card4() {
   return (
     <div className="flex-1 !p-1.5 md:!p-3">
       <RenderCounter />
-      <div className={cn('rounded p-2', count % 5 ? 'bg-rose-600' : 'bg-green-500 text-black')}>
+      <div
+        className={cn(
+          'rounded p-2',
+          count % 5 ? 'bg-rose-600 text-white' : 'bg-green-500 text-black',
+        )}
+      >
         Only re-render when
         <i>&quot;count value is a multiple of 5&quot;</i> is changed
       </div>
