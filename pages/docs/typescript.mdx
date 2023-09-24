@@ -11,11 +11,11 @@ const useFloppyDiskQuery = createQuery(
 
 function Component() {
   const { data, isLoading, isSuccess, isError } = useFloppyDiskQuery();
-  //      ^? const data: { isAwesome: boolean } | null
+  //      ^? const data: { isAwesome: boolean } | undefined
 
   if (isLoading) {
     console.log(data);
-    //          ^? const data: null
+    //          ^? const data: undefined
   }
 
   if (isSuccess) {
@@ -25,7 +25,7 @@ function Component() {
 
   if (isError) {
     console.log(data);
-    //          ^? const data: null
+    //          ^? const data: undefined
   }
 }
 ```
