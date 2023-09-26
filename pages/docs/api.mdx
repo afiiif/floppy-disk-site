@@ -1,3 +1,5 @@
+import Code from '@/pages/_components/Code';
+
 # API
 
 ## createStore
@@ -20,14 +22,14 @@ const state = useStore(selectDeps);
 
 <div className="[&_ul]:text-sm">
 
-- `initializer` A function that returns an initial state
+- <Code content="initializer" href="store/introduction" /> A function that returns an initial state
 - `options?` (_optional_)
-  - `defaultDeps` Set default reactivity ([learn more](/docs/store/introduction#set-default-reactivity))
-  - `intercept` Intercept set state
-  - `onFirstSubscribe` Handle first subscribe event
-  - `onSubscribe` Handle subscribe event
-  - `onUnsubscribe` Handle unsubscribe event
-  - `onLastUnsubscribe` Handle last unsubscribe event
+  - <Code content="defaultDeps" href="store/introduction#set-default-reactivity" /> Set default reactivity ([learn more](/docs/store/introduction#set-default-reactivity))
+  - <Code content="intercept" href="store/interception" /> Intercept set state
+  - <Code content="onFirstSubscribe" href="store/store-event" /> Handle first subscribe event
+  - <Code content="onSubscribe" href="store/store-event" /> Handle subscribe event
+  - <Code content="onUnsubscribe" href="store/store-event" /> Handle unsubscribe event
+  - <Code content="onLastUnsubscribe" href="store/store-event" /> Handle last unsubscribe event
 
 </div>
 
@@ -35,18 +37,20 @@ const state = useStore(selectDeps);
 
 <div className="[&_ul_ul]:text-sm">
 
-- `useStore()`
+- <Code content="useStore()" href="store/introduction#use-the-hook-anywhere" />
+
   - **Parameters** (_optional_)
-    - `selectDeps` Customize when to re-render
+    - <Code content="selectDeps" href="store/introduction#control-the-reactivity" /> Customize when to re-render
   - **Return Value**
     - `state`
+
 - **Methods**
-  - `useStore.get` Get state
-  - `useStore.set` Set state
-  - `useStore.subscribe` Subscribe the store state
-  - `useStore.getSubscribers` Get store subscribers
+  - <Code content="useStore.get" href="store/introduction#using-store-outside-component" /> Get state
+  - <Code content="useStore.set" href="store/introduction#using-store-outside-component" /> Set state
+  - <Code content="useStore.subscribe" href="store/introduction#using-store-outside-component" /> Subscribe the store state
+  - <Code content="useStore.getSubscribers" href="store/introduction#using-store-outside-component" /> Get store subscribers
   - `useStore.setDefaultValues` Set default/initial values from inside a component (must be called inside component before it gets any subscribers)
-  - `useStore.Watch` A helper component that will watch the state changes ([learn more](/docs/store/watch-component))
+  - <Code content="useStore.Watch" href="store/watch-component" /> A helper component that will watch the state changes ([learn more](/docs/store/watch-component))
 
 </div>
 
@@ -69,11 +73,12 @@ const state = useStores(selectDeps);
 
 <div className="[&_ul]:text-sm">
 
-- `initializer` A function that returns an initial single store state
+- <Code content="initializer" href="stores/introduction" /> A function that returns an initial single store state
 - `options?` (_optional_)
-  - `hashKeyFn` Custom function to transform the store key (object) into a hash string ([learn more](/docs/stores/introduction#store-key))
-  - `onBeforeChangeKey` Handle change key passed to the hook
-  - `onStoreInitialized` Handle single store state initialized event
+  - <Code content="hashKeyFn" href="stores/introduction#store-key" /> Custom function to transform the store key (object) into a hash string ([learn more](/docs/stores/introduction#store-key))
+  - <Code content="onBeforeChangeKey" href="stores/stores-event" /> Handle change key passed to the hook
+  - <Code content="onStoreInitialized" href="stores/stores-event" /> Handle single store state initialized event
+  - _... same as `useStore`'s_
 
 </div>
 
@@ -81,24 +86,26 @@ const state = useStores(selectDeps);
 
 <div className="[&_ul_ul]:text-sm">
 
-- `useStores()`
+- <Code content="useStores()" href="stores/introduction#using-a-stores-as-hook" />
+
   - **Parameters** (_optional_)
-    - `storeKey` Choose which store state will be used ([learn more](/docs/stores/introduction#store-key))
-    - `selectDeps` Customize when to re-render
+    - <Code content="storeKey" href="stores/introduction#store-key" /> Choose which store state will be used ([learn more](/docs/stores/introduction#store-key))
+    - <Code content="selectDeps" href="store/introduction#control-the-reactivity" /> Customize when to re-render
   - **Return Value**
     - `state`
+
 - **Methods**
-  - `useStore.get` Get state of specific store (specific store key)
-  - `useStore.getAll` Get all stores state
-  - `useStore.getAllWithSubscriber` Get all stores state that has subscriber
-  - `useStore.set` Set state of specific store (specific store key)
-  - `useStore.setAll` Set all stores state
-  - `useStore.subscribe` Subscribe to a store state
-  - `useStore.getSubscribers` Get subscribers of a store state
-  - `useStore.getStore` Get a store
-  - `useStore.getStores` Get all stores
-  - `useStore.setDefaultValues` Set default/initial values from inside a component (must be called inside component before it gets any subscribers)
-  - `useStore.Watch` A helper component that will watch the state changes ([learn more](/docs/store/watch-component))
+  - <Code content="useStores.get" href="store/introduction#stores-methods" /> Get state of specific store (specific store key)
+  - <Code content="useStores.getAll" href="store/introduction#stores-methods" /> Get all stores state
+  - <Code content="useStores.getAllWithSubscriber" href="store/introduction#stores-methods" /> Get all stores state that has subscriber
+  - <Code content="useStores.set" href="store/introduction#stores-methods" /> Set state of specific store (specific store key)
+  - <Code content="useStores.setAll" href="store/introduction#stores-methods" /> Set all stores state
+  - <Code content="useStores.subscribe" href="store/introduction#stores-methods" /> Subscribe to a store state
+  - <Code content="useStores.getSubscribers" href="store/introduction#stores-methods" /> Get subscribers of a store state
+  - `useStores.getStore` Get a store
+  - `useStores.getStores` Get all stores
+  - `useStores.setDefaultValues` Set default/initial values from inside a component (must be called inside component before it gets any subscribers)
+  - <Code content="useStores.Watch" href="store/watch-component" /> A helper component that will watch the state changes ([learn more](/docs/store/watch-component))
 
 </div>
 
@@ -150,6 +157,7 @@ const state = useQuery(selectDeps);
   - `onSuccess` Triggered after fetch, refetch, & fetch next/prev page succeed
   - `onError` Triggered after fetch, refetch, & fetch next/prev page failed
   - `onSettled` Triggered after fetch, refetch, & fetch next/prev page (both succeed or failed)
+  - _... same as `useStores`'s_
 
 </div>
 
@@ -159,12 +167,11 @@ const state = useQuery(selectDeps);
 
 - `useQuery()`
   - **Parameters** (_optional_)
-    - `storeKey` Choose which query store state will be used
+    - <Code content="storeKey" href="stores/introduction#store-key" /> Choose which query store state will be used ([learn more](/docs/stores/introduction#store-key))
     - `selectDeps` Customize when to re-render
   - **Return Value**
     - `state`
 - **Methods**
-  - Same as `useStores`'s
   - `useQuery.Render` A helper component that will render components conditionally based on query status
   - `useQuery.setInitialResponse` Set default/initial response from inside a component (must be called inside component before it gets any subscribers)
   - `useQuery.reset` Reset query to empty state for all query keys
@@ -173,6 +180,7 @@ const state = useQuery(selectDeps);
   - `useQuery.invalidateSpecificKey` Invalidate a specific query
   - `useQuery.optimisticUpdate` Optimistic update ([learn more](/docs/query/optimistic-update))
   - `useQuery.suspend` Use query with suspense mode ([learn more](/docs/query/suspense))
+  - _... same as `useStores`'s_
 
 </div>
 
@@ -201,6 +209,7 @@ const state = useMutation(selectDeps);
   - `onSuccess` Handle success event (promise resolved)
   - `onError` Handle error event (promise rejected)
   - `onSettled` Handle success or error event
+  - _... same as `useStore`'s_
 
 </div>
 
@@ -214,6 +223,6 @@ const state = useMutation(selectDeps);
   - **Return Value**
     - `state`
 - **Methods**
-  - Same as `useStore`'s
+  - _... same as `useStore`'s_
 
 </div>
