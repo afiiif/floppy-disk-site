@@ -1,4 +1,11 @@
+import { Callout } from 'nextra/components';
+
 # Initial Query Data (SSR/SSG)
+
+Sometimes, we want to fetch our data on server-side,
+either doing it on every request (like Next.js' `getServerSideProps`) or at build-time (like Next.js' `getStaticProps`).
+We can populate the initial response data easily by utilizing `setInitialResponse` method.
+Note that this `setInitialResponse` method should be called on top of your component tree, or before any component invokes the hook (a.k.a subscribe the query).
 
 ```jsx
 // Single query
@@ -35,3 +42,7 @@ export default function Page({ popularProduct, productDetail, notifications }) {
   return <main> ... </main>
 }
 ```
+
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../comparison/nextjs/with-floppy-disk](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/comparison/nextjs/with-floppy-disk)
+</Callout>

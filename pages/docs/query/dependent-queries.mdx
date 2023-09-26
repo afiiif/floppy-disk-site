@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components';
+
 # Dependent Queries
 
 Dependent (or serial) queries refer to a situation in which the execution of one query
@@ -38,6 +40,10 @@ function PokemonsPage() {
 ```
 
 Another example, we build a nested dropdown menu:
+
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../examples/react/dependent-queries](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/dependent-queries)
+</Callout>
 
 ```jsx
 const useCountriesQuery = createQuery(getCountries);
