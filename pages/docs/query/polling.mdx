@@ -22,9 +22,9 @@ const useFeedQuery = createQuery(
   fetchFeed,
   {
     refetchInterval: 3000, // Refetch every 3s
-    onBeforeFetch: (cancel) => {
-      if (document.visibilityState === 'hidden') {
-        cancel(); // To prevent polling while the window is minimized or unfocused
+    onBeforeFetch: (cancel, { isSuccess }) => {
+      if (isSuccess && document.visibilityState === 'hidden') {
+        cancel(); // To prevent refetching while the window is minimized or unfocused
       }
     },
   }

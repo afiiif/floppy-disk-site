@@ -1,0 +1,62 @@
+import { Callout } from 'nextra/components';
+
+# Network Mode
+
+Floppy Disk has no such "network mode" abstraction like [TanStack-Query](https://tanstack.com/query/latest/docs/react/guides/network-mode).
+But, we can replicate the "network mode" functionality easily by utilizing its options.
+
+Note that by default, Floppy Disk will call the query function without checking online status.
+
+## Prevent Fetch When Offline
+
+```jsx {3,6}
+const useMyQuery = createQuery(myQueryFn, {
+  onBeforeFetch: (cancel, { isSuccess }) => {
+    if (!navigator.onLine) cancel(); // Prevent all fetch
+
+    // Or, allow initial fetch, but prevent refetch when offline
+    // if (isSuccess && !navigator.onLine) cancel();
+  },
+});
+```
+
+## Prevent Retrying from Error When Offline
+
+```jsx {3}
+const useMyQuery = createQuery(myQueryFn, {
+  retry: () => {
+    if (!navigator.onLine) return 0; // No retry
+    return 1; // Retry once when online
+  },
+});
+```
+
+<Callout type="info" emoji="ℹ️">
+Example: [https://codesandbox.io/.../examples/react/query-network-status](https://codesandbox.io/p/sandbox/github/afiiif/floppy-disk/tree/main/examples/react/query-network-status)
+</Callout>
+
+## Set Globally
+
+```jsx
+import { createQuery as createQueryOriginal } from 'floppy-disk';
+
+export const createQuery = (queryFn, options = {}) => {
+  const useQuery = createQueryOriginal(
+    queryFn,
+    {
+      ...options,
+      onBeforeFetch: (cancel, state) => {
+        if (!navigator.onLine) cancel();
+        options.onBeforeFetch?.(cancel, state);
+      },
+      retry: (error, state) => {
+        if (!navigator.onLine) return 0;
+        return typeof options.retry === 'function'
+          ? options.retry(error, state)
+          : (options.retry ?? 1);
+      },
+    },
+  );
+  return useQuery;
+};
+```

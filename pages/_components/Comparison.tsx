@@ -6,7 +6,7 @@ export function BadgeFD() {
   return (
     <>
       <a href="https://pkg-size.dev/floppy-disk" target="_blank" rel="noreferrer">
-        <img src="https://pkg-size.dev/badge/bundle/10511" alt="Bundle size for floppy-disk" />
+        <img src="https://pkg-size.dev/badge/bundle/10742" alt="Bundle size for floppy-disk" />
         <span className="nx-sr-only nx-select-none"> (opens in a new tab)</span>
       </a>
       <div className="whitespace-nowrap pt-1 text-xs">(gzipped 3.8 kB)</div>

@@ -140,19 +140,20 @@ const state = useQuery(selectDeps);
 
 <div className="[&_ul]:text-sm">
 
-- `queryFn`
+- <Code content="queryFn" href="query/introduction" />
 - `options?` (_optional_)
-  - `select` Transform or select a portion of the raw response
-  - `staleTime` Determine how long a response is categorized as fresh, defaults to 3 seconds
+  - <Code content="select" href="query/introduction#response-vs-data" /> Transform or select a portion of the raw response
+  - <Code content="staleTime" href="query/introduction#fresh--stale-query-concept" /> Determine how long a response is categorized as fresh, defaults to 3 seconds
   - `cacheTime` Determine how long the query data should be stored in memory, defaults to 5 minutes
   - `fetchOnMount` Should we fetch/refetch when the component mounted?
   - `fetchOnWindowFocus` Should we fetch/refetch when a window focus event triggered?
+  - `fetchOnReconnect` Should we fetch/refetch when a window online event triggered?
   - `enabled` Should we fetch/refetch for any reason?
-  - `retry` Maximum error retry count ([learn more](/docs/query/error-retries))
-  - `retryDelay` Error retry delay in milliseconds
+  - <Code content="retry" href="query/error-retries" /> Maximum error retry count ([learn more](/docs/query/error-retries))
+  - <Code content="retryDelay" href="query/error-retries" /> Error retry delay in milliseconds
   - `keepPreviousData` Return the previous key's data until the current key's fetching finished
-  - `getNextPageParam` Determine the value that should be used when getting next page
-  - `refetchInterval` Auto refetching / polling interval ([learn more](/docs/query/polling))
+  - <Code content="getNextPageParam" href="query/paginated-or-infinite-query" /> Determine the value that should be used when getting next page
+  - <Code content="refetchInterval" href="query/polling" /> Auto refetching / polling interval ([learn more](/docs/query/polling))
   - `onBeforeFetch` Triggered before fetch, refetch, & fetch next/prev page, can also be used to cancel fetch
   - `onSuccess` Triggered after fetch, refetch, & fetch next/prev page succeed
   - `onError` Triggered after fetch, refetch, & fetch next/prev page failed
@@ -165,21 +166,23 @@ const state = useQuery(selectDeps);
 
 <div className="[&_ul_ul]:text-sm">
 
-- `useQuery()`
+- <Code content="useQuery()" href="query/introduction" />
+
   - **Parameters** (_optional_)
     - <Code content="storeKey" href="stores/introduction#store-key" /> Choose which query store state will be used ([learn more](/docs/stores/introduction#store-key))
     - `selectDeps` Customize when to re-render
   - **Return Value**
     - `state`
+
 - **Methods**
   - `useQuery.Render` A helper component that will render components conditionally based on query status
-  - `useQuery.setInitialResponse` Set default/initial response from inside a component (must be called inside component before it gets any subscribers)
+  - <Code content="useQuery.setInitialResponse" href="query/initial-query-data" /> Set default/initial response from inside a component (must be called inside component before it gets any subscribers)
   - `useQuery.reset` Reset query to empty state for all query keys
   - `useQuery.resetSpecificKey` Reset a specific query to empty state
-  - `useQuery.invalidate` Invalidate query for all query keys ([learn more](/docs/query/query-invalidation))
-  - `useQuery.invalidateSpecificKey` Invalidate a specific query
-  - `useQuery.optimisticUpdate` Optimistic update ([learn more](/docs/query/optimistic-update))
-  - `useQuery.suspend` Use query with suspense mode ([learn more](/docs/query/suspense))
+  - <Code content="useQuery.invalidate" href="query/query-invalidation" /> Invalidate query for all query keys ([learn more](/docs/query/query-invalidation))
+  - <Code content="useQuery.invalidateSpecificKey" href="query/query-invalidation" /> Invalidate a specific query
+  - <Code content="useQuery.optimisticUpdate" href="query/optimistic-update" /> Optimistic update ([learn more](/docs/query/optimistic-update))
+  - <Code content="useQuery.suspend" href="query/suspense" /> Use query with suspense mode ([learn more](/docs/query/suspense))
   - _... same as `useStores`'s_
 
 </div>
@@ -203,7 +206,7 @@ const state = useMutation(selectDeps);
 
 <div className="[&_ul]:text-sm">
 
-- `initializer`
+- <Code content="mutationFn" href="mutation/introduction" />
 - `options?` (_optional_)
   - `onMutate` Handle mutate event (right after the mutation function fired)
   - `onSuccess` Handle success event (promise resolved)
@@ -217,11 +220,13 @@ const state = useMutation(selectDeps);
 
 <div className="[&_ul_ul]:text-sm">
 
-- `useMutation()`
+- <Code content="useMutation()" href="mutation/introduction" />
+
   - **Parameters** (_optional_)
     - `selectDeps` Customize when to re-render
   - **Return Value**
     - `state`
+
 - **Methods**
   - _... same as `useStore`'s_
 
