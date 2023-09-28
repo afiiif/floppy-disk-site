@@ -1,6 +1,11 @@
 {
   "getting-started": "Getting Started",
-  "comparison": "Comparison",
+  "comparison": {
+    "title": "Comparison",
+    "theme": {
+      "layout": "full"
+    }
+  },
   "store": "Store",
   "stores": "Stores",
   "query": "Query",
