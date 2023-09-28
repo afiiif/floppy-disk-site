@@ -1,0 +1,10 @@
+{
+  "single-query": "Single Query",
+  "single-query-with-param": "Single Query with Param",
+  "skip-offline": "Prevent Fetch If Offline",
+  "paginated-or-infinite-query": "Paginated or Infinite Query",
+  "bi-directional-infinite-query": "Bi-directional Infinite List",
+  "dependent-queries": "Dependent Queries",
+  "initial-query-data": "Initial Query Data (SSR/SSG)",
+  "suspense": "Suspense"
+}

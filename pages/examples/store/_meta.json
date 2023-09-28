@@ -1,0 +1,8 @@
+{
+  "basic": "Basic Store",
+  "custom-reactivity": "Custom Reactivity",
+  "store-event": "Store Event",
+  "interception": "Interception",
+  "watch-component": "Watch Component",
+  "local-state": "As Local State"
+}
