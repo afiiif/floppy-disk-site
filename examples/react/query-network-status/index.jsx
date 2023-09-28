@@ -11,8 +11,9 @@ const usePsyduckQuery = createQuery(
   },
   {
     defaultDeps: (state) => [state.data, state.error, state.isWaiting],
-    onBeforeFetch: (cancel) => {
-      if (!navigator.onLine) cancel();
+    enabled: () => {
+      if (navigator.onLine) return true;
+      return false;
     },
   },
 );

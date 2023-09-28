@@ -12,9 +12,6 @@ const usePokemonQuery = createQuery(
   },
   {
     enabled: ({ pokemonName }) => !!pokemonName,
-    onBeforeFetch: (_, state) => {
-      console.info(state);
-    },
   },
 );
 

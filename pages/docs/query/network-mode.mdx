@@ -9,13 +9,16 @@ Note that by default, Floppy Disk will call the query function without checking 
 
 ## Prevent Fetch When Offline
 
-```jsx {3,6}
+```jsx {3,6-7}
 const useMyQuery = createQuery(myQueryFn, {
-  onBeforeFetch: (cancel, { isSuccess }) => {
-    if (!navigator.onLine) cancel(); // Prevent all fetch
+  enabled: (key) => {
+    if (!navigator.onLine) return false; // Prevent all fetch
 
     // Or, allow initial fetch, but prevent refetch when offline
-    // if (isSuccess && !navigator.onLine) cancel();
+    // const { isSuccess } = useMyQuery.get(key);
+    // if (isSuccess && !navigator.onLine) return false;
+
+    return true;
   },
 });
 ```
@@ -43,9 +46,11 @@ export const createQuery = (queryFn, options = {}) => {
     queryFn,
     {
       ...options,
-      onBeforeFetch: (cancel, state) => {
-        if (!navigator.onLine) cancel();
-        options.onBeforeFetch?.(cancel, state);
+      enabled: (key) => {
+        if (!navigator.onLine) return false;
+        return typeof options.enabled === 'function'
+          ? options.enabled(key)
+          : (options.enabled ?? true);
       },
       retry: (error, state) => {
         if (!navigator.onLine) return 0;

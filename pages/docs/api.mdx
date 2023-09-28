@@ -125,7 +125,6 @@ const useQuery = createQuery<TKey, TResponse, TData, TError>(queryFn, {
   keepPreviousData,
   getNextPageParam,
   refetchInterval,
-  onBeforeFetch,
   onSuccess,
   onError,
   onSettled,
@@ -154,7 +153,6 @@ const state = useQuery(selectDeps);
   - `keepPreviousData` Return the previous key's data until the current key's fetching finished
   - <Code content="getNextPageParam" href="query/paginated-or-infinite-query" /> Determine the value that should be used when getting next page
   - <Code content="refetchInterval" href="query/polling" /> Auto refetching / polling interval ([learn more](/docs/query/polling))
-  - `onBeforeFetch` Triggered before fetch, refetch, & fetch next/prev page, can also be used to cancel fetch
   - `onSuccess` Triggered after fetch, refetch, & fetch next/prev page succeed
   - `onError` Triggered after fetch, refetch, & fetch next/prev page failed
   - `onSettled` Triggered after fetch, refetch, & fetch next/prev page (both succeed or failed)

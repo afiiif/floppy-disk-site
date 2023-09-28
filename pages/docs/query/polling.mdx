@@ -15,17 +15,19 @@ It **will not** check if:
 - A window is in focus state
 - No internet connection
 
-Therefore, to prevent API calls while the window is minimized, we can utilize `onBeforeFetch` option.
+Therefore, to prevent API calls while the window is minimized, we can utilize `enabled` option.
 
 ```jsx
 const useFeedQuery = createQuery(
   fetchFeed,
   {
     refetchInterval: 3000, // Refetch every 3s
-    onBeforeFetch: (cancel, { isSuccess }) => {
+    enabled: (key) => {
+      const { isSuccess } = useFeedQuery.get(key);
       if (isSuccess && document.visibilityState === 'hidden') {
-        cancel(); // To prevent refetching while the window is minimized or unfocused
+        return false; // To prevent refetching while the window is minimized or unfocused
       }
+      return true;
     },
   }
 )
