@@ -85,3 +85,44 @@ function PokemonListPage() {
 ```
 
 <Example path="react/infinite-query" />
+
+## Bi-Directional Infinite List
+
+Creating bi-directional query is possible by creating 2 infinite queries and merge its data together.
+However, we must prevent fetching the initial page 2 times and handle 2 queries refetch simultaneously.
+Therefore, Floppy Disk provide an abstraction to do that using `createBiDirectionQuery`.
+
+```jsx
+import { createBiDirectionQuery } from 'floppy-disk';
+
+const fetchProjects = async (cursor) => {
+  const res = await fetch(`/api/projects?cursor=${cursor}`);
+  const resJson = await res.json();
+  if (res.ok) return resJson;
+  throw resJson;
+};
+
+const useProjectsQuery = createBiDirectionQuery(
+  (queryKey, { pageParam }, direction) => fetchProjects(pageParam || 0),
+  //                        ^? (parameter) direction: "prev" | "next"
+  {
+    select: (response, { data = [] }, direction) => {
+      return direction === 'prev' ? response.data.concat(data) : data.concat(response.data);
+    },
+    getPrevPageParam: (response) => response.previousId,
+    getNextPageParam: (response) => response.nextId,
+  },
+);
+
+function MyPage() {
+  const {
+    data,
+    fetchPrevPage, hasPrevPage, isWaitingPrevPage,
+    fetchNextPage, hasNextPage, isWaitingNextPage,
+  } = useProjectsQuery();
+
+  ...
+}
+```
+
+<Example path="react/bi-direction-infinite-query" />
