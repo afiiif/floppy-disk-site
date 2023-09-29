@@ -1,22 +1,18 @@
 # Prefetching or Preloading
 
-```jsx {8, 29}
+```jsx {9,26,35}
 import { useState } from 'react';
 import { createQuery } from 'floppy-disk';
 import { getProfile } from './queries';
 
 const useProfileQuery = createQuery(getProfile);
-const useNotificationQuery = createQuery(getNotifications);
+const usePokemonListQuery = createQuery(getPokemons);
+const usePokemonDetailQuery = createQuery(getPokemonByName);
 
-useProfileQuery.get().fetch();
+useProfileQuery.get().fetch(); // Prefetch profile query
 
 function Profile() {
   const { data } = useProfileQuery();
-  ...
-}
-
-function Notifications() {
-  const { data } = useNotificationsQuery();
   ...
 }
 
@@ -29,9 +25,20 @@ export default function App() {
 
       <Link
         href="/notifications"
-        onMouseEnter={() => useNotificationQuery.get().fetch()}
+        onMouseEnter={() => {
+          usePokemonListQuery.get().fetch(); // Prefetch pokemon list
+        }}
       >
-        Notifications Page
+        Pokemons Page
+      </Link>
+
+      <Link
+        href="/notifications"
+        onMouseEnter={() => {
+          usePokemonDetailQuery.get({ name: 'charmander' }).fetch(); // prefetch pokemon detail
+        }}
+      >
+        Charmander Page
       </Link>
     </div>
   )

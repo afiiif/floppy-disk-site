@@ -1,12 +1,16 @@
 # Custom Logger
 
-```jsx
+```jsx {6,9-10}
 import * as Sentry from '@sentry/react';
 import { createQuery } from 'floppy-disk';
 
 const usePokemonsQuery = createQuery(getPokemons, {
-  onError: (error) => {
+  onError: (error, { key }) => {
     Sentry.captureException(error);
+
+    // Or, if we want to capture final error (after all retries performed)
+    // const { isGoingToRetry, isGoingToRetryNextPage } = usePokemonsQuery.get(key);
+    // if (!isGoingToRetry && !isGoingToRetryNextPage) Sentry.captureException(error);
   },
 });
 ```

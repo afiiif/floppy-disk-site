@@ -15,5 +15,6 @@
   "window-focus-refetching": "Window Focus Refetching",
   "polling": "Auto Refetching / Polling",
   "suspense": "Suspense",
-  "custom-logger": "Custom Logger"
+  "custom-logger": "Custom Logger",
+  "query-cancellation": "Query Cancellation"
 }

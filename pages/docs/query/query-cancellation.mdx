@@ -1,0 +1,57 @@
+# Query Cancellation
+
+```jsx {1,4,6}
+let profileAbortController;
+const profileQuery = createQuery(
+  async () => {
+    profileAbortController = new AbortController();
+    const response = await fetch(profileUrl, {
+      signal: profileAbortController.signal;
+    });
+    ...
+  },
+  {
+    // If you want to cancel the fetch process when the component is unmounted
+    onLastUnsubscribe: () => profileAbortController.abort(),
+  }
+);
+
+<Button
+  // Cancel manually
+  onClick={() => profileAbortController.abort()}
+/>
+```
+
+For query with parameters:
+
+```jsx
+const productAbortController = new Map();
+const productQuery = createQuery(
+  async ({ id }, state) => {
+    const { keyHash } = state;
+    const controller = new AbortController();
+    productAbortController.set(keyHash, controller);
+    const response = await fetch(`${productUrl}/${id}`, {
+      signal: controller.signal;
+    });
+    ...
+  },
+  {
+    // If you want to cancel the fetch process when the component is unmounted
+    onLastUnsubscribe: (state) => {
+      const { keyHash } = state;
+      const controller = productAbortController.get(keyHash);
+      controller.abort();
+    },
+  }
+);
+
+<Button
+  // Cancel manually
+  onClick={() => {
+    const { keyHash } = productQuery.get({ id: 3 });
+    const controller = productAbortController.get(keyHash);
+    controller.abort();
+  }}
+/>
+```
