@@ -1,0 +1,206 @@
+---
+description: Introducing Floppy Disk, the Zustand-ReactQuery alternative for local, global, sync, or async state management.
+keywords: React, State Management, Floppy Disk, Store, TanStack-Query, Zustand, Alternative
+date: 2023-10-01T07:13:23.970Z
+author: [
+  { name: Afifudin, link: https://twitter.com/digimushrm },
+]
+---
+
+import Meta from './_components/Meta';
+
+<Meta />
+
+# Introducing Floppy Disk
+
+The Zustand-ReactQuery alternative for local, global, sync, or async state management.
+
+## Why?
+
+In the beginning, I made this library just as part of my learning journey.
+Not trying to re-invent the wheel, but I just **want to challange myself** whether I can build something like that.
+
+I always thought [Zustand](https://github.com/pmndrs/zustand) & [TanStack-Query](https://tanstack.com/query) (a.k.a React-Query) were really cool.
+I love the simplicity of Zustand.
+I am truly impressed with the completeness of the features offered by React-Query.
+So, it will be a really huge challange to replicate both functionalities.
+
+In the end, I managed to replicate more than 90% of their functionalities ([see comparison](/docs/comparison)),
+with the developer experience I desired, and some additional advantages.
+
+## How?
+
+1. **Zustand-Query**
+
+In the initial phase, I try to re-create something like React-Query using Zustand.
+A "Zutand-Query" 😆.
+But then I encountered difficulties because in Zustand, there is no store "key" that can be used as a query key.
+I feel like there is no way out unless I create something like Zustand, but with more power.
+
+2. **Zustand++**
+
+As I mentioned in the previously, finally I create a Zustand-like state manager, but with more features:
+
+<div>
+- Not only can create a "store", but it also can create "stores" that can be controlled by a store key.
+- Added store event handler: `onSubscribe`, `onUnsubscribe`, `onFirstSubscribe`, `onLastUnsubscribe`.
+</div>
+
+3. **Go Deeper Into React-Query and SWR**
+
+In this phase, I learned about:
+how to serialize a query key into a string,
+the different options naming between React-Query & SWR,
+the behavior of bi-directional query,
+race-condition prevention, React suspense, and many more.
+
+4. **The Born of Floppy Disk**
+
+Finally I managed to create:
+
+- A global state manager just like Zustand.
+- A data fetching state manager just like TanStack Query & SWR, but it tastes like Zustand.
+- A smaller bundle size package.
+
+```js
+import { create } from 'zustand'; // 3.3 kB (gzipped: 1.5 kB)
+import { createStore } from 'floppy-disk'; // 1.4 kB (gzipped: 714 B) 🎉
+
+import { QueryClient, QueryClientProvider, useQuery, useInfiniteQuery, useMutation } from '@tanstack/react-query'; // 41 kB (gzipped: 11 kB)
+import { createQuery, createMutation } from 'floppy-disk'; // 9.5 kB (gzipped: 3.2 kB) 🎉
+```
+
+<div className="h-6" />
+
+## Comparison
+
+> In the end, I managed to replicate more than 90% of their functionalities ([see comparison](/docs/comparison)),
+> with the developer experience I desired, and some additional advantages.
+
+I want to explain the **developer experience** part and the **additional advantages** part.
+
+### Query Key & Query Function
+
+I'm not a fan of the experience in React-Query regarding the use of a **query key** to refer a query.
+It's a bit difficult to ensure its uniqueness.
+In React-Query, we can't be 100% sure if there is no duplicate query key,
+even if we already use [Query Key factories](https://tkdodo.eu/blog/effective-react-query-keys#use-query-key-factories).
+
+```jsx
+const MY_QUERY = 'my-query';
+const MY_OTHER_QUERY = 'my-query'; // 🔴
+
+const myQuery = useQuery([MY_QUERY], myQueryFn);
+const myOtherQuery = useQuery([MY_OTHER_QUERY], otherFunction); // 🔴
+
+const state = queryClient.getQueryState({ queryKey: MY_QUERY });
+//    ^ Is this state comes from myQueryFn or otherFunction?
+```
+
+In Floppy Disk, we refer a query with the query object itself, no ambiguity:
+
+```jsx
+const useQuery = createQuery(myQueryFn);
+const myOtherQuery = createQuery(otherFunction);
+
+useQuery.get();
+myOtherQuery.get();
+useQuery.invalidate();
+myOtherQuery.invalidate();
+```
+
+### Optimistic Update
+
+Floppy Disk gives a simpler code for optimistic update,
+which automatically cancel the pending query to prevent race condition,
+and return a revert & invalidate function.
+
+```jsx
+const { revert, invalidate } = useProfileQuery.optimisticUpdate({
+  response: payload,
+});
+
+// Specific id:
+const { revert, invalidate } = useProductDetailQuery.optimisticUpdate({
+  key: { id: payload.id },
+  response: payload,
+});
+```
+
+### Bi-Directional Query
+
+In Floppy Disk, bi-directional query is treated like 2 independent infinite query.
+So, we can start refetch from the initial page and have a parallel refeching for next & previous pages.
+Therefore, we can obtain the information in which direction we are fetching/refetching.
+
+<section className="pt-6 pb-2 -mb-2 overflow-x-auto -mr-6">
+<div className="flex gap-3 [&_ol]:!mt-0 text-sm [&_p_strong]:text-base">
+
+<div className="p-3 border rounded min-w-[15rem]">
+
+**React-Query:**
+
+Initial:
+
+1. Initial fetch (page 5)
+2. Fetch next (page 6)
+3. Fetch previous (page 4)
+
+Pages: [4, 5, 6]
+
+Refetch:
+
+1. Refetch (page 4)
+2. Fetch next (page 5)
+3. Fetch next (page 6)
+
+</div>
+<div className="p-3 border rounded min-w-[16rem]">
+
+**Floppy Disk:**
+
+Initial:
+
+1. Initial fetch (page 5)
+2. Fetch next (page 6)
+3. Fetch previous (page 4)
+
+Pages: \{ next: [5, 6], prev: [4] \}
+
+Refetch:
+
+1. **Refetch initial page** (page 5)
+2. Fetch next pages (page 6) and previous pages (page 4) parallelly sequentially
+
+</div>
+
+</div>
+</section>
+
+It was inspired from this issue: https://github.com/TanStack/query/issues/1401.
+
+### Misc.
+
+There are some other improvement:
+
+<div>
+- A simplified DX for [infinite query](/docs/query/paginated-or-infinite-query)
+- A better [query state explanation](/docs/query/introduction#query-state--network-fetching-state)
+- More ways to handle `onSuccess` / `onError` in [mutation](/docs/mutation/introduction)
+- Easier to control subscription (re-render)
+- And a lot more, [see docs](/docs/getting-started)
+</div>
+
+<div className="h-6" />
+
+## Epilogue
+
+[Zustand](https://github.com/pmndrs/zustand) & [React-Query](https://tanstack.com/query) are awesome production-ready library.
+If you love both libraries, then I think you should **try** [Floppy Disk](/), but might not need to switch to it,
+unless it really solved the problem you encounted when using Zustand/React-Query.
+
+<div className="text-sm pt-12 opacity-80 hover:opacity-100">
+Anyway, why is it called "Floppy Disk"?<br/>
+I put a data in it, and it was a tiny store, then "Floppy Disk" comes to my mind.
+Also, the nowadays generation seems to be unfamiliar with the real object of a "save icon" 😅, I think it will help them knowing its real name.
+</div>

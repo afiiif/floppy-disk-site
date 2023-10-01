@@ -14,12 +14,19 @@ const themeConfig = {
       <div>Floppy Disk</div>
     </div>
   ),
-  useNextSeoProps: () => ({
-    titleTemplate: '%s – Floppy Disk',
-  }),
+  useNextSeoProps: () => {
+    const { route } = useRouter();
+    if (route === '/blog') return { titleTemplate: '%s' };
+    if (route.startsWith('/blog/')) return { titleTemplate: '%s – 📚 Floppy Disk Blog' };
+    return { titleTemplate: '%s – Floppy Disk' };
+  },
   head: () => {
     const { frontMatter } = useConfig();
     const ogImage = frontMatter.image || 'https://floppy-disk.vercel.app/floppy-disk-banner.jpg';
+    const { route } = useRouter();
+    const isBlog = route.startsWith('/blog/');
+    const author =
+      typeof frontMatter.author === 'object' ? frontMatter.author[0].name : frontMatter.author;
     return (
       <>
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
@@ -29,6 +36,10 @@ const themeConfig = {
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <meta property="og:image" content={ogImage} />
         <meta name="twitter:image" content={ogImage} />
+        {isBlog && <meta name="og:type" content="article" />}
+        {frontMatter.keywords && <meta name="keywords" content={frontMatter.keywords} />}
+        {frontMatter.date && <meta name="article:published_time" content={frontMatter.date} />}
+        {author && <meta name="article:author" content={author} />}
       </>
     );
   },
@@ -50,6 +61,20 @@ const themeConfig = {
   },
   sidebar: {
     titleComponent: ({ title }) => (title.endsWith('Introduction') ? 'Introduction' : title),
+  },
+  feedback: {
+    content: () => {
+      const { route, locale } = useRouter();
+      if (route.startsWith('/blog/')) return null;
+      return 'Question? Give us feedback →';
+    },
+  },
+  editLink: {
+    text: () => {
+      const { route, locale } = useRouter();
+      if (route.startsWith('/blog/')) return null;
+      return 'Edit this page on GitHub →';
+    },
   },
 };
 
