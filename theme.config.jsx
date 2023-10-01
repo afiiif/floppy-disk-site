@@ -21,10 +21,11 @@ const themeConfig = {
     return { titleTemplate: '%s – Floppy Disk' };
   },
   head: () => {
+    const DEFAULT_KEYWORDS = 'Floppy Disk, React, State Management, JS, JavaScript, NPM, Store';
     const { frontMatter } = useConfig();
     const ogImage = frontMatter.image || 'https://floppy-disk.vercel.app/floppy-disk-banner.jpg';
     const { route } = useRouter();
-    const isBlog = route.startsWith('/blog/');
+    const isBlog = route.startsWith('/blog');
     const author =
       typeof frontMatter.author === 'object' ? frontMatter.author[0].name : frontMatter.author;
     return (
@@ -36,10 +37,11 @@ const themeConfig = {
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <meta property="og:image" content={ogImage} />
         <meta name="twitter:image" content={ogImage} />
-        {isBlog && <meta name="og:type" content="article" />}
-        {frontMatter.keywords && <meta name="keywords" content={frontMatter.keywords} />}
+        <meta name="og:type" content={isBlog ? 'article' : 'website'} />
+        <meta name="keywords" content={frontMatter.keywords || DEFAULT_KEYWORDS} />
         {frontMatter.date && <meta name="article:published_time" content={frontMatter.date} />}
-        {author && <meta name="article:author" content={author} />}
+        {isBlog && author && <meta name="article:author" content={author} />}
+        {!isBlog && <meta name="author" content="Muhammad Afifudin" />}
       </>
     );
   },
