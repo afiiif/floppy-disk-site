@@ -11,14 +11,17 @@ const themeConfig = {
       <div className="-rotate-12 transition-transform group-hover:rotate-12 group-hover:scale-125">
         💾
       </div>
-      <div>Floppy Disk</div>
+      <div>
+        Floppy<span className="ml-0.5">Disk</span>
+        <small className="ml-0.5 text-xs font-normal">.JS</small>
+      </div>
     </div>
   ),
   useNextSeoProps: () => {
     const { route } = useRouter();
     if (route === '/blog') return { titleTemplate: '%s' };
     if (route.startsWith('/blog/')) return { titleTemplate: '%s – 📚 Floppy Disk Blog' };
-    return { titleTemplate: '%s – Floppy Disk' };
+    return { titleTemplate: '%s – Floppy Disk JS' };
   },
   head: () => {
     const DEFAULT_KEYWORDS = 'Floppy Disk, React, State Management, JS, JavaScript, NPM, Store';
