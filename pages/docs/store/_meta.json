@@ -4,5 +4,7 @@
   "interception": "Interception",
   "watch-component": "Watch Component",
   "silent-update": "Silent Update",
-  "as-local-state": "As Local State"
+  "as-local-state": "As Local State",
+  "persist-state": "Persist State",
+  "with-immer": "With Immer"
 }

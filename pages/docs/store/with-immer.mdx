@@ -1,0 +1,36 @@
+import Example from '@/pages/_components/Example';
+
+# With Immer
+
+```js {21-23}
+import { produce } from 'immer';
+
+const useTodoStore = createStore(({ set }) => ({
+  todos: [
+    { title: 'Learn JavaScript', done: true },
+    { title: 'Try Immer', done: false },
+  ],
+
+  // Without immer
+  toggleTodoWithoutImmer: (index) => {
+    set(({ todos }) => {
+      const nextTodos = todos.slice(); // Shallow clone the array
+      nextTodos[index] = { ...nextTodos[index], done: !nextTodos[index].done };
+      return { todos: nextTodos };
+    });
+  },
+
+  // With immer
+  toggleTodo: (index) => {
+    set(
+      produce(({ todos }) => {
+        todos[index].done = !todos[index].done;
+      })
+    );
+  },
+}));
+```
+
+<Example path="react/with-immer" />
+
+View Immer docs: https://immerjs.github.io/immer/

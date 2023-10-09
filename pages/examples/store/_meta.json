@@ -4,5 +4,7 @@
   "store-event": "Store Event",
   "interception": "Interception",
   "watch-component": "Watch Component",
-  "local-state": "As Local State"
+  "local-state": "As Local State",
+  "persist-state": "Persist State",
+  "with-immer": "With Immer"
 }
