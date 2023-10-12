@@ -16,7 +16,7 @@ export default function Code({ content, href }: Props) {
           href={`/docs/${href}`}
           className={cn(
             className,
-            'hover:nx-text-primary-600 hover:underline hover:decoration-dashed',
+            'hover:nx-text-primary-600 underline decoration-[hsl(var(--nextra-primary-hue)100%_45%/0.8)] decoration-dashed underline-offset-4 hover:decoration-[hsl(var(--nextra-primary-hue)100%_45%/1)]',
           )}
         >
           {content}
