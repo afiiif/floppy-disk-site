@@ -1,3 +1,121 @@
 # Experimental
 
-🚧 _Coming soon..._
+## Fetcher
+
+An abstraction layer used to create query/mutation function for REST or GraphQL API.
+The query/mutation function will be marked as success if only the response is a valid JSON.
+This `fetcher` utility will handle errors under the hood.
+
+### REST API
+
+**Query:**
+
+```js
+import { createQuery, fetcher } from 'floppy-disk';
+
+const useProfileQuery = createQuery(
+  fetcher({ url: '/api/profile' })
+);
+const useProductsQuery = createQuery(
+  fetcher({ url: '/api/products' })
+);
+const useProductDetailQuery = createQuery(
+  fetcher(({ id }) => ({ url: `/api/products/${id}` })) // using a function
+);
+
+// Inside a component:
+useProfileQuery(); // 🌐 [GET] /api/profile
+useProductsQuery(); // 🌐 [GET] /api/products
+useProductsQuery({ search: 'floppy', sort: 'asc' }); // 🌐 [GET] /api/products?search=floppy%20disk&sort=asc
+useProductDetailQuery({ id: '3' }); // 🌐 [GET] /api/products/3
+
+// Infinite query
+const useNotificationsQuery = createQuery(
+  fetcher((_, { pageParam = 1 }) => ({
+    url: '/api/notifications',
+    params: { page: pageParam, per_page: 10 },
+  }))
+);
+
+useNotificationsQuery(); // 🌐 [GET] /api/notifications?page=1&per_page=10
+```
+
+**Mutation:**
+
+```js
+const useEditProfileMutation = createMutation(
+  fetcher({ url: '/api/profile', method: 'PUT' })
+);
+const useLogoutMutation = createMutation(
+  fetcher({ url: '/api/logout', method: 'POST' })
+);
+
+// Inside a component:
+const { mutate: logout } = useLogoutMutation();
+logout(); // 🌐 [POST] /api/logout
+
+const { mutate: editProfile } = useEditProfileMutation();
+editProfile({ name: 'floppy-disk', isAmazing: true });
+// 🌐 [PUT] /api/profile
+//    with request body { name: 'floppy-disk', isAmazing: true }
+```
+
+### GraphQL API
+
+**Query:**
+
+```js {24}
+import { createQuery, fetcher } from 'floppy-disk';
+
+const usePokemonsQuery = createQuery(
+  fetcher({
+    url: 'https://beta.pokeapi.co/graphql/v1beta',
+    query: `
+      query Pokemons {
+        pokemon_v2_pokemon {
+          id
+          name
+          height
+          weight
+        }
+      }`
+  })
+);
+usePokemonsQuery();
+
+// With variables
+const useSearchPokemonsQuery = createQuery(
+  fetcher({
+    url: 'https://beta.pokeapi.co/graphql/v1beta',
+    query: `
+      query Pokemon($search: String) {
+        pokemon_v2_pokemon(where: { name:{ _like: $search } }) {
+          id
+          name
+        }
+      }`
+  })
+);
+useSearchPokemonsQuery({ search: "%cha%" });
+```
+
+**Mutation:**
+
+```js {5}
+const useSavePokemonMutation = createMutation(
+  fetcher({
+    url: 'https://beta.pokeapi.co/graphql/v1beta',
+    query: `
+      mutation SavePokemon($pokemon: Pokemon!) {
+        pokemon_v2_save_pokemon(pokemon: $pokemon) {
+          success
+          message
+        }
+      }`
+  })
+);
+const { mutate: savePokemon } = useSavePokemonMutation();
+savePokemon({
+  pokemon: { name: 'floppy', weight: 12, height: 34 }
+});
+```
