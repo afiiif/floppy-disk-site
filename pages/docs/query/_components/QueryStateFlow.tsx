@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 export default function QueryStateFlow() {
   return (
-    <section className="-mr-6 overflow-x-auto pb-4 pt-8">
+    <section className="-ml-6 -mr-6 overflow-x-auto pb-4 pl-6 pt-8">
       <div className="relative w-[41rem] text-sm">
         <svg
           viewBox="0 0 440 550"
@@ -36,7 +36,7 @@ export default function QueryStateFlow() {
           <b>Initial State</b>
           <ul>
             <li>status: "loading"</li>
-            <li>
+            <li className="highlight-state">
               isLoading: <span className="text-green-500">true</span>
             </li>
             <li>isSuccess: false</li>
@@ -60,7 +60,7 @@ export default function QueryStateFlow() {
             <ul>
               <li>status: "success"</li>
               <li>isLoading: false</li>
-              <li>
+              <li className="highlight-state">
                 isSuccess: <span className="text-green-500">true</span>
               </li>
               <li>isError: false</li>
@@ -83,7 +83,7 @@ export default function QueryStateFlow() {
             <ul>
               <li>status: "success"</li>
               <li>isLoading: false</li>
-              <li>
+              <li className="highlight-state">
                 isSuccess: <span className="text-green-500">true</span>
               </li>
               <li>isError: false</li>
@@ -126,7 +126,7 @@ export default function QueryStateFlow() {
             <li>status: "error"</li>
             <li>isLoading: false</li>
             <li>isSuccess: false</li>
-            <li>
+            <li className="highlight-state">
               isError: <span className="text-green-500">true</span>
             </li>
             <li className="mt-2 border-t border-dashed pt-1.5">isWaiting: false</li>
@@ -137,33 +137,63 @@ export default function QueryStateFlow() {
 
       <style jsx>
         {`
+          :global(.dark) {
+            .card {
+              border-color: rgb(234 179 8); /* yellow-500 */
+              &.waiting-state {
+                background-color: rgb(37 99 235 / 0.1);
+              }
+              &:not(.waiting-state) {
+                b {
+                  border-color: rgb(234 179 8); /* yellow-500 */
+                  background: rgb(234 179 8 / 0.07); /* yellow-500 */
+                }
+                .border-dashed {
+                  border-color: rgb(234 179 8); /* yellow-500 */
+                }
+              }
+            }
+          }
           .card {
-            width: 10rem/* 160px */;
-            border-radius: 0.25rem/* 4px */;
-            border-width: 1px;
-            overflow: hidden;
+            width: 10rem; /* 160px */
+            border-radius: 4px;
+            border: 1px solid rgb(148 163 184); /* slate-400 */
+            .border-dashed {
+              border-color: rgb(148 163 184); /* slate-400 */
+            }
           }
           .card :global(b) {
             display: block;
-            padding: 0.5rem/* 8px */;
-            border-bottom: 1px solid #e5e7eb;;
+            padding: 0.5rem; /* 8px */
+            border-bottom: 1px solid rgb(148 163 184); /* slate-400 */
+            border-radius: 3px 3px 0 0;
+            background: rgb(234 179 8 / 0.15); /* yellow-500 */
           }
           .card :global(ul) {
-            padding: 0.5rem/* 8px */;
+            padding: 0.5rem; /* 8px */
           }
           .card.waiting-state {
             border-color: rgb(37 99 235);
-            background-color: rgb(37 99 235 / 0.03);
+            background-color: rgb(37 99 235 / 0.04);
+            .border-dashed {
+              border-color: rgb(37 99 235);
+            }
           }
           .card.waiting-state :global(b) {
             border-color: rgb(37 99 235);
+            background-color: transparent;
           }
-        `}
-      </style>
-      <style jsx global>
-        {`
-          .dark .card.waiting-state {
-            background-color: rgb(37 99 235 / 0.1);
+          .highlight-state {
+            position: relative;
+            &::before {
+              position: absolute;
+              display: block;
+              content: '';
+              border: 0.5rem solid transparent;
+              border-left-color: rgb(34 197 94);
+              left: -19px;
+              top: 3px;
+            }
           }
         `}
       </style>
