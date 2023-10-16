@@ -1,0 +1,101 @@
+# Firebase/Supabase Integration
+
+Motivation:
+
+- We want to call a subscribe function just once.
+- We want that subscibe function is not being called when there is no one consuming it.
+- We want to always call the unsubscribe function whenever there is no more component-that-consume-it being rendered.
+
+```tsx
+import { initializeApp } from 'firebase/app';
+import { getAuth, Unsubscribe, User } from 'firebase/auth';
+
+import { createStore } from 'floppy-disk';
+
+const app = initializeApp({ /* ... */ });
+const auth = getAuth(app);
+
+type AuthStore = {
+  isLoading: boolean;
+  user: User | null;
+  error: Error | null;
+};
+
+export const useAuth = createStore<AuthStore>(
+  { isLoading: true, user: null, error: null }, // Initial state
+  (() => {
+    let unsubscribeAuthState: Unsubscribe = () => {};
+    const subscribeAuthState = () => {
+      unsubscribeAuthState = auth.onAuthStateChanged(
+        (user) => useAuth.set({ isLoading: false, user }),
+        (error) => useAuth.set({ isLoading: false, error }),
+      );
+    };
+    return {
+      onFirstSubscribe: subscribeAuthState,
+      onLastUnsubscribe: unsubscribeAuthState,
+    };
+  })(),
+);
+```
+
+By doing this, we can make sure that:
+
+- The `auth.onAuthStateChanged` will be called just once.
+- The `auth.onAuthStateChanged` will only be called if there is at least one subscriber.
+- The unsubscribe function returned from `auth.onAuthStateChanged` will be called when there is no more subsciber.
+
+Same goes for when we need to subscribe a Cloud Firestore documents.<br/>
+(See more: https://firebase.google.com/docs/firestore/query-data/listen)
+
+```tsx
+export const useMyDoc = createStore(
+  { isLoading: true, data: null, error: null },
+  (() => {
+    let unsubscribDoc: Unsubscribe = () => {};
+    return {
+      onFirstSubscribe: () => {
+        unsubscribDoc = onSnapshot(
+          doc(db, 'cities', 'SF'),
+          (doc) => useMyDoc.set({ isLoading: false, data: doc.data() }),
+          (error) => useMyDoc.set({ isLoading: false, error }),
+        );
+      },
+      onLastUnsubscribe: unsubscribDoc,
+    };
+  })(),
+);
+```
+
+Or when we need dynamic subsciption:
+
+```tsx
+export const useMyDoc = createStores(
+  ({ keyHash }) => ({
+    keyHash, // string
+    isLoading: true,
+    data: null,
+    error: null,
+  }),
+  (() => {
+    const Subscription = new Map<string, Unsubscribe>();
+    return {
+      onFirstSubscribe: ({ key }) => {
+        Subscription.set(
+          keyHash,
+          onSnapshot(
+            doc(db, 'cities', key.cityCode),
+            (doc) => useMyDoc.set({ isLoading: false, data: doc.data() }),
+            (error) => useMyDoc.set({ isLoading: false, error }),
+          ),
+        );
+      },
+      onLastUnsubscribe: Subscription.get(keyHash),
+    };
+  })(),
+);
+
+// Inside a component:
+const { isLoading, data, error } = useMyDoc({ cityCode: 'SF' });
+const anotherDocQuery            = useMyDoc({ cityCode: 'CA' });
+```

@@ -13,6 +13,7 @@
   "typescript": "TypeScript",
   "graphql": "GraphQL",
   "react-native": "React Native",
+  "firebase-supabase": "Firebase/Supabase Integration",
   "--separator1--": {
     "type": "separator",
     "title": ""
