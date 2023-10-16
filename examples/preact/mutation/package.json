@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "floppy-disk": "^2.7.2",
+    "floppy-disk": "^2.11.1-experimental.2",
     "preact": "^10.16.0"
   },
   "devDependencies": {
