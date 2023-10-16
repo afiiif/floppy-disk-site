@@ -2,14 +2,14 @@ import Link from 'next/link';
 
 export default function BlogList() {
   return (
-    <ol className="pt-10">
+    <ol className="space-y-8 pt-10">
       <li>
         <Link
           href="/blog/introducing-floppy-disk"
           className="group block border p-5 hover:border-[hsl(var(--nextra-primary-hue)100%_45%)]"
         >
           <time className="text-sm opacity-60">October 1st, 2023</time>
-          <h2 className="text-xl font-bold">Introducing Floppy Disk</h2>
+          <h2 className="text-xl font-bold">Introducing Floppy Disk JS</h2>
           <p className="pt-2 opacity-80">
             The Zustand-ReactQuery alternative for local, global, sync, or async state management.
             <br />
