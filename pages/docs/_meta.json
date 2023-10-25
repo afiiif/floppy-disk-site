@@ -19,9 +19,7 @@
     "title": ""
   },
   "api": "API",
-  "experimental": {
-    "display": "hidden"
-  },
+  "experimental": "Experimental Features",
   "--separator2--": {
     "type": "separator",
     "title": ""
