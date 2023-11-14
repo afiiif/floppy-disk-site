@@ -7,7 +7,7 @@ export default function Banner() {
             <div className="relative">
               <div
                 aria-hidden
-                className="pointer-events-none absolute w-full bg-gradient-to-br from-white/0 from-40% to-black/20 bg-clip-text pb-4 text-4xl font-extrabold text-transparent md:text-5xl xl:text-6xl"
+                className="pointer-events-none absolute w-full bg-gradient-to-b from-white/0 from-40% to-black/20 bg-clip-text pb-4 text-4xl font-extrabold text-transparent md:text-5xl xl:text-6xl"
               >
                 4.3 kB Powerful
                 <div>[Global/Local, Sync/Async]</div>
