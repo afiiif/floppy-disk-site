@@ -159,12 +159,12 @@ function Lines() {
         <path d="M40,14 L40,0" className="path moving" />
         <path d="M37,13 L30,13 L30,7" className="path moving" />
         <path d="M44,13 L50,13 L50,7" className="path moving" />
-        <path d="M37,16.5 L30,16.5 L30,31" className="path moving" />
+        <path d="M37,16.5 L30,16.5 L30,25" className="path moving" />
         <path d="M40,40 L40,17" className="path moving" />
         {isMuted ? (
-          <path d="M44,16.5 L50,16.5 L50,31" className="path" />
+          <path d="M44,16.5 L50,16.5 L50,25" className="path" />
         ) : (
-          <path d="M44,16.5 L50,16.5 L50,31" className="path moving" />
+          <path d="M44,16.5 L50,16.5 L50,25" className="path moving" />
         )}
       </svg>
       <svg
