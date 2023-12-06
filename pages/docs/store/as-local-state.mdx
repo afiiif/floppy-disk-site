@@ -41,11 +41,20 @@ function Parent() {
 
 function CatAge() {
   const { age } = useCatStoreContext()((state) => [state.age]);
+
+  // Shorthand after v1.13.0:
+  // const age = useCatStoreContext()('age');
+
   return <div>Age: {age}</div>;
 }
+
 function CatIsSleeping() {
   const useCatStore = useCatStoreContext();
   const { isSleeping } = useCatStore((state) => [state.isSleeping]);
+
+  // Shorthand after v1.13.0:
+  // const isSleeping = useCatStore('isSleeping');
+
   return (
     <>
       <div>Is Sleeping: {String(isSleeping)}</div>

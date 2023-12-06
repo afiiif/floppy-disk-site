@@ -51,7 +51,7 @@ function Card1() {
 }
 
 function Card2() {
-  const { count } = useMyStore((state) => [state.count]);
+  const count = useMyStore('count');
   return (
     <div className="flex-1 sm:-translate-y-12">
       <RenderCounter />
@@ -61,7 +61,7 @@ function Card2() {
 }
 
 function Card3() {
-  const { shape } = useMyStore((state) => [state.shape]);
+  const shape = useMyStore('shape');
   return (
     <div className="flex-1">
       <RenderCounter />

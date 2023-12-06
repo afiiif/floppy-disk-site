@@ -176,3 +176,18 @@ useProductStores({ sort: 'asc', keyword: 'floppy' });
 ```
 
 If the hashed store key is same, it will use the same stored state.
+
+Note that we don't need to memoize the **store key** / **query key**.
+
+```jsx
+function Component() {
+  const storeKey = useMemo(() => ({ keyword: 'floppy' }), []); // ❌
+  const storeData = useProductStores(storeKey); // ❌
+  const storeData = useProductStores({ keyword: 'floppy' }); // ✅
+
+  const queryKey = useMemo(() => ({ generation: 'ii', sort: 'asc' }), []); // ❌
+  const { isLoading, data } = usePokemonsQuery(queryKey); // ❌
+  const { isLoading, data } = usePokemonsQuery({ generation: 'ii', sort: 'asc' }); // ✅
+  ...
+}
+```

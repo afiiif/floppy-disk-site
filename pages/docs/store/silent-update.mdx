@@ -16,7 +16,7 @@ const decreaseAgeSilently = () => {
 };
 //                👇 Will not re-render
 function Cat() {
-  const { age } = useCatStore((state) => [state.age]);
+  const age = useCatStore('age');
   return <div>Cat's age: {age}</div>;
 }
 ```

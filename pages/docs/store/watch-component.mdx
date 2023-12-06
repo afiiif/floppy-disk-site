@@ -4,7 +4,7 @@ import Example from '@/pages/_components/Example';
 
 Prevent re-render using `Watch`.
 
-```jsx {26-31}
+```jsx {27-32, 36-39}
 const useCatStore = createStore(({ set }) => ({
   age: 0,
   isSleeping: false,
@@ -30,13 +30,20 @@ function CatPageOptimized() {
   return (
     <main>
       <HeavyComponent1 />
+
       <useCatStore.Watch
-        selectDeps={(state) => [state.age]}
-        render={({ age }) => {
-          return <div>Cat's age: {age}</div>;
+        selectDeps={(state) => [state.age, state.isSleeping]}
+        render={({ age, isSleeping }) => {
+          return <div>Cat's age: {age} ({isSleeping ? '😴' : '😗'})</div>;
         }}
       />
+
       <HeavyComponent2 />
+
+      <useCatStore.Watch
+        selectDeps="age"
+        render={(age) => <div>Cat's age: {age}</div>}
+      />
     </main>
   );
 }

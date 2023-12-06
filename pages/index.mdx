@@ -40,10 +40,10 @@ Its DX will be very similar to Zustand's. [[See comparison]](/docs/comparison)
 
 ```js
 import { create } from 'zustand'; // 3.3 kB (gzipped: 1.5 kB)
-import { createStore } from 'floppy-disk'; // 1.4 kB (gzipped: 725 B) 🎉
+import { createStore } from 'floppy-disk'; // 1.4 kB (gzipped: 750 B) 🎉
 
-import { QueryClient, QueryClientProvider, useQuery, useInfiniteQuery, useMutation } from '@tanstack/react-query'; // 41 kB (gzipped: 11 kB)
-import { createQuery, createMutation } from 'floppy-disk'; // 9.6 kB (gzipped: 3.2 kB) 🎉
+import { QueryClient, QueryClientProvider, useQuery, useInfiniteQuery, useMutation } from '@tanstack/react-query'; // 31.7 kB kB (gzipped: 9.2 kB)
+import { createQuery, createMutation } from 'floppy-disk'; // 9.7 kB (gzipped: 3.3 kB) 🎉
 ```
 
 <Callout type="info" emoji="🍽">
@@ -102,12 +102,12 @@ import { createQuery, createMutation } from 'floppy-disk'; // 9.6 kB (gzipped: 3
     }
 
     function Card2() {
-      const { count } = useMyStore((state) => [state.count]);
+      const count = useMyStore('count');
       return <div>Count: {count}</div>;
     }
 
     function Card3() {
-      const { shape } = useMyStore((state) => [state.shape]);
+      const shape = useMyStore('shape');
       return <div>Shape: {shape}</div>;
     }
 
@@ -443,7 +443,7 @@ import { createQuery, createMutation } from 'floppy-disk'; // 9.6 kB (gzipped: 3
 <section className="[&>ul>li]:mb-8 [&>ul>li>strong]:text-xl">
 - **Create Store**
   - Get/set store inside/outside component
-  - Custom reactivity (like `useEffect`'s dependency array)
+  - Very simple way to customize the reactivity (state update subscription)
   - Support middleware
   - Set state interception
   - Store event (`onSubscribe`, `onUnsubscribe`, etc.)

@@ -24,8 +24,8 @@ dependencies:
     specifier: 13.4.19
     version: 13.4.19(eslint@8.49.0)(typescript@5.2.2)
   floppy-disk:
-    specifier: ^2.11.1
-    version: 2.11.1
+    specifier: ^2.13.0
+    version: 2.13.0
   next:
     specifier: 13.4.19
     version: 13.4.19(react-dom@18.2.0)(react@18.2.0)
@@ -2531,8 +2531,8 @@ packages:
     resolution: {integrity: sha512-XGozTsMPYkm+6b5QL3Z9wQcJjNYxp0CYn3U1gO7dwD6PAqU1SVWZxI9CCg3z+ml3YfqdPnrBehaBrnH2AGKbNA==}
     dev: false
 
-  /floppy-disk@2.11.1:
-    resolution: {integrity: sha512-DOCv1FAaOnFVeArgwrJdhC0J67XaJ/tXWwI37d93+e7uF/EXPo3cveInfrT8dZ7zh1CuCKsLWOoVU2l7w84BOA==}
+  /floppy-disk@2.13.0:
+    resolution: {integrity: sha512-y68jNhVt1tIa5gReYnw4VZ9NDQI/8xy2giz+tl/55hm04M5ASOttsp8GmYehVFzleyhu3tuaA74JWW0+XNaJ5w==}
     dev: false
 
   /focus-visible@5.2.0:
