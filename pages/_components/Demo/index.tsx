@@ -189,6 +189,7 @@ function Lines() {
             stroke: #22c55e;
             stroke-width: 0.18;
             stroke-dasharray: 0.8;
+            transform: translateZ(0); /* Bug in Chrome - https://stackoverflow.com/a/48451959/10920294 */
           }
           .moving {
             animation: movingDashedLine 20s infinite linear;
