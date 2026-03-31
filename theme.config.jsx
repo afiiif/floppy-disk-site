@@ -6,6 +6,22 @@ import { useConfig } from 'nextra-theme-docs';
 const themeConfig = {
   docsRepositoryBase: 'https://github.com/afiiif/floppy-disk-site/blob/main',
   project: { link: 'https://github.com/afiiif/floppy-disk' },
+  banner: {
+    text: (
+      <>
+        <a href="https://github.com/afiiif/floppy-disk#readme">Version 3 is now available!</a>{' '}
+        <span className="hidden sm:inline">
+          Please refer to the updated documentation{' '}
+          <a
+            href="https://github.com/afiiif/floppy-disk#readme"
+            className="nx-text-primary-600 hover:underline"
+          >
+            here
+          </a>
+        </span>
+      </>
+    ),
+  },
   logo: (
     <div className="group flex items-center gap-3 py-2.5 pr-2.5 text-xl font-bold">
       <div className="-rotate-12 transition-transform group-hover:rotate-12 group-hover:scale-125">
