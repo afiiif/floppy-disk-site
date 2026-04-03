@@ -1,0 +1,13 @@
+{
+  "concepts": "Concepts",
+  "query": "Query",
+  "paginated-query": "Paginated Query",
+  "ssr-ssg": "Initial Query Data (SSR/SSG)",
+  "query-invalidation": "Query Invalidation",
+  "optimistic-update": "Optimistic Update",
+  "infinite-scroll": "Infinite Scroll",
+  "bi-directional": "Bi-directional Query",
+  "error-retries": "Error Retries",
+  "mutation": "Mutation",
+  "abort-controller": "Using Abort Controller"
+}

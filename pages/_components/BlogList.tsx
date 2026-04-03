@@ -8,12 +8,11 @@ export default function BlogList() {
           href="/blog/introducing-floppy-disk"
           className="group block border p-5 hover:border-[hsl(var(--nextra-primary-hue)100%_45%)]"
         >
-          <time className="text-sm opacity-60">October 1st, 2023</time>
-          <h2 className="text-xl font-bold">Introducing Floppy Disk JS</h2>
+          <time className="text-sm opacity-60">April 3st, 2026</time>
+          <h2 className="text-xl font-bold">(Re)Introducing FloppyDisk.ts</h2>
           <p className="pt-2 opacity-80">
-            The Zustand-ReactQuery alternative for local, global, sync, or async state management.
-            <br />
-            Why? & how?
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate sapiente, rerum aut
+            aperiam eos quae et laboriosam consequatur labore earum.
           </p>
           <div className="nx-text-primary-600 pt-4">
             Read more <span className="transition-all group-hover:ml-1.5">→</span>

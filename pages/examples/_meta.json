@@ -2,5 +2,6 @@
   "store": "Store",
   "stores": "Stores",
   "query": "Query",
+  "infinite-query": "Infinite Query",
   "mutation": "Mutation"
 }

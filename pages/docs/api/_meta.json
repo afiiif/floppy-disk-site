@@ -1,0 +1,7 @@
+{
+  "createStore": "createStore",
+  "createStores": "createStores",
+  "createQuery": "createQuery",
+  "createMutation": "createMutation",
+  "useMutation": "useMutation"
+}
