@@ -91,11 +91,10 @@ Use it in your component:
 
 ```tsx
 function PlantDetail({ id }) {
-  const usePlantDetailQuery = plantDetailQuery({ id: 1 });
+  const usePlantDetailQuery = plantDetailQuery({ id });
   const { data, error } = usePlantDetailQuery();
 
   if (!data && !error) return <div>Loading...</div>;
-
   if (error) return <div>Error: {error.message}</div>;
 
   return <div>Name: {data.name}, damage: {data.damage}</div>;
@@ -124,11 +123,10 @@ Use it in your component:
 
 ```tsx
 function PlantDetail({ id }: { id: string }) {
-  const usePlantDetailQuery = plantDetailQuery({ id: 1 });
+  const usePlantDetailQuery = plantDetailQuery({ id });
   const { data, error } = usePlantDetailQuery();
 
   if (!data && !error) return <div>Loading...</div>;
-
   if (error) return <div>Error: {error.message}</div>;
 
   return <div>Name: {data.name}, damage: {data.damage}</div>;

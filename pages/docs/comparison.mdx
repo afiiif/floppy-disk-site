@@ -97,11 +97,10 @@ const userDetailQuery = createQuery<GetUserByIdResponse, { id: string }>(
 
 ```tsx
 function UserDetail({ id }: { id: string }) {
-  const useUserDetailQuery = userDetailQuery({ id: 1 });
+  const useUserDetailQuery = userDetailQuery({ id });
   const { data, error } = useUserDetailQuery();
 
   if (!data && !error) return <div>Loading...</div>;
-
   if (error) return <div>Error: {error.message}</div>;
 
   return <div>Name: {data.name}, email: {data.email}</div>;

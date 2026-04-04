@@ -1,3 +1,111 @@
+import JsOrTs from '@/pages/_components/JsOrTs';
+
 # Query Guides
 
-🧑‍🍳 Documentation is being cooked...
+## Single Query
+
+Create a query using `createQuery`:
+
+```tsx
+import { createQuery } from "floppy-disk/react";
+
+const myQuery = createQuery(
+  myAsyncFn,
+  // { staleTime: 5000, revalidateOnFocus: false } <-- optional options
+);
+```
+
+Use it inside your component:
+
+```tsx
+const useMyQuery = myQuery();
+
+function MyComponent() {
+  const { data, error } = useMyQuery();
+
+  if (!data && !error) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return <div>{data.foo} {data.bar}</div>;
+}
+```
+
+## Keyed Query (Dynamic Params)
+
+You can create parameterized queries:
+
+<JsOrTs>
+
+<>
+
+```tsx
+import { createQuery } from "floppy-disk/react";
+
+import { getUserById } from "../utils"; // Your own module
+
+const userQuery = createQuery(
+  getUserById,
+  // { staleTime: 5000, revalidateOnFocus: false } <-- optional options
+);
+```
+
+</>
+
+<>
+
+```tsx
+import { createQuery } from "floppy-disk/react";
+
+import { getUserById, type GetUserByIdResponse } from "../utils"; // Your own module
+
+type MyQueryParam = { id: string };
+
+const userQuery = createQuery<GetUserByIdResponse, MyQueryParam>(
+  getUserById,
+  // { staleTime: 5000, revalidateOnFocus: false } <-- optional options
+);
+```
+
+</>
+
+</JsOrTs>
+
+Use it with parameters:
+
+```tsx
+function UserDetail({ id }) {
+  const useUserQuery = userQuery({ id: 1 });
+  const { data, error } = useUserQuery();
+
+  if (!data && !error) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return <div>{data.foo} {data.bar}</div>;
+}
+```
+
+Each unique parameter creates its own cache entry.
+
+## Store Inheritance
+
+Queries in FloppyDisk are built on top of the core store.
+This means every query inherits the same capabilities, such as `subscribe`, `getState`, and [store events](/docs/sync/store-events).
+It also gets **automatic reactivity** out of the box, so components rerender only when the state they use actually changes.
+
+```tsx
+const { data } = useMyQuery();
+// ^Only data changes will trigger a re-render
+
+const value = useMyQuery().data?.foo.bar.baz;
+// ^Only data.foo.bar.baz changes will trigger a re-render
+```
+
+Get state outside React:
+
+```tsx
+const myQuery = createQuery<AsyncResponse>(myAsyncFn); // Query without paramerer
+const userQuery = createQuery<UserDetail, { id: string }>(getUserById); // Parameterized query
+
+const getMyQueryData = () => myQuery().getState().data;
+const getUserQueryData = ({ id }) => userQuery({ id }).getState().data;
+```

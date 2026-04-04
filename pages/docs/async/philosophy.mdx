@@ -5,6 +5,11 @@ FloppyDisk provides a powerful async state layer, inspired by [TanStack Query](h
 It is agnostic to the type of async operation,
 it works with **any Promise-based operation**, whether it's a network request, local computation, storage access, or something else.
 
+Async operations introduce **time** into your state. That's where complexity comes from.
+Instead of managing the process, model the result as state and let everything follow.
+
+FloppyDisk handles this state modeling so your UI stays predictable.
+
 ## Query: Read Operations
 
 Queries are designed for **reading data**.\

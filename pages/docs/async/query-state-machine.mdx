@@ -14,17 +14,17 @@ This is how the query state transition flow looks like:
 ```
    initial                                                              failed, won't retry
  ┌────────────────────────────┐                                       ┌────────────────────────────┐
- │ isPending: false           │                                      Δ│ isPending: false           │
+ │ isPending: false           │                                      ■│ isPending: false           │
  │ isRevalidating: false      │                                       │ isRevalidating: false      │
  │                            │                  ┌──────────────────▶ │                            │
- │ state: "INITIAL"           │                  │                   Δ│ state: "ERROR"             │
+ │ state: "INITIAL"           │                  │                   ■│ state: "ERROR"             │
  │ isSuccess: false           │                  │                    │ isSuccess: false           │
  │ data: undefined            │                  │                    │ data: undefined            │
  │ dataUpdatedAt: undefined   │                  │                    │ dataUpdatedAt: undefined   │
  │ dataStaleAt: undefined     │                  │                    │ dataStaleAt: undefined     │
- │ isError: false             │                  │                   Δ│ isError: true              │
- │ error: undefined           │                  │                   Δ│ error: <TError>            │
- │ errorUpdatedAt: undefined  │                  │                   Δ│ errorUpdatedAt: <number>   │
+ │ isError: false             │                  │                   ■│ isError: true              │
+ │ error: undefined           │                  │                   ■│ error: <TError>            │
+ │ errorUpdatedAt: undefined  │                  │                   ■│ errorUpdatedAt: <number>   │
  │                            │                  │                    │                            │
  │ willRetryAt: undefined     │                  │                    │ willRetryAt: undefined     │
  │ isRetrying: false          │                  │                   •│ isRetrying: false          │
@@ -34,7 +34,7 @@ This is how the query state transition flow looks like:
                │ execute                         │
                ▼                                 │                      waiting retry delay
  ┌────────────────────────────┐                 (N)                   ┌────────────────────────────┐
-Δ│ isPending: true         [ƒ]│                  │                   Δ│ isPending: false           │
+■│ isPending: true         [ƒ]│                  │                   ■│ isPending: false           │
  │ isRevalidating: false      │    fail          │                    │ isRevalidating: false      │
  │                            ├──────────▶ Should retry? ────(Y)────▶ │                            │
  │ state: "INITIAL"           │                  ▲                    │ state: "INITIAL"           │
@@ -46,7 +46,7 @@ This is how the query state transition flow looks like:
  │ error: undefined           │                  │                    │ error: undefined           │
  │ errorUpdatedAt: undefined  │                  │                    │ errorUpdatedAt: undefined  │
  │                            │                  │                    │                            │
- │ willRetryAt: undefined     │                  │                   Δ│ willRetryAt: <number>      │
+ │ willRetryAt: undefined     │                  │                   ■│ willRetryAt: <number>      │
  │ isRetrying: false          │                  │                    │ isRetrying: false          │
  │ retryCount: 0              │                  │                    │ retryCount: <number>       │
  └─────────────┬──────────────┘                  │                    └─────────────┬──────────────┘
@@ -54,21 +54,21 @@ This is how the query state transition flow looks like:
                │ success                         │                                  │ retrying
                ▼                                 │                                  ▼
  ┌────────────────────────────┐                  │                    ┌────────────────────────────┐
-Δ│ isPending: false           │                  │                   Δ│ isPending: true         [ƒ]│
+■│ isPending: false           │                  │                   ■│ isPending: true         [ƒ]│
  │ isRevalidating: false      │                  │            fail    │ isRevalidating: false      │
  │                            │                  └────────────────────┤                            │
-Δ│ state: "SUCCESS"           │                                       │ state: "INITIAL"           │
-Δ│ isSuccess: true            │                                       │ isSuccess: false           │
-Δ│ data: <TData>              │                                       │ data: undefined            │
-Δ│ dataUpdatedAt: <number>    │                                       │ dataUpdatedAt: undefined   │
-Δ│ dataStaleAt: <number>      │                                       │ dataStaleAt: undefined     │
+■│ state: "SUCCESS"           │                                       │ state: "INITIAL"           │
+■│ isSuccess: true            │                                       │ isSuccess: false           │
+■│ data: <TData>              │                                       │ data: undefined            │
+■│ dataUpdatedAt: <number>    │                                       │ dataUpdatedAt: undefined   │
+■│ dataStaleAt: <number>      │                                       │ dataStaleAt: undefined     │
  │ isError: false             │                                       │ isError: false             │
  │ error: undefined           │                                       │ error: undefined           │
  │ errorUpdatedAt: undefined  │                            success    │ errorUpdatedAt: undefined  │
  │                            │ ◀─────────────────────────────────────┤                            │
- │ willRetryAt: undefined     │                                      Δ│ willRetryAt: undefined     │
-•│ isRetrying: false          │                                      Δ│ isRetrying: true           │
-•│ retryCount: 0 (reset)      │                                      Δ│ retryCount: <number> (+1)  │
+ │ willRetryAt: undefined     │                                      ■│ willRetryAt: undefined     │
+•│ isRetrying: false          │                                      ■│ isRetrying: true           │
+•│ retryCount: 0 (reset)      │                                      ■│ retryCount: <number> (+1)  │
  └────────────────────────────┘                                       └────────────────────────────┘
 ```
 
@@ -79,17 +79,17 @@ And then after success:
 ```
    success                                                              failed, won't retry
  ┌────────────────────────────┐                                       ┌─────────────────────────────────────────┐
- │ isPending: false           │                                      Δ│ isPending: false                        │
- │ isRevalidating: false      │                                      Δ│ isRevalidating: false                   │
+ │ isPending: false           │                                      ■│ isPending: false                        │
+ │ isRevalidating: false      │                                      ■│ isRevalidating: false                   │
  │                            │                  ┌──────────────────▶ │                                         │
- │ state: "SUCCESS"           │                  │                   Δ│ state: "SUCCESS_BUT_REVALIDATION_ERROR" │
+ │ state: "SUCCESS"           │                  │                   ■│ state: "SUCCESS_BUT_REVALIDATION_ERROR" │
  │ isSuccess: true            │                  │                    │ isSuccess: true                         │
  │ data: <TData>              │                  │                    │ data: <TData>                           │
  │ dataUpdatedAt: <number>    │                  │                    │ dataUpdatedAt: <number>                 │
  │ dataStaleAt: <number>      │                  │                    │ dataStaleAt: <number>                   │
  │ isError: false             │                  │                    │ isError: false                          │
- │ error: undefined           │                  │                   Δ│ error: <TError>                         │
- │ errorUpdatedAt: undefined  │                  │                   Δ│ errorUpdatedAt: <number>                │
+ │ error: undefined           │                  │                   ■│ error: <TError>                         │
+ │ errorUpdatedAt: undefined  │                  │                   ■│ errorUpdatedAt: <number>                │
  │                            │                  │                    │                                         │
  │ willRetryAt: undefined     │                  │                    │ willRetryAt: undefined                  │
  │ isRetrying: false          │                  │                   •│ isRetrying: false                       │
@@ -99,8 +99,8 @@ And then after success:
                │ revalidate                      │
                ▼                                 │                      waiting retry delay
  ┌────────────────────────────┐                 (N)                   ┌────────────────────────────┐
-Δ│ isPending: true         [ƒ]│                  │                   Δ│ isPending: false           │
-Δ│ isRevalidating: true       │    fail          │                   Δ│ isRevalidating: false      │
+■│ isPending: true         [ƒ]│                  │                   ■│ isPending: false           │
+■│ isRevalidating: true       │    fail          │                   ■│ isRevalidating: false      │
  │                            ├──────────▶ Should retry? ────(Y)────▶ │                            │
  │ state: "SUCCESS"           │                  ▲                    │ state: "SUCCESS"           │
  │ isSuccess: true            │                  │                    │ isSuccess: true            │
@@ -111,7 +111,7 @@ And then after success:
  │ error: undefined           │                  │                    │ error: undefined           │
  │ errorUpdatedAt: undefined  │                  │                    │ errorUpdatedAt: undefined  │
  │                            │                  │                    │                            │
- │ willRetryAt: undefined     │                  │                   Δ│ willRetryAt: <number>      │
+ │ willRetryAt: undefined     │                  │                   ■│ willRetryAt: <number>      │
  │ isRetrying: false          │                  │                    │ isRetrying: false          │
  │ retryCount: 0              │                  │                    │ retryCount: <number>       │
  └─────────────┬──────────────┘                  │                    └─────────────┬──────────────┘
@@ -119,20 +119,20 @@ And then after success:
                │ success                         │                                  │ retrying
                ▼                                 │                                  ▼
  ┌────────────────────────────┐                  │                    ┌────────────────────────────┐
-Δ│ isPending: false           │                  │                   Δ│ isPending: true         [ƒ]│
-Δ│ isRevalidating: false      │                  │            fail   Δ│ isRevalidating: true       │
+■│ isPending: false           │                  │                   ■│ isPending: true         [ƒ]│
+■│ isRevalidating: false      │                  │            fail   ■│ isRevalidating: true       │
  │                            │                  └────────────────────┤                            │
  │ state: "SUCCESS"           │                                       │ state: "SUCCESS"           │
  │ isSuccess: true            │                                       │ isSuccess: true            │
-Δ│ data: <TData>              │                                       │ data: <TData>              │
-Δ│ dataUpdatedAt: <number>    │                                       │ dataUpdatedAt: <number>    │
-Δ│ dataStaleAt: <number>      │                                       │ dataStaleAt: <number>      │
+■│ data: <TData>              │                                       │ data: <TData>              │
+■│ dataUpdatedAt: <number>    │                                       │ dataUpdatedAt: <number>    │
+■│ dataStaleAt: <number>      │                                       │ dataStaleAt: <number>      │
  │ isError: false             │                                       │ isError: false             │
  │ error: undefined           │                                       │ error: undefined           │
  │ errorUpdatedAt: undefined  │                            success    │ errorUpdatedAt: undefined  │
  │                            │ ◀─────────────────────────────────────┤                            │
- │ willRetryAt: undefined     │                                      Δ│ willRetryAt: undefined     │
-•│ isRetrying: false          │                                      Δ│ isRetrying: true           │
-•│ retryCount: 0 (reset)      │                                      Δ│ retryCount: <number> (+1)  │
+ │ willRetryAt: undefined     │                                      ■│ willRetryAt: undefined     │
+•│ isRetrying: false          │                                      ■│ isRetrying: true           │
+•│ retryCount: 0 (reset)      │                                      ■│ retryCount: <number> (+1)  │
  └────────────────────────────┘                                       └────────────────────────────┘
 ```
