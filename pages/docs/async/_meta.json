@@ -1,6 +1,7 @@
 {
-  "concepts": "Concepts",
-  "query": "Query",
+  "philosophy": "Philosophy",
+  "query-state-machine": "Query State Machine",
+  "query": "Query Guides",
   "paginated-query": "Paginated Query",
   "ssr-ssg": "Initial Query Data (SSR/SSG)",
   "query-invalidation": "Query Invalidation",
@@ -8,6 +9,6 @@
   "infinite-scroll": "Infinite Scroll",
   "bi-directional": "Bi-directional Query",
   "error-retries": "Error Retries",
-  "mutation": "Mutation",
+  "mutation": "Mutation Guides",
   "abort-controller": "Using Abort Controller"
 }
