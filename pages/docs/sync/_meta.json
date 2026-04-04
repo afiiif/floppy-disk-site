@@ -1,7 +1,6 @@
 {
-  "store": "Introduction to Store",
-  "updating-state": "Updating State",
-  "store-event": "Store Event",
+  "store": "Store (Global State)",
+  "store-events": "Store Events",
   "stores": "Stores (Keyed Store)",
   "ssr-ssg": "Initial Store State (SSR/SSG)"
 }
