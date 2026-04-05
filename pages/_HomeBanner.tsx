@@ -47,12 +47,12 @@ export default function Banner({ children }: { children: ReactNode }) {
             <div
               className={cn(
                 'rounded-md bg-white dark:bg-[rgba(17,17,17,var(--tw-bg-opacity))] sm:w-52 sm:text-left',
-                '[&_pre+div]:opacity-100 [&_pre+div_.nextra-button:first-child]:hidden [&_pre]:mb-0 [&_pre]:rounded-md',
+                '[&_pre+div]:opacity-100 [&_pre+div_.nextra-button:first-child]:hidden [&_pre]:mb-0 [&_pre]:rounded-md [&_pre]:py-3.5',
               )}
             >
               {children}
             </div>
-            <Link className="btn" href="/docs/getting-started">
+            <Link className="btn py-3" href="/docs/getting-started">
               Get Started
             </Link>
           </div>

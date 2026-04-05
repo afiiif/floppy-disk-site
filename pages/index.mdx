@@ -25,8 +25,8 @@ npm i floppy-disk
 **Like Zustand, but has additional capability:**
 
 - No selector: auto optimize re-render.
-- Store events: `onSubscribe`, `onUnSubscribe`, etc.
-- Easier to set initialState from server
+- Store events: `onFirstSubscribe`, `onSubscribe`, `onUnSubscribe`, `onLastUnsubscribe`.
+- Easier to set initial state on SSR/SSG
 - Smaller bundle
 
 **Like TanStack Query, but:**

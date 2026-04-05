@@ -1,5 +1,7 @@
 import JsOrTs from '@/pages/_components/JsOrTs';
 
+import { KeyedQuery } from './_KeyedQuery';
+
 # Query Guides
 
 ## Single Query
@@ -41,10 +43,10 @@ You can create parameterized queries:
 ```tsx
 import { createQuery } from "floppy-disk/react";
 
-import { getUserById } from "../utils"; // Your own module
+import { getZombieById } from "../utils"; // Your own module
 
-const userQuery = createQuery(
-  getUserById,
+const zombieQuery = createQuery(
+  getZombieById,
   // { staleTime: 5000, revalidateOnFocus: false } <-- optional options
 );
 ```
@@ -56,12 +58,12 @@ const userQuery = createQuery(
 ```tsx
 import { createQuery } from "floppy-disk/react";
 
-import { getUserById, type GetUserByIdResponse } from "../utils"; // Your own module
+import { getZombieById, type GetZombieByIdResponse } from "../utils"; // Your own module
 
-type MyQueryParam = { id: string };
+type ZombieQueryParam = { id: string };
 
-const userQuery = createQuery<GetUserByIdResponse, MyQueryParam>(
-  getUserById,
+const zombieQuery = createQuery<GetZombieByIdResponse, ZombieQueryParam>(
+  getZombieById,
   // { staleTime: 5000, revalidateOnFocus: false } <-- optional options
 );
 ```
@@ -73,18 +75,22 @@ const userQuery = createQuery<GetUserByIdResponse, MyQueryParam>(
 Use it with parameters:
 
 ```tsx
-function UserDetail({ id }) {
-  const useUserQuery = userQuery({ id: 1 });
-  const { data, error } = useUserQuery();
+function ZombieDetail({ id }) {
+  const useZombieQuery = zombieQuery({ id: 1 });
+  const { data, error } = useZombieQuery();
 
   if (!data && !error) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
-  return <div>{data.foo} {data.bar}</div>;
+  return <div>Name: {data.name}, hp: {data.hp}</div>;
 }
 ```
 
 Each unique parameter creates its own cache entry.
+
+### Keyed Query Demo
+
+<KeyedQuery />
 
 ## Store Inheritance
 
@@ -103,9 +109,9 @@ const value = useMyQuery().data?.foo.bar.baz;
 Get state outside React:
 
 ```tsx
-const myQuery = createQuery<AsyncResponse>(myAsyncFn); // Query without paramerer
-const userQuery = createQuery<UserDetail, { id: string }>(getUserById); // Parameterized query
+const myPlantQuery = createQuery<MyPlantResponse>(getMyPlant); // Query without paramerer
+const zombieQuery = createQuery<GetZombieByIdResponse, { id: string }>(getZombieById); // Parameterized query
 
-const getMyQueryData = () => myQuery().getState().data;
-const getUserQueryData = ({ id }) => userQuery({ id }).getState().data;
+const getMyPlantQueryData = () => myPlantQuery().getState().data;
+const getZombieQueryData = ({ id }) => zombieQuery({ id }).getState().data;
 ```

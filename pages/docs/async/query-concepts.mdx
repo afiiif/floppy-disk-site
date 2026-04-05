@@ -1,0 +1,102 @@
+import { Callout } from 'nextra-theme-docs';
+
+# Concept of Stale, Revalidate, Invalidate, Unused
+
+Understanding these concepts is key to how FloppyDisk manages async state efficiently and predictably.
+
+## Used vs Unused Query
+
+A query can be classified into two conditions:
+
+<div>
+- **Used query** → has active subscribers
+- **Unused query** → has no subscribers
+</div>
+
+This distinction is important because it determines whether a query should actively update or stay idle.
+
+If a query is used in currently rendered component, it means it is a **used query**, since it internally subscribe to the query store.
+
+## Stale vs Fresh
+
+Every query can be either:
+
+<div>
+- **Fresh** → data is still considered up-to-date
+- **Stale** → data is considered outdated (need revalidation)
+</div>
+
+This is controlled by **staleTime** (default: 2.5 seconds).
+
+The timer starts right after the promise resolves.
+
+### Simulation
+
+Let's say a query with `{ staleTime: 2500 }`.\
+Timeline simulation:
+
+<div>
+- t = 0ms → query executed
+- t = 500ms → promise resolved → data is considered FRESH → ⏱️ start stale timer
+- t = 2500ms → still FRESH (2000ms since time started)
+- t = 3000ms → becomes STALE (2500ms since time started)
+- t = 4000ms → still STALE
+</div>
+
+<Callout type='info'>
+Stale time starts after data is available, not when the request begins.
+This ensures freshness is based on actual data age, not network duration.
+</Callout>
+
+**Mental Model**
+
+<div>
+- Fresh = trust the cache
+- Stale = safe to revalidate (refetch)
+</div>
+
+## Execute
+
+`execute()` means:\
+Always run the promise, no matter what.
+
+- Ignores stale state
+- Ignores invalidation
+- Forces a fetch
+
+## Revalidate
+
+`revalidate()` is conditional:
+
+- If query is **stale** → run the promise
+- If query is **invalidated** → run the promise
+- Otherwise → do nothing (use cached data)
+
+Revalidation respects freshness.
+
+## Invalidate
+
+`invalidate()` marks a query as **invalid**, even if it's still fresh.
+
+Then:
+
+<div>
+- If the query is unused → stop here
+- If the query is used → automatically execute
+</div>
+
+This ensures:
+
+<div>
+- No unnecessary work for unused queries
+- Active UI always stays up-to-date
+</div>
+
+## How They Work Together
+
+- `execute()` → always fetches
+- Fresh query → `revalidate()` does nothing
+- Stale query → `revalidate()` fetches
+- Invalidated query → `revalidate()` fetches
+- `invalidate()` + used → fetch immediately
+- `invalidate()` + unused → wait until used
