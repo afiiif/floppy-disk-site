@@ -32,7 +32,7 @@ const config: Config = {
           backgroundColor: theme('colors.blue.700'),
         },
         '.btn-secondary': {
-          backgroundColor: 'transparent',
+          '@apply bg-white text-blue-600 dark:bg-[rgb(17,17,17)]': '',
           borderRadius: theme('borderRadius.md'),
           borderWidth: '1px',
           borderColor: theme('colors.blue.600'),
@@ -40,7 +40,10 @@ const config: Config = {
           fontWeight: '500',
         },
         '.btn-secondary:hover, .btn-secondary:focus': {
-          backgroundColor: 'rgb(37 99 235 / 0.1)',
+          '@apply bg-blue-50 dark:bg-[#0f1528]': '',
+        },
+        '.border-soft': {
+          '@apply border-gray-200 dark:border-gray-800': '',
         },
       });
     }),
