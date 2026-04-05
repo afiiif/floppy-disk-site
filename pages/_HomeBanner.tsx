@@ -13,7 +13,7 @@ export default function Banner({ children }: { children: ReactNode }) {
       )}
     >
       <div className="bg-[radial-gradient(var(--tw-gradient-stops))] from-white dark:from-black/70">
-        <div className="mx-auto max-w-6xl px-6 py-24 md:px-12 xl:py-20">
+        <span className="mx-auto block max-w-6xl px-6 py-24 md:px-12 xl:py-20">
           <h1
             className={cn(
               'text-4xl font-extrabold sm:text-5xl xl:text-6xl',
@@ -30,7 +30,7 @@ export default function Banner({ children }: { children: ReactNode }) {
           <div className="pt-4 italic opacity-70 sm:pt-5 sm:text-lg xl:pt-7 xl:text-xl">
             <div>
               If you know Zustand and TanStack Query,{' '}
-              <span className="block md:inline-block">you already know FloppyDisk TS.</span>
+              <span className="block md:inline-block">you already know FloppyDisk(.ts).</span>
             </div>
             <div>
               It unifies everything into a simpler API.{' '}
@@ -44,9 +44,6 @@ export default function Banner({ children }: { children: ReactNode }) {
               'pt-16 md:pb-5 md:pt-11',
             )}
           >
-            <Link className="btn" href="/docs/getting-started">
-              Get Started
-            </Link>
             <div
               className={cn(
                 'rounded-md bg-white dark:bg-[rgba(17,17,17,var(--tw-bg-opacity))] sm:w-52 sm:text-left',
@@ -55,15 +52,11 @@ export default function Banner({ children }: { children: ReactNode }) {
             >
               {children}
             </div>
-            {/* <Link
-              className="btn btn-secondary"
-              href="https://afiiif.github.io/floppy-disk/"
-              target="_blank"
-            >
-              View Comparison
-            </Link> */}
+            <Link className="btn" href="/docs/getting-started">
+              Get Started
+            </Link>
           </div>
-        </div>
+        </span>
       </div>
 
       <div

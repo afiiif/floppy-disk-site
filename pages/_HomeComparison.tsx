@@ -1,5 +1,6 @@
-import { cn } from '@/utils/string';
 import Link from 'next/link';
+
+import { cn } from '@/utils/string';
 
 const comparisonResult = `
 ✓ 103 modules transformed.
@@ -21,7 +22,7 @@ const comparisonResult = `
   .split('\n')
   .filter(Boolean);
 
-export default function LandingPage() {
+export default function Comparison() {
   return (
     <>
       <div
@@ -58,34 +59,6 @@ export default function LandingPage() {
           View Comparison
         </Link>
       </div>
-
-      <section className="mx-auto max-w-4xl pb-28 pt-40 text-center text-base sm:px-4 sm:pt-48 sm:text-lg md:px-0">
-        <h2 className="pb-5 text-3xl font-extrabold sm:text-4xl">What They Think</h2>
-        <p className="pt-6 italic">
-          What I like most about your library is how it simplifies the mental model without
-          sacrificing power. Automatic reactivity without selectors feels like a big step forward—it
-          removes a lot of unnecessary decisions and just works the way you’d expect. The idea that
-          queries are just stores is also very clean, making sync and async state feel consistent
-          instead of like two separate systems.
-        </p>
-        <p className="pt-6 italic">
-          I also appreciate the philosophy behind it. Treating async as “state over time” and
-          focusing on results instead of the process makes the API feel predictable and easy to
-          reason about. Overall, it strikes a rare balance: minimal surface area, but still flexible
-          when you need it.
-        </p>
-
-        <div className="border-soft mx-auto mt-8 h-12 w-12 rounded-full border bg-white p-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg"
-            alt="ChatGPT"
-            className="h-full w-full"
-          />
-        </div>
-        <div className="pt-2.5 opacity-70">ChatGPT</div>
-        <div className="text-xs sm:text-sm">After I showed the codes to it</div>
-      </section>
     </>
   );
 }
