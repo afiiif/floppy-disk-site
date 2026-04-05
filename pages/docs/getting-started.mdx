@@ -37,9 +37,9 @@ It brings together familiar patterns into a simpler, more predictable model.
 
 Compatible with React 17+ and works any renderers such as `react-dom`, `react-native`, `react-three-fiber`, and so on.
 
-## Your First Global State
+## Your First Store
 
-Create a global store:
+Create a store:
 
 ```tsx
 import { createStore } from "floppy-disk/react";
@@ -63,14 +63,14 @@ function MyPlants() {
 Update the state **anywhere**:
 
 ```tsx
-const plant = () => {
+const addPlant = () => {
   useLawn.setState(prev => ({ plants: prev.plants + 1 }));
 };
 ```
 
 ## Your First Query
 
-Create a global store for async data with `createQuery`:
+Create a query store for async data with `createQuery`:
 
 <JsOrTs>
 
