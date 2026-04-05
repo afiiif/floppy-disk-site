@@ -4,7 +4,7 @@
   "core-concepts": "Core Concepts",
   "sync": "Sync State Manager",
   "async": "Async State Manager",
-  "api": "API Reference",
+  "api-reference": "API Reference",
 
   "--separator1--": {
     "type": "separator",
