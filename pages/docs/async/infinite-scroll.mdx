@@ -1,0 +1,89 @@
+import { Callout } from 'nextra-theme-docs';
+
+# Infinite Scroll
+
+FloppyDisk does **not provide** a dedicated "_infinite query_" API for infinite scroll UI.\
+Instead, it embraces a simpler and more flexible approach:
+
+> Infinite queries are just **composition** + **recursion**.
+
+Why? Because async state is already powerful enough:
+
+<div>
+- keyed queries handle parameters
+- components handle composition
+- recursion handles pagination
+</div>
+
+No special abstraction needed.
+
+Here is the example on how to implement infinite query properly:
+
+```tsx
+type GetPlantParams = {
+  cursor?: string; // For pagination
+};
+type GetPlantsResponse = {
+  plants: Plant[];
+  meta: { nextCursor: string };
+};
+
+const plantsQuery = createQuery<GetPlantsResponse, GetPlantParams>(getPlants, {
+  staleTime: Infinity,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+});
+
+function Main() {
+  return <Page cursor={undefined} />;
+}
+
+function Page({ cursor }: { cursor?: string }) {
+  const usePlantsQuery = plantsQuery({ cursor });
+  const { data, error } = usePlantsQuery();
+
+  if (!data && !error) return <div>Loading...</div>;
+  if (error) return <div>Error</div>;
+
+  return (
+    <>
+      {data.plants.map((plant) => (
+        <PlantCard key={plant.id} plant={plant} />
+      ))}
+      {data.meta.nextCursor && <LoadMore nextCursor={data.meta.nextCursor} />}
+    </>
+  );
+}
+
+function LoadMore({ nextCursor }: { nextCursor?: string }) {
+  const [isNextPageRequested, setIsNextPageRequested] = useState(() => {
+    const stateOfNextPageQuery = plantsQuery({ cursor: nextCursor }).getState();
+    return stateOfNextPageQuery.isPending || stateOfNextPageQuery.isSuccess;
+  });
+
+  if (isNextPageRequested) {
+    return <Page cursor={nextCursor} />;
+  }
+
+  return <DomObserver onReachBottom={() => setIsNextPageRequested(true)} />;
+}
+```
+
+When implementing infinite queries, it is **highly recommended to disable automatic revalidation**.
+
+Why?\
+In an infinite list, users may scroll through many pages ("_doom-scrolling_").\
+If revalidation is triggered:
+
+<div>
+- All previously loaded pages may re-execute
+- Content at the top may change without the user noticing
+- Layout shifts can occur unexpectedly
+</div>
+
+This leads to a **confusing and unstable user experience**.\
+Revalidating dozens of previously viewed pages rarely provides value to the user.
+
+<Callout type='info'>
+Demo: https://afiiif.github.io/floppy-disk/async/floppy-disk/?activeTab=Infinite+Query
+</Callout>

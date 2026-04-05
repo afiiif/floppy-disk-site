@@ -6,22 +6,6 @@ import { useConfig } from 'nextra-theme-docs';
 const themeConfig = {
   docsRepositoryBase: 'https://github.com/afiiif/floppy-disk-site/blob/main',
   project: { link: 'https://github.com/afiiif/floppy-disk' },
-  banner: {
-    text: (
-      <>
-        <a href="https://github.com/afiiif/floppy-disk#readme">Version 3 is now available!</a>{' '}
-        <span className="hidden sm:inline">
-          Please refer to the updated documentation{' '}
-          <a
-            href="https://github.com/afiiif/floppy-disk#readme"
-            className="nx-text-primary-600 hover:underline"
-          >
-            here
-          </a>
-        </span>
-      </>
-    ),
-  },
   logo: (
     <div className="group flex items-center gap-3 py-2.5 pr-2.5 text-xl font-bold">
       <div className="-rotate-12 transition-transform group-hover:rotate-12 group-hover:scale-125">
@@ -29,7 +13,7 @@ const themeConfig = {
       </div>
       <div>
         Floppy<span className="ml-0.5">Disk</span>
-        <small className="ml-0.5 text-xs font-normal">.JS</small>
+        <span className="ml-0.5 text-sm font-normal">.ts</span>
       </div>
     </div>
   ),
@@ -37,7 +21,7 @@ const themeConfig = {
     const { route } = useRouter();
     if (route === '/blog') return { titleTemplate: '%s' };
     if (route.startsWith('/blog/')) return { titleTemplate: '%s – 📚 Floppy Disk Blog' };
-    return { titleTemplate: '%s – Floppy Disk JS' };
+    return { titleTemplate: '%s – FloppyDisk.ts' };
   },
   head: () => {
     const DEFAULT_KEYWORDS = 'Floppy Disk, React, State Management, JS, JavaScript, NPM, Store';

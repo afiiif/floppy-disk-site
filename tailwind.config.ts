@@ -22,25 +22,31 @@ const config: Config = {
     plugin(function ({ addComponents, theme }: PluginAPI) {
       addComponents({
         '.btn': {
-          color: theme('colors.white'),
-          backgroundColor: theme('colors.blue.600'),
-          borderRadius: theme('borderRadius.md'),
-          padding: '0.75rem 1.5rem',
+          '@apply bg-blue-600 text-white px-6 py-2.5 rounded-md': '',
           fontWeight: '500',
         },
+        '.btn:disabled': {
+          '@apply opacity-60 cursor-not-allowed': '',
+        },
+        '[type=button].btn': {
+          '@apply bg-blue-600': '',
+        },
         '.btn:hover, .btn:focus': {
-          backgroundColor: theme('colors.blue.700'),
+          '@apply bg-blue-700': '',
+        },
+        '.btn-sm': {
+          '@apply px-3 py-0.5': '',
         },
         '.btn-secondary': {
-          backgroundColor: 'transparent',
-          borderRadius: theme('borderRadius.md'),
-          borderWidth: '1px',
-          borderColor: theme('colors.blue.600'),
-          padding: '0.75rem 1.5rem',
+          '@apply bg-white text-blue-600 dark:bg-[rgb(17,17,17)]': '',
+          '@apply border border-blue-600 px-6 py-2.5': '',
           fontWeight: '500',
         },
         '.btn-secondary:hover, .btn-secondary:focus': {
-          backgroundColor: 'rgb(37 99 235 / 0.1)',
+          '@apply bg-blue-50 dark:bg-[#0f1528]': '',
+        },
+        '.border-soft': {
+          '@apply border-gray-200 dark:border-gray-800': '',
         },
       });
     }),

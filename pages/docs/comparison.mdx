@@ -1,254 +1,115 @@
-import { Callout, Tabs, Tab } from 'nextra-theme-docs'
-import { BadgeFD, BadgeZustand, BadgeRQ, BadgeSWR, StoreEvent } from '../_components/Comparison'
-
 # Comparison
 
-## Feature Comparison
+Every state management tool makes **trade-offs**.\
+FloppyDisk(.ts) is designed to combine what works well and remove what doesn't.
 
-<Callout type="info">
-  <div>Legend</div>
-  <div>✅ : Supported</div>
-  <div>🔶 : Not built-in, but we can make our own</div>
-  <div>🔴 : Not officially supported or documented</div>
-</Callout>
+If you've used Zustand, Valtio, or TanStack Query, this will feel familiar—but more unified.
 
-<section className="pt-6 [&_tr:nth-child(2n)]:bg-transparent dark:[&_tr:nth-child(2n)]:!bg-transparent text-sm [&_tr:hover]:!bg-gray-400/10 dark:[&_tr:hover]:!bg-white/10 dark:[&_tr:nth-child(2n):hover]:!bg-white/10">
+## Zustand & Valtio
 
-|                                                            |       Floppy Disk<br/>@2.13.0       | Zustand<br/>@4.4.7 | TanStack Query<br/>@5.12.2 | SWR<br/>@2.2.4 |
-| ---------------------------------------------------------- | :---------------------------------: | :----------------: | :------------------------: | :------------: |
-| Bundle size (https://pkg-size.dev)                         |             <BadgeFD />             |  <BadgeZustand />  |        <BadgeRQ />         |  <BadgeSWR />  |
-| Dependencies                                               |                  0                  |         1          |             2              |       2        |
-| TypeScript                                                 |                 ✅                  |         ✅         |             ✅             |       ✅       |
-| Create store                                               |                 ✅                  |         ✅         |                            |                |
-| - Selecting state slices                                   |                 ✅                  |         ✅         |                            |                |
-| - Async actions                                            |                 ✅                  |         ✅         |                            |                |
-| - Read/write state outside component                       |                 ✅                  |         ✅         |                            |                |
-| - Subscribe changes outside component                      |                 ✅                  |         ✅         |                            |                |
-| - Subscribe with selector                                  |                 ✅                  |         ✅         |                            |                |
-| - Without React                                            |                 ✅                  |         ✅         |                            |                |
-| - Transient updates                                        |                 ✅                  |         ✅         |                            |                |
-| - Using Immer                                              |                 ✅                  |         ✅         |                            |                |
-| - Middleware                                               |                 ✅                  |         ✅         |                            |                |
-| - Persist middleware                                       |                 🔶                  |         ✅         |                            |                |
-| - Immer middleware                                         |                 🔶                  |         ✅         |                            |                |
-| - Omit state key                                           | 🔴 <sup className="-mr-4">[1]</sup> |         ✅         |                            |                |
-| - Redux devtool                                            |                 🔴                  |         ✅         |                            |                |
-| - Intercept set state                                      |                 ✅                  |         🔶         |                            |                |
-| - Silently update state                                    |                 ✅                  |         🔴         |                            |                |
-| - <StoreEvent />                                           |                 ✅                  |         🔴         |                            |                |
-| Create stores                                              |                 ✅                  |         🔴         |                            |                |
-| Queries & Mutations                                        |                 ✅                  |                    |             ✅             |       ✅       |
-| - SSR/SSG support                                          |                 ✅                  |                    |             ✅             |       ✅       |
-| - React Suspense                                           |                 ✅                  |                    |             ✅             |       ✅       |
-| - Cache persistence                                        |                 ✅                  |                    |             ✅             |       ✅       |
-| - Parallel queries                                         |                 ✅                  |                    |             ✅             |       ✅       |
-| - Dependent queries                                        |                 ✅                  |                    |             ✅             |       ✅       |
-| - Lazy queries                                             |                 ✅                  |                    |             ✅             |       ✅       |
-| - Lagged queries                                           |                 ✅                  |                    |             ✅             |       ✅       |
-| - Paginated queries                                        |                 ✅                  |                    |             ✅             |       ✅       |
-| - Infinite queries                                         |                 ✅                  |                    |             ✅             |       ✅       |
-| - Bi-directional infinite queries                          |                 ✅                  |                    |             ✅             |       🔶       |
-| - Infinite queries refetching                              |                 ✅                  |                    |             ✅             |       ✅       |
-| - Prefetching                                              |                 ✅                  |                    |             ✅             |       ✅       |
-| - Retrying                                                 |                 ✅                  |                    |             ✅             |       ✅       |
-| - Stale while revalidate                                   |                 ✅                  |                    |             ✅             |       ✅       |
-| - Initial data                                             |                 ✅                  |                    |             ✅             |       ✅       |
-| - Scroll recovery                                          |                 ✅                  |                    |             ✅             |       ✅       |
-| - Render optimization                                      |                 ✅                  |                    |             ✅             |       ✅       |
-| - Cache manipulation                                       |                 ✅                  |                    |             ✅             |       ✅       |
-| - Optimistic updates                                       |                 ✅                  |                    |             ✅             |       ✅       |
-| - Selectors                                                |                 ✅                  |                    |             ✅             |       🔴       |
-| - Partial query matching                                   |                 ✅                  |                    |             ✅             |       🔶       |
-| - Window focus refetching                                  |                 ✅                  |                    |             ✅             |       ✅       |
-| - Network status refetching                                |                 ✅                  |                    |             ✅             |       ✅       |
-| - Polling/intervals                                        |                 ✅                  |                    |             ✅             |       ✅       |
-| - Query cancellation                                       |                 🔶                  |                    |             ✅             |       🔴       |
-| - Offline mutation support                                 |                 🔶                  |                    |             ✅             |       🔴       |
-| - Auto garbage collection                                  |                 ✅                  |                    |             ✅             |       🔴       |
-| - Does not need provider wrapper                           |                 ✅                  |                    |             🔴             |       ✅       |
-| - Read/write query/mutation state outside component        |                 ✅                  |                    |             ✅             |       🔴       |
-| - Subscribe query/mutation state changes outside component |                 ✅                  |                    |             ✅             |       🔴       |
-| - Devtool                                                  |                 🔴                  |                    |             ✅             |       ✅       |
+[Zustand](https://zustand.docs.pmnd.rs) is popular for its simplicity.\
+But there's a catch:
 
-**Notes:**<br /><sup>[1]</sup> Do we really need that feature? We can just set a state slice to `undefined`.
+> You need selectors to prevent unnecessary re-renders.
 
-</section>
+```tsx
+const count = useStore(s => s.count);
+```
 
-## DX Comparison
+Without selectors, components may re-render more than needed.
+Optimization becomes the developer's responsibility.
 
-<Tabs items={['Floppy Disk', 'Zustand']}>
-  <Tab>
-    ```tsx {4,24,25,29,36,37} showLineNumbers
-    import { createStore } from 'floppy-disk';
+[Valtio](https://valtio.dev) solves this with Proxy-based tracking:\
+No selectors needed, fine-grained reactivity out of the box.
 
-    export const useMyStore = createStore(
-      ({ set, get }) => ({
-        count: 3,
-        shape: 'square',
-        increment: () => set((prev) => ({ count: prev.count + 1 })),
-        changeShape: () => {
-          const { shape } = get();
-          let nextShape;
-          if (shape === 'square') nextShape = 'circle';
-          else if (shape === 'circle') nextShape = 'triangle';
-          else nextShape = 'square';
-          set({ shape: nextShape });
-        },
-      })
-    );
+But it introduces a different trade-off:
 
-    function MyComponent() {
-      // Subscribe all changes
-      const { count, shape } = useMyStore();
+```tsx
+state.count++;
+```
 
-      // Subscribe to single slice
-      const count = useMyStore('count');
-      const shape = useMyStore('shape');
+<div className='mt-6 [&_ul]:mt-0'>
 
-      // Subscribe to multiple slices
-      const { count, shape } = useMyStore(
-        (state) => [state.count, state.shape]
-      );
+> You mix two mental models:
+>
+> - React → immutable updates
+> - Valtio → mutable updates
 
-      ...
-    }
+</div>
 
-    // Get/set state outside component
-    const getShape = () => useMyStore.get().shape;
-    const increment = () => useMyStore.set((state) => ({ count: state.count + 1 }));
-    ```
+## FloppyDisk: No selectors, no mixed model
 
-  </Tab>
-  <Tab>
-    ```tsx {4,24,25,29,30,37,38} showLineNumbers
-    import { create } from 'zustand';
+FloppyDisk combines the strengths of both:
 
-    export const useMyStore = create(
-      (set, get) => ({
-        count: 3,
-        shape: 'square',
-        increment: () => set((prev) => ({ count: prev.count + 1 })),
-        changeShape: () => {
-          const { shape } = get();
-          let nextShape;
-          if (shape === 'square') nextShape = 'circle';
-          else if (shape === 'circle') nextShape = 'triangle';
-          else nextShape = 'square';
-          set({ shape: nextShape });
-        },
-      })
-    );
+- ✅ No selectors (like Valtio)
+- ✅ Immutable updates (like React & Zustand)
+- ✅ Automatic fine-grained reactivity
 
-    function MyComponent() {
-      // Subscribe all changes
-      const { count, shape } = useMyStore();
+```tsx
+const { count } = useStore();
+```
 
-      // Subscribe to single slice
-      const count = useMyStore((state) => state.count);
-      const shape = useMyStore((state) => state.shape);
+```tsx
+useStore.setState(prev => ({ count: prev.count + 1 }));
+```
 
-      // Subscribe to multiple slices
-      const { count, shape } = useMyStore(
-        (state) => ({ count: state.count, shape: state.shape }),
-        shallow // import shallow from 'zustand/shallow'
-      );
+> You get automatic optimization—without changing how you think about state.
 
-      ...
-    }
+## TanStack Query
 
-    // Get/set state outside component
-    const getShape = () => useMyStore.getState().shape;
-    const increment = () => useMyStore.setState((state) => ({ count: state.count + 1 }));
-    ```
+[TanStack Query](https://tanstack.com/query) is the go-to solution for async state:\
+Caching, retry logic, revalidation, huge ecosystem.
 
-  </Tab>
-</Tabs>
+<div className='mt-6 [&_.nextra-code-block]:mt-2.5'>
 
-<Tabs items={['Floppy Disk', 'TanStack Query']}>
-  <Tab>
-    ```tsx {1,26} showLineNumbers
-    const usePokemonDetailQuery = createQuery(fetchPokemonById);
+But it comes with trade-offs:
 
-    function PokemonDetailPage({ id }) {
-      const { isLoading, data, error } = usePokemonDetailQuery({ id });
-      if (error) return <div>Something went wrong</div>;
-      if (isLoading) return <div>Loading...</div>;
-      return (
-        <main>
-          <h1>{data.name}</h1>
-          <PokemonAttribute id={id} />
-        </main>
-      );
-    }
+1. **Bundle size**\
+   It's a relatively large library, especially if you only need core features.
+2. **Query keys**\
+   Every query must be identified manually. You are responsible for structuring and maintaining query keys.
+   ```tsx
+   useQuery(["user", id], getUserById);
+   ```
 
-    function PokemonAttribute({ id }) {
-      const { data } = usePokemonDetailQuery({ id });
-      return (
-        <section>
-          <div>Weight: {data.weight}</div>
-          <div>Height: {data.height}</div>
-        </section>
-      );
-    }
+</div>
 
-    // Outside component
-    const prefetchPokemonById = ({ id }) => usePokemonDetailQuery.get({ id }).fetch();
-    ```
+## FloppyDisk: Simpler model, smaller footprint
 
-  </Tab>
-  <Tab>
-    ```tsx {1,5,7,11-16,41-47} showLineNumbers
-    const queryClient = new QueryClient();
+FloppyDisk approaches async state differently:
 
-    function App() {
-      return (
-        <QueryClientProvider client={queryClient}>
-          <Page />
-        </QueryClientProvider>
-      );
-    }
+- ✅ **Smaller bundle**\
+  No external dependencies, designed to stay lightweight.
+- ✅ **No query keys**\
+  Each variable creates its own store, the variable itself is the identity.
+- ✅ **Unified mental model**\
+  With FloppyDisk:
+  - Sync state → `createStore` / `createStores`
+  - Async state → `createQuery` / `createMutation`
 
-    const usePokemonDetailQuery = ({ id }) => {
-      return useQuery(
-        ['pokemon', id],
-        () => fetchPokemonById({ id })
-      );
-    };
+```tsx
+import { createQuery } from "floppy-disk/react";
 
-    function PokemonDetailPage({ id }) {
-      const { isLoading, data, error } = usePokemonDetailQuery({ id });
-      if (error) return <div>Something went wrong</div>;
-      if (isLoading) return <div>Loading...</div>;
-      return (
-        <main>
-          <h1>{data.name}</h1>
-          <PokemonAttribute id={id} />
-        </main>
-      );
-    }
+const userDetailQuery = createQuery<GetUserByIdResponse, { id: string }>(
+  getUserById,
+);
+```
 
-    function PokemonAttribute({ id }) {
-      const { data } = usePokemonDetailQuery({ id });
-      return (
-        <section>
-          <div>Weight: {data.weight}</div>
-          <div>Height: {data.height}</div>
-        </section>
-      );
-    }
+```tsx
+function UserDetail({ id }: { id: string }) {
+  const useUserDetailQuery = userDetailQuery({ id });
+  const { data, error } = useUserDetailQuery();
 
-    function SomeComponent() {
-      const queryClient = useQueryClient({ context });
-      const prefetchPokemonById = ({ id }) => {
-        queryClient.prefetchQuery({
-          queryKey: ['pokemon', id],
-          queryFn: () => fetchPokemonById({ id }),
-        });
-      };
+  if (!data && !error) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-      //...
-    }
-    ```
+  return <div>Name: {data.name}, email: {data.email}</div>;
+}
+```
 
-  </Tab>
-</Tabs>
+## When FloppyDisk Fits Best
+
+- You want **automatic reactivity** without selectors
+- You prefer **immutable state** (same pattern as React)
+- You want **one solution** for sync + async
+- You care about **bundle size**
