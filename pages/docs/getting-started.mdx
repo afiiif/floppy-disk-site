@@ -110,7 +110,7 @@ function PlantDetail({ id }) {
 ```tsx
 import { createQuery } from "floppy-disk/react";
 
-import { type GetPlantByIdResponse } from "../api"; // Yours
+import { type GetPlantByIdResponse } from "../api"; // Your own module
 
 const plantDetailQuery = createQuery<GetPlantByIdResponse, { id: string }>(
   async ({ id }) => {
