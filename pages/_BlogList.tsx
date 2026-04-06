@@ -8,11 +8,11 @@ export default function BlogList() {
           href="/blog/introducing-floppy-disk"
           className="group block border p-5 hover:border-[hsl(var(--nextra-primary-hue)100%_45%)]"
         >
-          <time className="text-sm opacity-60">April 3st, 2026</time>
+          <time className="text-sm opacity-60">6 April 2026</time>
           <h2 className="text-xl font-bold">(Re)Introducing FloppyDisk.ts</h2>
           <p className="pt-2 opacity-80">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate sapiente, rerum aut
-            aperiam eos quae et laboriosam consequatur labore earum.
+            A side project from 2023, rebuilt in 2026 with fine-grained reactivity, smarter async
+            handling, and a simpler way to do infinite scroll without `useInfiniteQuery`.
           </p>
           <div className="nx-text-primary-600 pt-4">
             Read more <span className="transition-all group-hover:ml-1.5">→</span>

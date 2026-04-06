@@ -9,13 +9,8 @@ export default function Meta() {
 
   return (
     <header className="pt-8 text-sm">
-      <time dateTime={timestamp.toISOString()} className="opacity-60">
-        {timestamp.toLocaleDateString(locale, {
-          weekday: 'long',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        })}
+      <time dateTime={frontMatter.date} className="opacity-60">
+        {frontMatter.dateDisplay}
       </time>
       <span className="opacity-60"> – by </span>
       <span className="inline-flex space-x-2.5">
