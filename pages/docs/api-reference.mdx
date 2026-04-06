@@ -1,12 +1,51 @@
 import Code from '@/pages/_components/Code';
 
-# API
+# API Reference
 
 Legend:
 
-<div>
+<div className='pb-4'>
 - `?` means optional
 </div>
+
+## initStore
+
+Create a standalone store instance **without React**.
+
+```ts
+import { initStore } from "floppy-disk";
+
+const store = initStore(initialState, options);
+```
+
+### Parameters
+
+<div className="[&_ul]:text-sm">
+
+- `initialState` : The initial state of the store, must be an **object**
+- `options?`
+  - `onFirstSubscribe?` : Called when the first subscriber is added
+  - `onSubscribe?` : Called every time a subscriber is added
+  - `onUnsubscribe?` : Called every time a subscriber is removed
+  - `onLastUnsubscribe?` : Called when the last subscriber is removed
+  - `onStateChange?` : Called whenever state changes (does not register as a subscriber)
+  - `allowSetStateServerSide?` : Allow `setState` on server (**disabled by default**)
+
+</div>
+
+### Return Value
+
+<div className="[&_ul_ul]:text-sm">
+
+- `store` : **Store Instance**
+  - `store.getState()` : Get the current state
+  - `store.setState(value)` : Update the state (accepts partial object or updater function)
+  - `store.subscribe(fn)` : Subscribe to state changes (returns unsubscribe function)
+  - `store.getSubscribers()` : Get all subscribers
+
+</div>
+
+<div className='[&~h2]:mt-16' />
 
 ## createStore
 
