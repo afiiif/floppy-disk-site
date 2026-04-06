@@ -33,7 +33,7 @@ export default function Banner({ children }: { children: ReactNode }) {
               <span className="block sm:inline-block">Refined into something simpler.</span>
             </div>
             <div>
-              Automatic reactivity, minimal boilerplate,{' '}
+              Fine-grained reactivity, minimal boilerplate,{' '}
               <span className="block sm:inline-block">zero dependencies.</span>
             </div>
           </div>
