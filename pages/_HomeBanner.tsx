@@ -29,12 +29,12 @@ export default function Banner({ children }: { children: ReactNode }) {
           </h1>
           <div className="pt-4 italic opacity-70 sm:pt-5 sm:text-lg xl:pt-7 xl:text-xl">
             <div>
-              If you know Zustand and TanStack Query,{' '}
-              <span className="block md:inline-block">you already know FloppyDisk(.ts).</span>
+              {'Built on the patterns you know. '}
+              <span className="block sm:inline-block">Refined into something simpler.</span>
             </div>
             <div>
-              It unifies everything into a simpler API.{' '}
-              <span className="block md:inline-block">Less boilerplate, zero dependencies.</span>
+              Automatic reactivity, minimal boilerplate,{' '}
+              <span className="block sm:inline-block">zero dependencies.</span>
             </div>
           </div>
 
@@ -61,7 +61,7 @@ export default function Banner({ children }: { children: ReactNode }) {
 
       <div
         className={cn(
-          'absolute -top-1 sm:-top-2 md:-top-2.5 xl:-top-0.5',
+          'absolute -top-1 sm:-top-1 md:-top-2.5 xl:-top-1',
           'z-[-1] h-[calc(100%_+_32px)] w-[calc(100%_+_32px)] translate-x-0 bg-grid',
         )}
       />
