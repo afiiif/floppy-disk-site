@@ -1,6 +1,6 @@
 {
   "name": "floppy-disk-site",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -24,7 +24,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sharp": "^0.32.5",
-    "tailwindcss": "3.3.3",
+    "tailwindcss": "^3.4.19",
     "typescript": "5.2.2"
   },
   "devDependencies": {
