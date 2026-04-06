@@ -27,7 +27,7 @@ export default function Comparison() {
     <>
       <div
         className={cn(
-          'mx-auto -mt-8 max-w-xl',
+          'mx-auto -mt-8 max-w-xl sm:max-w-[540px]',
           'font-mono text-[10px] leading-[13px] sm:text-[12px] sm:leading-[16px]',
           'overflow-x-auto rounded-md border p-3',
           'relative bg-blue-50 dark:bg-zinc-900',

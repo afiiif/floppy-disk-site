@@ -41,7 +41,7 @@ export default function Banner({ children }: { children: ReactNode }) {
           <div
             className={cn(
               'relative flex flex-col justify-center gap-4 sm:flex-row sm:items-center',
-              'pt-16 md:pb-5 md:pt-11',
+              'pt-16 sm:pt-11 md:pb-5',
             )}
           >
             <div
@@ -61,7 +61,7 @@ export default function Banner({ children }: { children: ReactNode }) {
 
       <div
         className={cn(
-          'absolute -top-1 sm:-top-3 md:-top-2 xl:-top-0.5',
+          'absolute -top-1 sm:-top-2 md:-top-2.5 xl:-top-0.5',
           'z-[-1] h-[calc(100%_+_32px)] w-[calc(100%_+_32px)] translate-x-0 bg-grid',
         )}
       />
