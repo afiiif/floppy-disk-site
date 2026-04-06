@@ -81,6 +81,23 @@ const themeConfig = {
       return 'Edit this page on GitHub →';
     },
   },
+  footer: {
+    text: () => {
+      return (
+        <div>
+          Library by{' '}
+          <a
+            href="https://afiiif.github.io"
+            target="_blank"
+            className="hover:text-slate-900 hover:underline dark:hover:text-white"
+          >
+            Afifudin
+          </a>{' '}
+          🇮🇩
+        </div>
+      );
+    },
+  },
 };
 
 export default themeConfig;

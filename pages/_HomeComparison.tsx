@@ -50,13 +50,16 @@ export default function Comparison() {
           })}
         </div>
       </div>
-      <div className="flex justify-center pt-4">
+      <div className="flex flex-col justify-center gap-4 pt-4 sm:flex-row">
         <Link
-          className="btn btn-secondary w-full text-center sm:w-auto"
+          className="btn w-full text-center sm:w-auto"
           href="https://afiiif.github.io/floppy-disk/"
           target="_blank"
         >
-          View Comparison
+          Live Demo
+        </Link>
+        <Link className="btn btn-secondary w-full text-center sm:w-auto" href="/docs/comparison">
+          Deep Dive Comparison
         </Link>
       </div>
     </>
