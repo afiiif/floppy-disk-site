@@ -1,5 +1,5 @@
 const GITHUB_URL = "afiiif/floppy-disk-site/tree/main/examples";
-const BASE_SANDBOX_URL = `https://codesandbox.io/p/sandbox/github/${GITHUB_URL}`;
+const BASE_SANDBOX_URL = `https://stackblitz.com/github/${GITHUB_URL}`;
 
 type Props = {
   path: string;
@@ -9,7 +9,7 @@ export default function Sandbox({ path, file = "/index.jsx" }: Props) {
   return (
     <>
       <div className="pb-1.5 pt-4">
-        <span className="opacity-70">CodeSandbox from</span>{" "}
+        <span className="opacity-70">Source: </span>
         <a
           href={`https://github.com/${GITHUB_URL}/${path}`}
           className="hover:underline"
