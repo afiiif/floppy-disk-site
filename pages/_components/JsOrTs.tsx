@@ -1,21 +1,21 @@
-import { cn } from '@/utils/string';
-import { ReactNode, useId, useState } from 'react';
+import { cn } from "@/utils/string";
+import { ReactNode, useId, useState } from "react";
 
 type Props = {
   children: ReactNode[];
   className?: string;
-  initialLang?: 'js' | 'ts';
+  initialLang?: "js" | "ts";
 };
-export default function JsOrTs({ children, className = 'mt-3', initialLang }: Props) {
-  const [isTS, setIsTS] = useState(initialLang === 'ts');
+export default function JsOrTs({ children, className = "mt-3", initialLang }: Props) {
+  const [isTS, setIsTS] = useState(initialLang === "ts");
   const id = useId();
 
   return (
     <>
       <div
         className={cn(
-          '-mb-5 inline-flex items-center gap-3 rounded-t-xl px-3 pb-6 pt-1.5',
-          'bg-slate-200 dark:bg-zinc-700',
+          "-mb-5 inline-flex items-center gap-3 rounded-t-xl px-3 pb-6 pt-1.5",
+          "bg-slate-200 dark:bg-zinc-700",
           className,
         )}
       >

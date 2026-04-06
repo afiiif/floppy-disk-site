@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import Code from './Code';
+import Code from "./Code";
 
 export function BadgeFD() {
   return (

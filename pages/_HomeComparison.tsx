@@ -1,6 +1,6 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { cn } from '@/utils/string';
+import { cn } from "@/utils/string";
 
 const comparisonResult = `
 ✓ 103 modules transformed.
@@ -19,7 +19,7 @@ const comparisonResult = `
   /assets/entry.client-CMKBzKJ-.js       190.57 kB │ gzip: 60.05 kB
 ✓ built in 715ms
 `
-  .split('\n')
+  .split("\n")
   .filter(Boolean);
 
 export default function Comparison() {
@@ -27,20 +27,20 @@ export default function Comparison() {
     <>
       <div
         className={cn(
-          'mx-auto -mt-8 max-w-xl sm:max-w-[540px]',
-          'font-mono text-[10px] leading-[13px] sm:text-[12px] sm:leading-[16px]',
-          'overflow-x-auto rounded-md border p-3',
-          'relative bg-blue-50 dark:bg-zinc-900',
+          "mx-auto -mt-8 max-w-xl sm:max-w-[540px]",
+          "font-mono text-[10px] leading-[13px] sm:text-[12px] sm:leading-[16px]",
+          "overflow-x-auto rounded-md border p-3",
+          "relative bg-blue-50 dark:bg-zinc-900",
         )}
       >
         <div className="min-w-[467px] space-y-1 whitespace-pre">
           {comparisonResult.map((line, i) => {
             let className: string | undefined = undefined;
-            if (line.includes('floppy-disk')) {
-              className = 'bg-green-400/30 text-green-900 dark:bg-green-500/10 dark:text-green-300';
-            } else if (line.includes('zustand') || line.includes('tanstack')) {
+            if (line.includes("floppy-disk")) {
+              className = "bg-green-400/30 text-green-900 dark:bg-green-500/10 dark:text-green-300";
+            } else if (line.includes("zustand") || line.includes("tanstack")) {
               className =
-                'bg-orange-400/20 text-orange-900 dark:bg-orange-500/15 dark:text-orange-400';
+                "bg-orange-400/20 text-orange-900 dark:bg-orange-500/15 dark:text-orange-400";
             }
             return (
               <div key={i} className={className}>

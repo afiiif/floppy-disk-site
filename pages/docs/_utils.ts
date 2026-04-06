@@ -1,4 +1,4 @@
-import { PLANTS, ZOMBIES } from './_dummy-data';
+import { PLANTS, ZOMBIES } from "./_dummy-data";
 
 const delay = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 

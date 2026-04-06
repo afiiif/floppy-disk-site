@@ -1,4 +1,4 @@
-const GITHUB_URL = 'afiiif/floppy-disk-site';
+const GITHUB_URL = "afiiif/floppy-disk-site";
 
 type Props = {
   path: string;
@@ -14,7 +14,7 @@ export default function Example({ path }: Props) {
       </div>
       <div className="nx-w-full nx-min-w-0 nx-leading-7">
         <p className="nx-mt-6 nx-leading-7 first:nx-mt-0">
-          Example:{' '}
+          Example:{" "}
           <a
             href={`https://codesandbox.io/p/sandbox/github/${GITHUB_URL}/tree/main/examples/${path}`}
             target="_blank"

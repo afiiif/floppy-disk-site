@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { createQuery } from 'floppy-disk/react';
+import { useState } from "react";
+import { createQuery } from "floppy-disk/react";
 
-import { getZombieById } from './_utils';
+import { getZombieById } from "./_utils";
 
 const zombieQuery = createQuery(({ id }: { id: number }) => getZombieById(id));
 
@@ -10,28 +10,28 @@ export function KeyedQuery() {
 
   const useZombieQuery = zombieQuery({ id });
   const { state, data, error } = useZombieQuery({ keepPreviousData: true });
-  const isPrevData = !!data && state !== 'SUCCESS';
+  const isPrevData = !!data && state !== "SUCCESS";
 
   return (
     <section className="border-soft mt-4 rounded-xl border p-4">
       <div className="flex flex-col gap-4 sm:flex-row">
         <div className="flex items-center gap-4">
           <button
-            className="btn-sm btn"
+            className="btn btn-sm"
             type="button"
             onClick={() => setId((p) => p - 1)}
             disabled={id <= 1}
           >
-            {'<'}
+            {"<"}
           </button>
           <div>Zombie ID: {id}</div>
           <button
-            className="btn-sm btn"
+            className="btn btn-sm"
             type="button"
             onClick={() => setId((p) => p + 1)}
             disabled={id >= 26}
           >
-            {'>'}
+            {">"}
           </button>
         </div>
         {isPrevData && <div className="opacity-60">⏳ Getting zombie with id {id}</div>}
