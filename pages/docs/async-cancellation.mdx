@@ -32,13 +32,13 @@ With keyed queries, each query instance can manage its own controller:
 ```tsx
 const controllers = new Map<string, AbortController>();
 
-const myQuery = createQuery(async (params, _state, paramHash) => {
+const myQuery = createQuery(async (param, _state, paramHash) => {
   controllers.get(paramHash)?.abort();
 
   const controller = new AbortController();
   controllers.set(paramHash, controller);
 
-  const res = await fetch(`/api/data?id=${params.id}`, {
+  const res = await fetch(`/api/data?id=${param.id}`, {
     signal: controller.signal,
   });
 
