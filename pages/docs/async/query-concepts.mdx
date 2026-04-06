@@ -4,19 +4,6 @@ import { Callout } from 'nextra-theme-docs';
 
 Understanding these concepts is key to how FloppyDisk manages async state efficiently and predictably.
 
-## Used vs Unused Query
-
-A query can be classified into two conditions:
-
-<div>
-- **Used query** → has active subscribers
-- **Unused query** → has no subscribers
-</div>
-
-This distinction is important because it determines whether a query should actively update or stay idle.
-
-If a query is used in currently rendered component, it means it is a **used query**, since it internally subscribe to the query store.
-
 ## Stale vs Fresh
 
 Every query can be either:
@@ -91,6 +78,19 @@ This ensures:
 - No unnecessary work for unused queries
 - Active UI always stays up-to-date
 </div>
+
+## Used vs Unused Query
+
+Based on total subscribers, a query can be classified into two conditions:
+
+<div>
+- **Used query** → has active subscribers
+- **Unused query** → has no subscribers
+</div>
+
+This distinction is important because it determines whether a query should actively update or stay idle.
+
+If a query is used in currently rendered component, it means it is a **used query**, since it internally subscribe to the query store.
 
 ## How They Work Together
 
