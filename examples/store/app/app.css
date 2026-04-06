@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+:root {
+  --primary-bg: #21252b;
+  --secondary-bg: #282c34;
+}
+
+@theme inline {
+  --color-primary-bg: var(--primary-bg);
+  --color-secondary-bg: var(--secondary-bg);
+}
+
+html,
+body {
+  background: var(--primary-bg);
+  @apply text-mist-400 font-mono;
+}
