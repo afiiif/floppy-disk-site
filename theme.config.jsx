@@ -19,7 +19,7 @@ const themeConfig = {
   ),
   useNextSeoProps: () => {
     const { route } = useRouter();
-    if (route === "/blog") return { titleTemplate: "%s" };
+    if (route === "/" || route === "/blog") return { titleTemplate: "%s" };
     if (route.startsWith("/blog/")) return { titleTemplate: "%s – 📚 Floppy Disk Blog" };
     return { titleTemplate: "%s – FloppyDisk.ts" };
   },
