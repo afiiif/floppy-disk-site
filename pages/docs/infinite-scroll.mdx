@@ -5,17 +5,34 @@ import { Callout } from 'nextra-theme-docs';
 FloppyDisk does **not provide** a dedicated "_infinite query_" API for infinite scroll UI.\
 Instead, it embraces a simpler and more flexible approach:
 
-> Infinite queries are just **composition** + **recursion**.
+> Infinite queries can be easily built with **composition** + **recursive rendering**.
 
 Why? Because async state is already powerful enough:
 
 <div>
 - keyed queries handle parameters
 - components handle composition
-- recursion handles pagination
+- recursive rendering handles pagination
 </div>
 
 No special abstraction needed.
+
+Instead of relying on a specific API, infinite scroll is achieved by composing components that render the next page when needed.
+Each page is simply another component instance with a different cursor.
+
+## How It Works
+
+At a high level, the pattern looks like this:
+
+```
+Page → LoadMore → Page → LoadMore → ...
+```
+
+- `Page` is responsible for fetching and rendering a single page of data
+- `LoadMore` decides when to render the next page
+- When triggered, `LoadMore` renders another `Page` with the next cursor
+
+This creates a recursive rendering pattern where each page naturally leads to the next.
 
 Here is the example on how to implement infinite query properly:
 
@@ -68,6 +85,8 @@ function LoadMore({ nextCursor }: { nextCursor?: string }) {
   return <DomObserver onReachBottom={() => setIsNextPageRequested(true)} />;
 }
 ```
+
+## Revalidation Considerations
 
 When implementing infinite queries, it is **highly recommended to disable automatic revalidation**.
 
