@@ -68,8 +68,8 @@ Revalidation respects freshness.
 Then:
 
 <div>
-- If the query is unused → stop here
-- If the query is used → automatically execute
+- If the query is subscribed → automatically execute
+- If the query is unsubscribed → stop here → wait until it becomes subscribed, then execute
 </div>
 
 This ensures:
@@ -79,24 +79,32 @@ This ensures:
 - Active UI always stays up-to-date
 </div>
 
-## Used vs Unused Query
+## Subscribed vs Unsubscribed
 
 Based on total subscribers, a query can be classified into two conditions:
 
 <div>
-- **Used query** → has active subscribers
-- **Unused query** → has no subscribers
+- **Subscribed query** → has active subscribers
+- **Unsubscribed query** → has no subscribers
 </div>
 
 This distinction is important because it determines whether a query should actively update or stay idle.
 
-If a query is used in currently rendered component, it means it is a **used query**, since it internally subscribe to the query store.
+<Callout type='info'>
+If a query is **used** by a currently rendered component, it becomes **subscribed**,
+because the component internally subscribes to the query store.
+</Callout>
 
 ## How They Work Together
 
-- `execute()` → always fetches
-- Fresh query → `revalidate()` does nothing
-- Stale query → `revalidate()` fetches
-- Invalidated query → `revalidate()` fetches
-- `invalidate()` + used → fetch immediately
-- `invalidate()` + unused → wait until used
+<div className='whitespace-nowrap pt-6'>
+
+| Command        | Fresh/Stale                             | Subscribed                              | Query function called?                                           |
+| -------------- | --------------------------------------- | --------------------------------------- | ---------------------------------------------------------------- |
+| `execute()`    | <span className='opacity-70'>Any</span> | <span className='opacity-70'>Any</span> | ✅ Called                                                        |
+| `revalidate()` | **Fresh**                               | <span className='opacity-70'>Any</span> | ❌ Not called                                                    |
+| `revalidate()` | **Stale**                               | <span className='opacity-70'>Any</span> | ✅ Called                                                        |
+| `invalidate()` | <span className='opacity-70'>Any</span> | **Yes**                                 | ✅ Called immediately                                            |
+| `invalidate()` | <span className='opacity-70'>Any</span> | **No**                                  | ⏳ Deferred<div>→ Called when the query becomes subscribed</div> |
+
+</div>
