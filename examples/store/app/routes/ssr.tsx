@@ -30,10 +30,10 @@ const useMyStore = createStore(
   },
   {
     onSubscribe: () => {
-      console.log("🟦 Subscriber added", `(total subs: ${useMyStore.getSubscribers().size})`);
+      console.log("🟦 Subscriber added", `(total subs: ${useMyStore.getSubscriberCount()})`);
     },
     onUnsubscribe: () => {
-      console.log("🟨 Subscriber removed", `(total subs: ${useMyStore.getSubscribers().size})`);
+      console.log("🟨 Subscriber removed", `(total subs: ${useMyStore.getSubscriberCount()})`);
     },
   },
 );

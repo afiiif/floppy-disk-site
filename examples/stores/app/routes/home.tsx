@@ -27,13 +27,13 @@ const myStore = createStores<StoreState, { id: number }>(
     onSubscribe: (_state, { key, keyHash }) => {
       console.log(
         `🟦 ${keyHash} Subscriber added`,
-        `(total subs: ${myStore(key).getSubscribers().size})`,
+        `(total subs: ${myStore(key).getSubscriberCount()})`,
       );
     },
     onUnsubscribe: (_state, { key, keyHash }) => {
       console.log(
         `🟨 ${keyHash} Subscriber removed`,
-        `(total subs: ${myStore(key).getSubscribers().size})`,
+        `(total subs: ${myStore(key).getSubscriberCount()})`,
       );
     },
   },
