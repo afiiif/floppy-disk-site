@@ -180,12 +180,12 @@ const useQuery = getQuery(variable);
   - `onError?` : Called when query fails and no more retries
   - `onSettled?` : Called after success or final failure
   - `shouldRetry?` : Control retry behavior (default: retry once with 1500ms delay)
-  - `onFirstSubscribe?`
-  - `onSubscribe?`
-  - `onUnsubscribe?`
-  - `onLastUnsubscribe?`
-  - `onStateChange?`
-  - `allowSetStateServerSide?`
+  - `onFirstSubscribe?` : Called when the first subscriber is added
+  - `onSubscribe?` : Called every time a subscriber is added
+  - `onUnsubscribe?` : Called every time a subscriber is removed
+  - `onLastUnsubscribe?` : Called when the last subscriber is removed
+  - `onStateChange?` : Called whenever state changes (does not register as a subscriber)
+  - `allowSetStateServerSide?` : Allow `setState` on server (**disabled by default**)
 
 </div>
 
@@ -262,12 +262,12 @@ const useMutation = createMutation(mutationFn, options);
   - `onSuccess?` : Called when mutation succeeds
   - `onError?` : Called when mutation fails
   - `onSettled?` : Called after success or error
-  - `onFirstSubscribe?`
-  - `onSubscribe?`
-  - `onUnsubscribe?`
-  - `onLastUnsubscribe?`
-  - `onStateChange?`
-  - `allowSetStateServerSide?`
+  - `onFirstSubscribe?` : Called when the first subscriber is added
+  - `onSubscribe?` : Called every time a subscriber is added
+  - `onUnsubscribe?` : Called every time a subscriber is removed
+  - `onLastUnsubscribe?` : Called when the last subscriber is removed
+  - `onStateChange?` : Called whenever state changes (does not register as a subscriber)
+  - `allowSetStateServerSide?` : Allow `setState` on server (**disabled by default**)
 
 </div>
 
