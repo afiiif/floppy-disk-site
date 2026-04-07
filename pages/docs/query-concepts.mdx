@@ -51,6 +51,10 @@ Always run the promise, no matter what.
 - Ignores invalidation
 - Forces a fetch
 
+<div className='text-sm mt-6 opacity-70'>
+💡 In TanStack Query terms, `execute` is equivalent to `fetch`.
+</div>
+
 ## Revalidate
 
 `revalidate()` is conditional:
@@ -60,6 +64,10 @@ Always run the promise, no matter what.
 - Otherwise → do nothing (use cached data)
 
 Revalidation respects freshness.
+
+<div className='text-sm mt-6 opacity-70'>
+💡 In TanStack Query terms, `revalidate` is equivalent to `refetch`.
+</div>
 
 ## Invalidate
 
@@ -77,6 +85,10 @@ This ensures:
 <div>
 - No unnecessary work for unused queries
 - Active UI always stays up-to-date
+</div>
+
+<div className='text-sm mt-6 opacity-70'>
+💡 In TanStack Query terms, `invalidate` is equivalent to `invalidateQueries`.
 </div>
 
 ## Subscribed vs Unsubscribed
