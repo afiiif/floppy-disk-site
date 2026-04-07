@@ -41,7 +41,7 @@ const store = initStore(initialState, options);
   - `store.getState()` : Get the current state
   - `store.setState(value)` : Update the state (accepts partial object or updater function)
   - `store.subscribe(fn)` : Subscribe to state changes (returns unsubscribe function)
-  - `store.getSubscribers()` : Get all subscribers
+  - `store.getSubscriberCount()` : Get the number of subscribers
 
 </div>
 
@@ -86,7 +86,7 @@ const useStore = createStore(initialState, options);
   - `useStore.getState()` : Get the current state
   - `useStore.setState(value)` : Update the state (accepts partial object or updater function)
   - `useStore.subscribe(fn)` : Subscribe to state changes (returns unsubscribe function)
-  - `useStore.getSubscribers()` : Get all subscribers
+  - `useStore.getSubscriberCount()` : Get the number of subscribers
 
 </div>
 
@@ -136,7 +136,7 @@ const useStore = getStore(key);
   - `useStore.getState()` : Get the current state
   - `useStore.setState(value)` : Update the state (accepts partial object or updater function)
   - `useStore.subscribe(fn)` : Subscribe to state changes (returns unsubscribe function)
-  - `useStore.getSubscribers()` : Get all subscribers
+  - `useStore.getSubscriberCount()` : Get the number of subscribers
   - `useStore.delete()` : Delete the store instance (only works when no active subscribers)
 
 - `useStore` **properties**
@@ -223,7 +223,7 @@ const useQuery = getQuery(variable);
   - `useQuery.getState()` : Get current state
   - <div className='opacity-60'>`useQuery.setState(value)` : Manually update state (not recommended)</div>
   - `useQuery.subscribe(fn)` : Subscribe to state changes
-  - `useQuery.getSubscribers()` : Get all subscribers
+  - `useQuery.getSubscriberCount()` : Get the number of subscribers
 
 - `getQuery` **methods**
   - `getQuery.executeAll()` : Execute all queries
@@ -285,7 +285,7 @@ const useMutation = createMutation(mutationFn, options);
   - `useMutation.getState()` : Get current state
   - <div className='opacity-60'>`useMutation.setState(value)` : Manually update state (not recommended)</div>
   - `useMutation.subscribe(fn)` : Subscribe to state changes
-  - `useMutation.getSubscribers()` : Get all subscribers
+  - `useMutation.getSubscriberCount()` : Get the number of subscribers
 
 </div>
 
