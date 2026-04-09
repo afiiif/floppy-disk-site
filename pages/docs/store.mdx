@@ -1,3 +1,5 @@
+import { Callout } from 'nextra-theme-docs';
+
 # Store (Global State)
 
 A store is a global state container that can be used both inside and outside React.
@@ -27,7 +29,67 @@ function TheZombies() {
 }
 ```
 
-The component automatically re-renders when the values it uses change.
+Each component automatically re-renders only **when the values it uses change**.
+
+## Reading State Outside Render
+
+Sometimes you don't need a value for rendering, but only for an event (e.g. inside a click handler).\
+In that case, avoid subscribing to unnecessary state.
+
+<Callout>
+This optimization is **not new**, it follows the same principle commonly used in Zustand:\
+only subscribe to what you render, and read the rest on demand.
+</Callout>
+
+### Not Recommended
+
+```tsx
+function Nay() {
+  const { plants, zombies } = useLawn();
+                // ^⚠️
+  return (
+    <>
+      <div> 🌱 {plants} </div>  {/* only need plant to render */}
+
+      <button
+        onClick={() => {
+          doSomething(zombies);  // zombies only used in event ⚠️
+        }}
+      >
+        Do something with zombies
+      </button>
+    </>
+  );
+}
+```
+
+Here 👆 the component subscribes to `zombies` even though it's not used for rendering.
+This can cause unnecessary re-renders.
+
+### Recommended
+
+```tsx
+function Yay() {
+  const { plants } = useLawn();  // ✅
+
+  return (
+    <>
+      <div> 🌱 {plants} </div>  {/* you only need plant to render */}
+
+      <button
+        onClick={() => {
+          const { zombies } = useLawn.getState();  // ✅
+          doSomething(zombies);
+        }}
+      >
+        Do something with zombies
+      </button>
+    </>
+  );
+}
+```
+
+Only `plants` is subscribed for rendering, while `zombies` is read on demand.
 
 ## Updating State
 
