@@ -27,8 +27,8 @@ importers:
         specifier: 13.4.19
         version: 13.4.19(eslint@8.57.1)(typescript@5.2.2)
       floppy-disk:
-        specifier: ~3.2.2
-        version: 3.2.2(@types/react@18.2.21)(react@18.2.0)
+        specifier: ~3.7.2
+        version: 3.7.2(@types/react@18.2.21)(react@18.2.0)
       next:
         specifier: 13.4.19
         version: 13.4.19(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1642,8 +1642,8 @@ packages:
   flexsearch@0.7.43:
     resolution: {integrity: sha512-c5o/+Um8aqCSOXGcZoqZOm+NqtVwNsvVpWv6lfmSclU954O3wvQKxxK8zj74fPaSJbXpSLTs4PRhh+wnoCXnKg==}
 
-  floppy-disk@3.2.2:
-    resolution: {integrity: sha512-DhcSiUWNoXqW4THiHluzYd+3u4e17infHC7E80hm+Sk4/bxe1BcTtIjxeYx6G2ioHJkRwvEZG35Nat3Fjzyupw==}
+  floppy-disk@3.7.2:
+    resolution: {integrity: sha512-F9gs7WIkiB/29EqIkHz2KXXK2qgzerSyxw+DsXVtwLLtIwzlzqJykA6g34bUZq+siKAdLZULT3btmmzgQgAuXA==}
     peerDependencies:
       '@types/react': '>=17.0'
       react: '>=17.0'
@@ -5416,7 +5416,7 @@ snapshots:
 
   flexsearch@0.7.43: {}
 
-  floppy-disk@3.2.2(@types/react@18.2.21)(react@18.2.0):
+  floppy-disk@3.7.2(@types/react@18.2.21)(react@18.2.0):
     optionalDependencies:
       '@types/react': 18.2.21
       react: 18.2.0
