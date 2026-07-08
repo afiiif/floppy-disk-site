@@ -28,3 +28,8 @@ ul ul.nx-mt-6 {
     top: 0 !important;
   }
 }
+body.nextra-banner-hidden .nextra-banner-container {
+  /* Not sure why the body has the "nextra-banner-hidden" class in production. */
+  /* It doesn't appear in local development. */
+  @apply !block;
+}
