@@ -12,8 +12,8 @@ const themeConfig = {
       <>
         <div className="xl:inline-block">
           This library has been rebranded as{" "}
-          <a href="/" className="text-amber-300 hover:underline">
-            {"{new-name}"}
+          <a href="https://yuustate.vercel.app" className="text-amber-300 hover:underline">
+            {"YuuState"}
           </a>
           .
         </div>{" "}
